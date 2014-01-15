@@ -29,5 +29,5 @@ public interface Action1E<T, E extends Exception> {
 	 * @param t the first parameter
 	 * @throws E the exception
 	 */
-	void invoke(T t) throws E;
+	void call(T t) throws E;
 }

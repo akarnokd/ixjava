@@ -27,5 +27,5 @@ public interface Action0E<E extends Exception> {
 	 * Invoke the action.
 	 * @throws E the exception
 	 */
-	void invoke() throws E;
+	void call() throws E;
 }

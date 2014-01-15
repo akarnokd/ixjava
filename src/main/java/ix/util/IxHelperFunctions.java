@@ -194,7 +194,7 @@ public final class IxHelperFunctions {
      * To have a comparator which places nulls last, use the <code>comparator0()</code> method.
      * @param <T> the element types to compare
      * @return the comparator
-     * @see Functions#comparator0()
+     * @see IxHelperFunctions#comparator0()
      */
     public static <T extends Comparable<? super T>> Comparator<T> comparator() {
         return new Comparator<T>() {

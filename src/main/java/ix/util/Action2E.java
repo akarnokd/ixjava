@@ -31,5 +31,5 @@ public interface Action2E<T, V, E extends Exception> {
 	 * @param u the second parameter
 	 * @throws E the exception
 	 */
-	void invoke(T t, V u) throws E;
+	void call(T t, V u) throws E;
 }

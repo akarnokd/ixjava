@@ -1179,7 +1179,7 @@ public final class IterableBuilder<T> implements Iterable<T> {
     }
     /**
      * Converts this iterable into an observable builder
-     * which uses the default scheduler of {@link hu.akarnokd.reactive4java.reactive.Reactive} to emit values.
+     * which uses the default scheduler of {@link rx.Observable} to emit values.
      * @return the observable builder
      */
     public Observable<T> toObservable() {

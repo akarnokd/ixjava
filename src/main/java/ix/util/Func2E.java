@@ -35,5 +35,5 @@ public interface Func2E<Param1, Param2, Return, E extends Exception> {
 	 * @return the return object
 	 * @throws E on error
 	 */
-	Return invoke(Param1 param1, Param2 param2) throws E;
+	Return call(Param1 param1, Param2 param2) throws E;
 }
