@@ -1,5 +1,5 @@
 /*
-* Copyright 2011-2013 David Karnok
+* Copyright 2011-2014 David Karnok
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ import rx.util.Exceptions;
  * <p>The implementations of the operators are partially derived
  * from the Reactive operators.</p>
  * @author akarnokd, 2011.02.02.
- * @see hu.akarnokd.reactive4java.reactive.Reactive
+ * @see rx.Observable
  */
 public final class Interactive {
     /**

@@ -1,5 +1,5 @@
 /*
-* Copyright 2011-2013 David Karnok
+* Copyright 2011-2014 David Karnok
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ import rx.util.functions.Functions;
  * An iterable builder which offers methods to chain the
  * sequence of some Interactive operations.
  * <p>This builder is the dual of the
- * {@link hu.akarnokd.reactive4java.query.ObservableBuilder} class.</p>
+ * {@link rx.Observable} class.</p>
  * @author akarnokd, Jan 25, 2012
  * @param <T> the element type
  * @since 0.96
