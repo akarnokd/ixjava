@@ -78,6 +78,10 @@ public abstract class ObserverToIteratorSink<T, U> implements Observer<T>,
     public void unsubscribe() {
         handle.unsubscribe();
     }
+    @Override
+    public boolean isUnsubscribed() {
+    	return handle.isUnsubscribed();
+    }
     /** Closes this iterator and suppresses exceptions. */
     protected void done() {
         unsubscribe();

@@ -8,3 +8,5 @@
 
 .gradle
 .m2
+/.nb-gradle/private/
+/bin/

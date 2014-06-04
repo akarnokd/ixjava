@@ -16,7 +16,7 @@
 package ix.util;
 
 import rx.Notification;
-import rx.util.Exceptions;
+import rx.exceptions.Exceptions;
 
 /**
  * Container that may contain a single value or an exception, but not both.
@@ -125,13 +125,13 @@ public final class SingleOption<T> {
             Throwable t = error;
             if (t != null) {
                 error = null;
-                return new Notification<T>(t);
+                return Notification.createOnError(t);
             }
             T v = value;
             value = null;
-            return new Notification<T>(v);
+            return Notification.createOnNext(v);
         }
-        return new Notification<T>();
+        return Notification.createOnCompleted();
     }
     /**
      * Add a new optional value to the container.

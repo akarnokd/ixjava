@@ -19,6 +19,7 @@ import ix.operators.ToIterable;
 import ix.util.GroupedIterable;
 import ix.util.IxHelperFunctions;
 import ix.util.Pair;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -27,15 +28,16 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
 import rx.Notification;
 import rx.Observable;
 import rx.Scheduler;
-import rx.util.functions.Action0;
-import rx.util.functions.Action1;
-import rx.util.functions.Func0;
-import rx.util.functions.Func1;
-import rx.util.functions.Func2;
-import rx.util.functions.Functions;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.functions.Functions;
 
 /**
  * An iterable builder which offers methods to chain the

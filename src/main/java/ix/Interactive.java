@@ -15,11 +15,18 @@
 */
 package ix;
 
-import rx.*;
-import rx.util.functions.*;
-import ix.util.*;
-import java.io.Closeable;
+import ix.util.CircularBuffer;
+import ix.util.CloseableIterable;
+import ix.util.CloseableIterator;
+import ix.util.DefaultGroupedIterable;
+import ix.util.Enumerable;
+import ix.util.Enumerator;
+import ix.util.GroupedIterable;
+import ix.util.IxHelperFunctions;
+import ix.util.Pair;
+import ix.util.SingleContainer;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -38,9 +45,21 @@ import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import rx.Notification;
+import rx.Scheduler;
+import rx.Subscription;
+import rx.exceptions.Exceptions;
+import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func0;
+import rx.functions.Func1;
+import rx.functions.Func2;
+import rx.functions.Functions;
+import rx.internal.util.SubscriptionList;
 import rx.schedulers.Schedulers;
-import rx.util.Exceptions;
 
 /**
  * The interactive (i.e., <code>Iterable</code> based) counterparts
@@ -110,16 +129,14 @@ public final class Interactive {
             ((Subscription)iter).unsubscribe();
         }
     }
-    static final Notification<Object> NONE = new Notification<Object>();
     static <T> Notification<T> some(T value) {
-        return new Notification<T>(value);
+        return Notification.createOnNext(value);
     }
     static <T> Notification<T> error(Throwable t) {
-        return new Notification<T>(t);
+        return Notification.createOnError(t);
     }
-    @SuppressWarnings("unchecked")
     static <T> Notification<T> none() {
-        return (Notification<T>)NONE;
+        return Notification.createOnCompleted();
     }
     static <T> T value(Notification<T> notif) {
         if (notif.isOnNext()) {
@@ -2007,7 +2024,9 @@ public final class Interactive {
             public Iterator<T> iterator() {
                 final BlockingQueue<Notification<T>> queue = new LinkedBlockingQueue<Notification<T>>();
                 final AtomicInteger wip = new AtomicInteger(1);
-                final List<Subscription> handlers = new LinkedList<Subscription>();
+                final SubscriptionList handlers = new SubscriptionList();
+                final Scheduler.Worker worker = scheduler.createWorker();
+                handlers.add(worker);
                 for (final Iterable<? extends T> iter : sources) {
                     Action0 r = new Action0() {
                         @Override
@@ -2035,7 +2054,7 @@ public final class Interactive {
                         }
                     };
                     wip.incrementAndGet();
-                    handlers.add(scheduler.schedule(r));
+                    handlers.add(worker.schedule(r));
                 }
                 if (wip.decrementAndGet() == 0) {
                     queue.add(Interactive.<T>none());
@@ -2072,9 +2091,7 @@ public final class Interactive {
                             try {
                                 return value(peek.take());
                             } catch (RuntimeException ex) {
-                                for (Subscription h : handlers) {
-                                    h.unsubscribe();
-                                }
+                            	handlers.unsubscribe();
                                 throw ex;
                             }
                         }
@@ -3690,7 +3707,7 @@ public final class Interactive {
                     /** The iterator. */
                     final Iterator<? extends T> it = usage.call(c).iterator();
                     /** Run once the it has no more elements. */
-                    boolean once = true;
+                    final AtomicBoolean once = new AtomicBoolean();
                     @Override
                     public boolean hasNext() {
                         if (it.hasNext()) {
@@ -3714,8 +3731,7 @@ public final class Interactive {
                     }
                     @Override
                     public void unsubscribe() {
-                        if (once) {
-                            once = false;
+                        if (once.compareAndSet(false, true)) {
                             try {
                                 c.close();
                             } catch (IOException ex) {
@@ -3723,7 +3739,10 @@ public final class Interactive {
                             }
                         }
                     }
-                    
+                    @Override
+                    public boolean isUnsubscribed() {
+                    	return once.get();
+                    }
                 };
             }
         };
@@ -4475,6 +4494,7 @@ public final class Interactive {
             final Action0 close
     ) {
         return new CloseableIterator<T>() {
+        	final AtomicBoolean once = new AtomicBoolean();
             @Override
             public boolean hasNext() {
                 return src.hasNext();
@@ -4492,9 +4512,14 @@ public final class Interactive {
             
             @Override
             public void unsubscribe() {
-                close.call();
+            	if (once.compareAndSet(false, true)) {
+            		close.call();
+            	}
             }
-            
+            @Override
+            public boolean isUnsubscribed() {
+            	return once.get();
+            }
         };
     }
     /**
@@ -4512,6 +4537,7 @@ public final class Interactive {
             final Closeable close
     ) {
         return new CloseableIterator<T>() {
+        	final AtomicBoolean once = new AtomicBoolean();
             @Override
             public boolean hasNext() {
                 return src.hasNext();
@@ -4529,11 +4555,17 @@ public final class Interactive {
             
             @Override
             public void unsubscribe() {
-                try {
-                    close.close();
-                } catch (IOException ex) {
-                    //ignored
-                }
+            	if (once.compareAndSet(false, true)) {
+            		try {
+	                    close.close();
+	                } catch (IOException ex) {
+	                    //ignored
+	                }
+            	}
+            }
+            @Override
+            public boolean isUnsubscribed() {
+            	return once.get();
             }
             
         };
@@ -4552,6 +4584,7 @@ public final class Interactive {
             final Action1<? super Iterator<? extends T>> close
     ) {
         return new CloseableIterator<T>() {
+        	final AtomicBoolean once = new AtomicBoolean();
             @Override
             public boolean hasNext() {
                 return src.hasNext();
@@ -4569,9 +4602,14 @@ public final class Interactive {
             
             @Override
             public void unsubscribe() {
-                close.call(src);
+            	if (once.compareAndSet(false, true)) {
+            		close.call(src);
+            	}
             }
-            
+            @Override
+            public boolean isUnsubscribed() {
+            	return once.get();
+            }
         };
     }
     

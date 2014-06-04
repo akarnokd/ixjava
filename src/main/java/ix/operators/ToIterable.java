@@ -21,6 +21,7 @@ import ix.util.SingleOption;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
 import rx.Notification;
 import rx.Observable;
 import rx.Subscription;
@@ -49,21 +50,21 @@ public final class ToIterable<T> extends
 			final BlockingQueue<Notification<T>> queue = new LinkedBlockingQueue<Notification<T>>();
 			@Override
 			public void onNext(T value) {
-				queue.add(new Notification<T>(value));
+				queue.add(Notification.createOnNext(value));
 			}
 
 			@Override
 			public void onError(Throwable ex) {
 				done();
 				
-				queue.add(new Notification<T>(ex));
+				queue.add(Notification.createOnError(ex));
 			}
 
 			@Override
 			public void onCompleted() {
 				done();
 
-				queue.add(new Notification<T>());
+				queue.add(Notification.createOnCompleted());
 			}
 
 			@Override
