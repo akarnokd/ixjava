@@ -121,13 +121,13 @@ public final class IterableBuilder<T> implements Iterable<T> {
     /**
      * A generator function which returns Ts based on the termination condition and the way it computes the next values.
      * This is equivalent to:
-     * <code><pre>
+     * <pre><code>
      * T value = seed;
      * while (predicate(value)) {
      *     yield value;
      *     value = next(value);
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
      * for its <code>remove()</code> method.</p>
      * @param <T> the element type

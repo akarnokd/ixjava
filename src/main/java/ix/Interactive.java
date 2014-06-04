@@ -1301,13 +1301,13 @@ public final class Interactive {
     /**
      * A generator function which returns Ts based on the termination condition and the way it computes the next values.
      * This is equivalent to:
-     * <code><pre>
+     * <pre><code>
      * T value = seed;
      * while (predicate(value)) {
      *     yield value;
      *     value = next(value);
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
      * for its <code>remove()</code> method.</p>
      * @param <T> the element type
@@ -1356,7 +1356,7 @@ public final class Interactive {
      * subsequent element is then generated after <code>betweenDelay</code> sleep.
      * The sleeping is blocking the current thread which invokes the hasNext()/next() methods.
      * This is equivalent to:
-     * <code><pre>
+     * <pre><code>
      * T value = seed;
      * sleep(initialDelay);
      * if (predicate(value)) {
@@ -1369,7 +1369,7 @@ public final class Interactive {
      *     value = next(value);
      *     sleep(betweenDelay);
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
      * for its <code>remove()</code> method.</p>
      * @param <T> the element type
@@ -2870,20 +2870,20 @@ public final class Interactive {
     }
     /**
      * Creates an iterator which attempts to re-iterate the source if it threw an exception.
-     * <code><pre>
-     * while (count-- > 0) {
+     * <pre><code>
+     * while (count-- &gt; 0) {
      * 	  try {
      *        for (T t : source) {
      *            yield t;
      *        }
      *        break;
      *    } catch (Throwable t) {
-     *        if (count <= 0) {
+     *        if (count &lt;= 0) {
      *            throw t;
      *        }
      *    }
      * }
-     * </pre></code>
+     * </code></pre>
      * <p>The returned iterator forwards all <code>remove()</code> calls
      * to the source.</p>
      * @param <T> the source type

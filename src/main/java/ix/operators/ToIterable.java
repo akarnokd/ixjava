@@ -57,14 +57,14 @@ public final class ToIterable<T> extends
 			public void onError(Throwable ex) {
 				done();
 				
-				queue.add(Notification.createOnError(ex));
+				queue.add(Notification.<T>createOnError(ex));
 			}
 
 			@Override
 			public void onCompleted() {
 				done();
 
-				queue.add(Notification.createOnCompleted());
+				queue.add(Notification.<T>createOnCompleted());
 			}
 
 			@Override

@@ -21,7 +21,7 @@ import rx.Subscription;
 /**
  * An iterator which supports a close() method. Usage:
  * <pre><code>
- * CloseableIterator<T> it = citerable.iterator();
+ * CloseableIterator&lt;T&gt; it = citerable.iterator();
  * try {
  *     while (it.hasNext()) {
  *         doSomething(it.next());

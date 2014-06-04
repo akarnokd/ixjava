@@ -20,7 +20,7 @@ package ix.util;
  * The function interface which takes one parameter and returns something.
  * When <code>Func1</code> is used in a method parameter declaration, you
  * may consider using wildcards: 
- * <p><code>&lt;T, U> U someMethod(Func1&lt;? super T, ? extends U> f);</code></p>
+ * <p><code>&lt;T, U&gt; U someMethod(Func1&lt;? super T, ? extends U&gt; f);</code></p>
  * 
  * @author akarnokd
  * @param <Param1> the first parameter
