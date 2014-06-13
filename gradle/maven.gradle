@@ -43,7 +43,7 @@ task uploadMavenCentral(type:Upload, dependsOn: signArchives) {
                     developers {
                         developer {
                             id 'akarnokd'
-                            name 'akarnokd Open Source Development'
+                            name 'David Karnok'
                             email 'akarnokd@gmail.com'
                         }
                     }

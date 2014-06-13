@@ -103,6 +103,46 @@ public class Iterables<T> implements Iterable<T> {
         return from(Interactive.toIterable(ts));
     }
     /**
+     * Creates an iterable which returns only a single element.
+     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
+     * for its <code>remove()</code> method.</p>
+     * @param <T> the element type
+     * @param value the value to return
+     * @return the new iterable
+     */
+    public static <T> Iterable<T> just(final T value) {
+        return from(Interactive.just(value));
+    }
+    /**
+     * Returns an iterator which will throw the given
+     * <code>Throwable</code> exception when the client invokes
+     * <code>next()</code> the first time. Any subsequent
+     * <code>next()</code> call will simply throw a <code>NoSuchElementException</code>.
+     * Calling <code>remove()</code> will always throw a <code>IllegalStateException</code>.
+     * If the given Throwable instance extends a <code>RuntimeException</code>, it is throws
+     * as is, but when the throwable is a checked exception, it is wrapped
+     * into a <code>RuntimeException</code>.
+     * @param <T> the element type, irrelevant
+     * @param t the exception to throw
+     * @return the new iterable
+     */
+    public static <T> Iterable<T> error(
+            final Throwable t) {
+        return from(Interactive.<T>error(t));
+    }
+    /**
+     * Returns an empty iterable which will not produce elements.
+     * Its <code>hasNext()</code> returns always false,
+     * <code>next()</code> throws a <code>NoSuchElementException</code>
+     * and <code>remove()</code> throws an <code>IllegalStateException</code>.
+     * Note that the <code>Collections.emptyIterable()</code> static method is introduced by Java 7.
+     * @param <T> the element type, irrelevant
+     * @return the iterable
+     */
+    public static <T> Iterable<T> empty() {
+        return Interactive.empty();
+    }
+    /**
      * Creates a new iterable builder instance by wrapping the given
      * array. Changes to the array will be visible through
      * the iterator.
@@ -387,21 +427,6 @@ public class Iterables<T> implements Iterable<T> {
     public Iterables<List<T>> buffer(int bufferSize) {
         return from(Interactive.buffer(it, bufferSize));
     }
-    // #GWT-IGNORE-START
-    /**
-     * Casts the source iterable into a different typ by using a type token.
-     * If the source contains a wrong element, the <code>next()</code>
-     * will throw a <code>ClassCastException</code>.
-     * <p>The returned iterator forwards all <code>remove()</code> calls
-     * to the source.</p>
-     * @param <U> the result element type
-     * @param token the type token
-     * @return the new iterable
-     */
-    public <U> Iterables<U> cast(final Class<U> token) {
-        return from(Interactive.cast(it, token));
-    }
-    // #GWT-IGNORE-END
     /**
      * Concatenate this iterable with the other iterable in a way, that calling the second <code>iterator()</code>
      * only happens when there is no more element in the first iterator.
@@ -517,7 +542,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     public Iterables<T> doOnCompleted(Action0 action) {
-        return from(Interactive.finish(it, action));
+        return from(Interactive.doOnCompleted(it, action));
     }
     /**
      * Construct a new iterable which will invoke the specified action
@@ -571,7 +596,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     public Iterables<T> filter(final Func1<? super T, Boolean> predicate) {
-        return from(Interactive.where(it, predicate));
+        return from(Interactive.filter(it, predicate));
     }
     /**
      * Creates an iterable which filters this iterable with the
@@ -581,7 +606,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     public Iterables<T> filterIndexed(final Func2<Integer, ? super T, Boolean> predicate) {
-        return from(Interactive.where(it, predicate));
+        return from(Interactive.filterIndexed(it, predicate));
     }
     /**
      * Returns the first element from the iterable sequence or
@@ -601,7 +626,19 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     public <U> Iterables<U> flatMap(final Func1<? super T, ? extends Iterable<? extends U>> selector) {
-        return from(Interactive.selectMany(it, selector));
+        return from(Interactive.flatMap(it, selector));
+    }
+    /**
+     * Iterate over the source and submit each value to the
+     * given action. Basically, a for-each loop with pluggable
+     * action.
+     * This method is useful when the concrete values from the iterator
+     * are not needed but the iteration itself implies some side effects.
+     * @param action the action to invoke on with element
+     */
+    public void forEach(
+            final Action1<? super T> action) {
+        Interactive.forEach(it, action);
     }
     /**
      * Creates an iterable which traverses the source iterable,
@@ -705,7 +742,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     public <U> Iterables<U> mapIndexed(final Func2<Integer, ? super T, ? extends U> selector) {
-        return from(Interactive.select(it, selector));
+        return from(Interactive.mapIndexed(it, selector));
     }
     /**
      * Transforms the sequence of the source iterable into an option sequence of
@@ -866,6 +903,19 @@ public class Iterables<T> implements Iterable<T> {
         return from(Interactive.minBy((Iterable<U>)it));
     }
     /**
+     * Casts the source iterable into a different typ by using a type token.
+     * If the source contains a wrong element, the <code>next()</code>
+     * will throw a <code>ClassCastException</code>.
+     * <p>The returned iterator forwards all <code>remove()</code> calls
+     * to the source.</p>
+     * @param <U> the result element type
+     * @param token the type token
+     * @return the new iterable
+     */
+    public <U> Iterables<U> ofType(final Class<U> token) {
+        return from(Interactive.ofType(it, token));
+    }
+    /**
      * Returns an iterable which traverses the entire
      * source iterable and creates an ordered list
      * of elements. Once the source iterator completes,
@@ -919,14 +969,14 @@ public class Iterables<T> implements Iterable<T> {
      * <p>Is the same as using {@code this.run(Interactive.print())}.</p>
      */
     public void print() {
-        Interactive.run(it, Interactive.print());
+        Interactive.forEach(it, Interactive.print());
     }
     /**
      * Runs this iterable and prints the values.
      * <p>Is the same as using {@code this.run(Interactive.println())}.</p>
      */
     public void println() {
-        Interactive.run(it, Interactive.println());
+        Interactive.forEach(it, Interactive.println());
     }
     /**
      * Applies the <code>func</code> function for a shared instance of the source,
@@ -1012,18 +1062,6 @@ public class Iterables<T> implements Iterable<T> {
      */
     public void run() {
         Interactive.run(it);
-    }
-    /**
-     * Iterate over the source and submit each value to the
-     * given action. Basically, a for-each loop with pluggable
-     * action.
-     * This method is useful when the concrete values from the iterator
-     * are not needed but the iteration itself implies some side effects.
-     * @param action the action to invoke on with element
-     */
-    public void run(
-            final Action1<? super T> action) {
-        Interactive.run(it, action);
     }
     /**
      * Generates an iterable which acts like a running sum when iterating over the source iterable, e.g.,
@@ -1125,6 +1163,7 @@ public class Iterables<T> implements Iterable<T> {
     public Iterables<BigInteger> sumBigInteger() {
         return from(Interactive.sumBigInteger((Iterable<BigInteger>)it));
     }
+    
     /**
      * Computes and signals the sum of the values of the Double source.
      * The source may not send nulls.
@@ -1135,7 +1174,6 @@ public class Iterables<T> implements Iterable<T> {
     public Iterables<Double> sumDouble() {
         return from(Interactive.sumDouble((Iterable<Double>)it));
     }
-    
     /**
      * Computes and signals the sum of the values of the Float source.
      * The source may not send nulls.
@@ -1356,6 +1394,7 @@ public class Iterables<T> implements Iterable<T> {
     public Observable<T> toObservable(Scheduler scheduler) {
         return Observable.from(it, scheduler);
     }
+    
     /**
      * Pairs each element from this and the oher iterable source and
      * combines them into a new value by using the <code>combiner</code>

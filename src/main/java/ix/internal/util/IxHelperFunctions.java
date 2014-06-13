@@ -28,9 +28,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Action2;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
@@ -518,50 +515,6 @@ public final class IxHelperFunctions {
                 return new TreeSet<T>(elementComparator);
             }
         };
-    }
-    /** A helper action with one parameter which does nothing. */
-    private static final Action1<Void> NO_ACTION_1 = new Action1<Void>() {
-        @Override
-        public void call(Void value) {
-            
-        }
-    };
-    /** A helper action without parameters which does nothing. */
-    private static final Action0 NO_ACTION_0 = new Action0() {
-        @Override
-        public void call() {
-            
-        }
-    };
-    /** Empty action. */
-    private static final Action2<Void, Void> NO_ACTION_2 = new Action2<Void, Void>() {
-        @Override
-        public void call(Void t, Void u) { }
-    };
-    /**
-     * @return returns an empty action which does nothing.
-     */
-    public static Action0 noAction0() {
-        return NO_ACTION_0;
-    }
-    /**
-     * Returns an action which does nothing with its parameter.
-     * @param <T> the type of the parameter (irrelevant)
-     * @return the action
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Action1<T> noAction1() {
-        return (Action1<T>)NO_ACTION_1;
-    }
-    /**
-     * Returns an action which does nothing with its parameter.
-     * @param <T> the type of the first parameter (irrelevant)
-     * @param <U> the type of the second parameter (irrelevant)
-     * @return the action
-     */
-    @SuppressWarnings("unchecked")
-    public static <T, U> Action2<T, U> noAction2() {
-        return (Action2<T, U>)NO_ACTION_2;
     }
     /**
      * @return Returns a function that negates the incoming boolean value.
