@@ -21,7 +21,6 @@ import ix.Enumerable;
 import ix.Enumerator;
 import ix.GroupedIterable;
 import ix.internal.util.CircularBuffer;
-import ix.internal.util.DefaultGroupedIterable;
 import ix.internal.util.IxHelperFunctions;
 import ix.internal.util.LinkedBuffer;
 import ix.internal.util.Pair;
@@ -760,7 +759,7 @@ public final class Interactive {
      */
     
     public static <T> Iterable<Boolean> contains(
-            final Iterable<? extends T> source, final T value) {
+            final Iterable<? extends T> source, final Object value) {
         return any(source, new Func1<T, Boolean>() {
             @Override
             public Boolean call(T param1) {
@@ -1060,7 +1059,7 @@ public final class Interactive {
             final Iterable<? extends T> source,
             final Func1<? super T, ? extends U> keySelector,
             final Func1<? super T, ? extends V> valueSelector) {
-        return select(where(source,
+        return map(where(source,
                 new Func0<Func2<Integer, T, Boolean>>() {
                     @Override
                     public Func2<Integer, T, Boolean> call() {
@@ -1156,7 +1155,6 @@ public final class Interactive {
      * @param iterator1 the first iterator
      * @param iterator2 the second interator
      * @return true if they are equal
-     * @since 0.97
      */
     public static boolean elementsEqual(
             Iterator<?> iterator1,
@@ -1268,7 +1266,7 @@ public final class Interactive {
     public static <T, U> Iterable<U> forEach(
             final Iterable<? extends T> source,
             final Func1<? super T, ? extends Iterable<? extends U>> selector) {
-        return concat(select(source, selector));
+        return concat(map(source, selector));
     }
     /**
      * A generator function which returns Ts based on the termination condition and the way it computes the next values.
@@ -1444,10 +1442,10 @@ public final class Interactive {
         return distinct(new Iterable<GroupedIterable<V, U>>() {
             @Override
             public Iterator<GroupedIterable<V, U>> iterator() {
-                final Map<V, DefaultGroupedIterable<V, U>> groups = new LinkedHashMap<V, DefaultGroupedIterable<V, U>>();
+                final Map<V, GroupedIterable<V, U>> groups = new LinkedHashMap<V, GroupedIterable<V, U>>();
                 final Iterator<? extends T> it = source.iterator();
                 return new Iterator<GroupedIterable<V, U>>() {
-                    Iterator<DefaultGroupedIterable<V, U>> groupIt;
+                    Iterator<GroupedIterable<V, U>> groupIt;
                     @Override
                     public boolean hasNext() {
                         return it.hasNext() || (groupIt != null && groupIt.hasNext());
@@ -1462,9 +1460,9 @@ public final class Interactive {
                                         T t = it.next();
                                         V v = keySelector.call(t);
                                         U u = valueSelector.call(t);
-                                        DefaultGroupedIterable<V, U> g = groups.get(v);
+                                        GroupedIterable<V, U> g = groups.get(v);
                                         if (g == null) {
-                                            g = new DefaultGroupedIterable<V, U>(v);
+                                            g = new GroupedIterable<V, U>(v);
                                             groups.put(v, g);
                                         }
                                         g.add(u);
@@ -1489,7 +1487,7 @@ public final class Interactive {
         }, new Func1<GroupedIterable<V, U>, V>() {
             @Override
             public V call(GroupedIterable<V, U> param1) {
-                return param1.key();
+                return param1.getKey();
             }
             
         }, Functions.<GroupedIterable<V, U>>identity());
@@ -1506,7 +1504,7 @@ public final class Interactive {
      * @return the new iterable
      */
     
-    public static <T> Iterable<T> invoke(
+    public static <T> Iterable<T> doOnNext(
             final Iterable<? extends T> source,
             final Action1<? super T> action) {
         return new Iterable<T>() {
@@ -1643,7 +1641,7 @@ public final class Interactive {
     
     public static Iterable<Boolean> isEmpty(
             final Iterable<?> source) {
-        return select(any(source), IxHelperFunctions.negate());
+        return map(any(source), IxHelperFunctions.negate());
     }
     /**
      * Concatenates the source strings one after another and uses the given separator.
@@ -3020,7 +3018,7 @@ public final class Interactive {
      * @return the new iterable
      */
     
-    public static <T, U> Iterable<U> select(
+    public static <T, U> Iterable<U> map(
             final Iterable<? extends T> source,
             final Func1<? super T, ? extends U> selector) {
         return select(source, new Func2<Integer, T, U>() {
@@ -3163,7 +3161,6 @@ public final class Interactive {
      * @param source the source sequence
      * @param selector the selector function
      * @return the new iterable
-     * @since 0.97
      * TODO Builder
      */
     
@@ -3878,7 +3875,6 @@ public final class Interactive {
      * @param <T> the value type
      * @param src the source sequence
      * @return the first element
-     * @since 0.96
      */
     public static <T> T first(Iterable<? extends T> src) {
         return src.iterator().next();
@@ -3892,7 +3888,6 @@ public final class Interactive {
      * @param <T> the element type
      * @param ts the input array
      * @return the iterable for the array
-     * @since 0.96
      */
     
     public static <T> Iterable<T> toIterable(final T... ts) {
@@ -3934,7 +3929,6 @@ public final class Interactive {
      * @param to the end index exclusive
      * @param ts the input array
      * @return the iterable for the array
-     * @since 0.96
      */
     
     public static <T> Iterable<T> toIterablePart(
@@ -3976,7 +3970,6 @@ public final class Interactive {
      * @param valueSelector the selector to extract the value from T
      * @param valueComparator the comparator to compare two values
      * @return the first pair of max argument and value or null if the source sequence was empty
-     * @since 0.96
      */
     public static <T, V> Pair<T, V> argAndMax(
             Iterable<? extends T> source,
@@ -4011,7 +4004,6 @@ public final class Interactive {
      * @param source the source sequence
      * @param valueSelector the value selector function
      * @return the pair of the first maximum element and value, null if the sequence was empty
-     * @since 0.96
      */
     public static <T, V extends Comparable<? super V>> Pair<T, V> argAndMax(
             Iterable<? extends T> source,
@@ -4025,7 +4017,6 @@ public final class Interactive {
      * @param source the source sequence
      * @param valueSelector the value selector function
      * @return the pair of the first maximum element and value, null if the sequence was empty
-     * @since 0.96
      */
     public static <T, V extends Comparable<? super V>> Pair<T, V> argAndMin(
             Iterable<? extends T> source,
@@ -4040,7 +4031,6 @@ public final class Interactive {
      * @param valueSelector the selector to extract the value from T
      * @param valueComparator the comparator to compare two values
      * @return the first pair of min argument and value or null if the source sequence was empty
-     * @since 0.96
      */
     public static <T, V> Pair<T, V> argAndMin(
             Iterable<? extends T> source,
@@ -4060,7 +4050,6 @@ public final class Interactive {
      * @param <T> the value type
      * @param value the value to repeat
      * @return the iterable
-     * @since 0.96
      */
     public static <T> Iterable<T> repeat(final T value) {
         return new Iterable<T>() {
@@ -4090,7 +4079,6 @@ public final class Interactive {
      * @param value the value to repeat
      * @param count the repeat amount
      * @return the iterable
-     * @since 0.96
      */
     public static <T> Iterable<T> repeat(final T value, final int count) {
         return new Iterable<T>() {
@@ -4128,7 +4116,6 @@ public final class Interactive {
      * @param source the source sequence
      * @param value the value to append
      * @return the new iterable
-     * @since 0.96
      */
     
     public static <T> Iterable<T> endWith(
@@ -4141,7 +4128,6 @@ public final class Interactive {
      * The source may not send nulls. An empty source produces an empty sum
      * @param source the source of integers to aggregate.
      * @return the observable for the sum value
-     * @since 0.96
      */
     
     public static Iterable<Double> sumIntAsDouble(
@@ -4162,7 +4148,6 @@ public final class Interactive {
      * The source may not send nulls.
      * @param source the source of longs to aggregate.
      * @return the observable for the sum value
-     * @since 0.96
      */
     
     public static Iterable<Double> sumLongAsDouble(
@@ -4190,7 +4175,6 @@ public final class Interactive {
      * @param source the source of Ts
      * @param keySelector the key selector
      * @return the new iterable
-     * @since 0.96.1
      */
     
     public static <T, V> Iterable<GroupedIterable<V, T>> groupBy(
@@ -4208,7 +4192,6 @@ public final class Interactive {
      * @param <T> the element type
      * @param source the source iterable
      * @return the new iterable
-     * @since 0.96.1
      */
     public static <T> Iterable<Pair<T, T>> subsequent(final Iterable<? extends T> source) {
         return new Iterable<Pair<T, T>>() {
@@ -4255,7 +4238,6 @@ public final class Interactive {
      * @param source the source iterable
      * @param count the element count
      * @return the new iterable
-     * @since 0.96.1
      */
     public static <T> Iterable<Iterable<T>> subsequent(
             final Iterable<? extends T> source,
@@ -4264,7 +4246,7 @@ public final class Interactive {
             throw new IllegalArgumentException("Count must be > 0");
         }
         if (count == 1) {
-            return select(source, new Func1<T, Iterable<T>>() {
+            return map(source, new Func1<T, Iterable<T>>() {
                 @Override
                 public Iterable<T> call(T param1) {
                     return singleton(param1);
@@ -4318,7 +4300,6 @@ public final class Interactive {
      * @param <U> the iterator type
      * @param body the body function returning an iterator
      * @return the iterable sequence
-     * @since 0.97
      */
     public static <T, U extends Iterator<T>> Iterable<T> newIterable(
             final Func0<U> body) {
@@ -4338,7 +4319,6 @@ public final class Interactive {
      * @param hasNext function that returns true if more elements are available.
      * @param next function that returns the next element
      * @return the created iterator
-     * @since 0.97
      */
     public static <T> Iterator<T> newIterator(
             final Func0<Boolean> hasNext,
@@ -4366,7 +4346,6 @@ public final class Interactive {
      * @param next function that returns the next element
      * @param remove function to remove the current element
      * @return the created iterator
-     * @since 0.97
      */
     public static <T> Iterator<T> newIterator(
             final Func0<Boolean> hasNext,
@@ -4395,7 +4374,6 @@ public final class Interactive {
      * @param src the source sequence
      * @param close the close action.
      * @return the new closeable iterable
-     * @since 0.97
      */
     
     public static <T> CloseableIterable<T> newCloseableIterable(
@@ -4416,9 +4394,7 @@ public final class Interactive {
      * @param src the source sequence
      * @param close the close action.
      * @return the new closeable iterable
-     * @since 0.97
      */
-    
     public static <T> CloseableIterable<T> newCloseableIterable(
             final Iterable<? extends T> src,
             final Action0 close
@@ -4437,7 +4413,6 @@ public final class Interactive {
      * @param src the source sequence
      * @param close the closeable object.
      * @return the new closeable iterable
-     * @since 0.97
      */
     
     public static <T> CloseableIterable<T> newCloseableIterable(
@@ -4458,7 +4433,6 @@ public final class Interactive {
      * @param src the source iterator
      * @param close the close action
      * @return the new closeable iterator
-     * @since 0.97
      */
     
     public static <T> CloseableIterator<T> newCloseableIterator(
@@ -4501,9 +4475,7 @@ public final class Interactive {
      * @param src the source iterator
      * @param close the closeable instance
      * @return the new closeable iterator
-     * @since 0.97
      */
-    
     public static <T> CloseableIterator<T> newCloseableIterator(
             final Iterator<? extends T> src,
             final Closeable close

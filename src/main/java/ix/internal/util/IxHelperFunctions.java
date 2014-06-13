@@ -371,7 +371,6 @@ public final class IxHelperFunctions {
      * A list creator factory.
      * @param <T> the value type
      * @return a function which creates a new empty instance of the given concrete list implementation.
-     * @since 0.96.1
      */
     public static <T> Func0<ArrayList<T>> arrayListProvider() {
         return new Func0<ArrayList<T>>() {
@@ -387,7 +386,6 @@ public final class IxHelperFunctions {
      * @param <U> the function parameter type, ignored
      * @return a function which creates a new empty instance of
      * the given concrete list implementation.
-     * @since 0.97
      */
     public static <T, U> Func1<U, ArrayList<T>> arrayListProvider1() {
         return new Func1<U, ArrayList<T>>() {
@@ -401,7 +399,6 @@ public final class IxHelperFunctions {
      * A list creator factory.
      * @param <T> the value type
      * @return a function which creates a new empty instance of the given concrete list implementation.
-     * @since 0.96.1
      */
     public static <T> Func0<LinkedList<T>> linkedListProvider() {
         return new Func0<LinkedList<T>>() {
@@ -416,7 +413,6 @@ public final class IxHelperFunctions {
      * @param <K> the key type
      * @param <V> the value type
      * @return a function which creates a new empty instance of the given concrete map implementation.
-     * @since 0.96.1
      */
     public static <K, V> Func0<HashMap<K, V>> hashMapProvider() {
         return new Func0<HashMap<K, V>>() {
@@ -431,7 +427,6 @@ public final class IxHelperFunctions {
      * @param <K> the key type
      * @param <V> the value type
      * @return a function which creates a new empty instance of the given concrete map implementation.
-     * @since 0.96.1
      */
     public static <K, V> Func0<TreeMap<K, V>> treeMapProvider() {
         return new Func0<TreeMap<K, V>>() {
@@ -447,7 +442,6 @@ public final class IxHelperFunctions {
      * @param <V> the value type
      * @param keyComparator the key comparator function
      * @return a function which creates a new empty instance of the given concrete map implementation.
-     * @since 0.96.1
      */
     public static <K, V> Func0<TreeMap<K, V>> treeMapProvider(final Comparator<? super K> keyComparator) {
         return new Func0<TreeMap<K, V>>() {
@@ -462,7 +456,6 @@ public final class IxHelperFunctions {
      * @param <K> the key type
      * @param <V> the value type
      * @return a function which creates a new empty instance of the given concrete map implementation.
-     * @since 0.96.1
      */
     public static <K, V> Func0<LinkedHashMap<K, V>> linkedHashMapProvider() {
         return new Func0<LinkedHashMap<K, V>>() {
@@ -477,7 +470,6 @@ public final class IxHelperFunctions {
      * @param <K> the key type
      * @param <V> the value type
      * @return a function which creates a new empty instance of the given concrete map implementation.
-     * @since 0.96.1
      */
     public static <K, V> Func0<ConcurrentHashMap<K, V>> concurrentHashMapProvider() {
         return new Func0<ConcurrentHashMap<K, V>>() {
@@ -491,7 +483,6 @@ public final class IxHelperFunctions {
      * A set creation provider.
      * @param <T> the element type
      * @return the function which creates an empty instance of the set
-     * @since 0.96.1
      */
     public static <T> Func0<HashSet<T>> hashSetProvider() {
         return new Func0<HashSet<T>>() {
@@ -505,7 +496,6 @@ public final class IxHelperFunctions {
      * A set creation provider.
      * @param <T> the element type
      * @return the function which creates an empty instance of the set
-     * @since 0.96.1
      */
     public static <T> Func0<TreeSet<T>> treeSetProvider() {
         return new Func0<TreeSet<T>>() {
@@ -520,7 +510,6 @@ public final class IxHelperFunctions {
      * @param <T> the element type
      * @param elementComparator the custom element comparator
      * @return the function which creates an empty instance of the set
-     * @since 0.96.1
      */
     public static <T> Func0<TreeSet<T>> treeSetProvider(final Comparator<? super T> elementComparator) {
         return new Func0<TreeSet<T>>() {
@@ -559,7 +548,6 @@ public final class IxHelperFunctions {
      * Returns an action which does nothing with its parameter.
      * @param <T> the type of the parameter (irrelevant)
      * @return the action
-     * @since 0.96
      */
     @SuppressWarnings("unchecked")
     public static <T> Action1<T> noAction1() {
@@ -570,7 +558,6 @@ public final class IxHelperFunctions {
      * @param <T> the type of the first parameter (irrelevant)
      * @param <U> the type of the second parameter (irrelevant)
      * @return the action
-     * @since 0.96
      */
     @SuppressWarnings("unchecked")
     public static <T, U> Action2<T, U> noAction2() {

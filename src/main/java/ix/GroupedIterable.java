@@ -15,13 +15,45 @@
  */
 package ix;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- * The extension interface to an iterable which
- * holds a group key for its contents.
+ * Contains a sequence values with an associated key used by the groupBy operator.
  * @param <K> the group key type
  * @param <V> the value type
  */
-public interface GroupedIterable<K, V> extends Iterable<V> {
-	/** @return the key of this iterable. */
-	K key();
+public final class GroupedIterable<K, V> extends Iterables<V> {
+	/** The group key. */
+	protected final K key;
+	/** The values in the group. */
+	protected final List<V> values;
+	/**
+	 * Constructs a new grouped iterable with the given key.
+	 * @param key the group key
+	 */
+	public GroupedIterable(K key) {
+		super(new LinkedList<V>());
+		this.key = key;
+		this.values = (List<V>)this.it;
+	}
+	public K getKey() {
+		return key;
+	}
+	/**
+	 * Adds one element to the values.
+	 * @param value the value
+	 */
+	public void add(V value) {
+		values.add(value);
+	}
+	/**
+	 * Add the values of the target iterable.
+	 * @param values the values to add
+	 */
+	public void add(Iterable<V> values) {
+		for (V v : values) {
+			this.values.add(v);
+		}
+	}
 }

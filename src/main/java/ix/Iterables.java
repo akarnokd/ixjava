@@ -46,7 +46,16 @@ import rx.functions.Functions;
  * {@link rx.Observable} class.</p>
  * @param <T> the element type
  */
-public final class Iterables<T> implements Iterable<T> {
+public class Iterables<T> implements Iterable<T> {
+    /**
+     * Creates an iterable builder which contains the concatenation
+     * of all the iterables returned by the iterable.
+     * @param sources the source iterables
+     * @return the created iterable
+     */
+    public static <T> Iterables<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
+        return from(Interactive.concat(sources));
+    }
     /**
      * Defers the source iterable creation to registration time and
      * calls the given <code>func</code> for the actual source.
@@ -60,19 +69,6 @@ public final class Iterables<T> implements Iterable<T> {
     }
     /**
      * Creates a new iterable builder instance by wrapping the given
-     * array. Changes to the array will be visible through
-     * the iterator.
-     * @param <T> the element type
-     * @param from the source index inclusive
-     * @param to the destination index exclusive
-     * @param ts the array of ts
-     * @return the created iterable builder
-     */
-    public static <T> Iterables<T> fromPart(int from, int to, final T... ts) {
-        return from(Interactive.toIterablePart(from, to, ts));
-    }
-    /**
-     * Creates a new iterable builder instance by wrapping the given
      * source sequence, if not already a builder.
      * @param <T> the element type
      * @param source the source sequence
@@ -82,16 +78,6 @@ public final class Iterables<T> implements Iterable<T> {
         if (source instanceof Iterables) {
             return (Iterables<T>)source;
         }
-        return new Iterables<T>(source);
-    }
-    /**
-     * Creates a new iterable builder instance by wrapping the given
-     * source sequence.
-     * @param <T> the element type
-     * @param source the source sequence
-     * @return the created iterable builder
-     */
-    public static <T> Iterables<T> newBuilder(final Iterable<T> source) {
         return new Iterables<T>(source);
     }
     /**
@@ -116,6 +102,19 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.toIterable(ts));
     }
     /**
+     * Creates a new iterable builder instance by wrapping the given
+     * array. Changes to the array will be visible through
+     * the iterator.
+     * @param <T> the element type
+     * @param from the source index inclusive
+     * @param to the destination index exclusive
+     * @param ts the array of ts
+     * @return the created iterable builder
+     */
+    public static <T> Iterables<T> fromPart(int from, int to, final T... ts) {
+        return from(Interactive.toIterablePart(from, to, ts));
+    }
+    /**
      * A generator function which returns Ts based on the termination condition and the way it computes the next values.
      * This is equivalent to:
      * <pre><code>
@@ -135,6 +134,16 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public static <T> Iterables<T> generate(T seed, Func1<? super T, Boolean> predicate, Func1<? super T, ? extends T> next) {
         return from(Interactive.generate(seed, predicate, next));
+    }
+    /**
+     * Creates a new iterable builder instance by wrapping the given
+     * source sequence.
+     * @param <T> the element type
+     * @param source the source sequence
+     * @return the created iterable builder
+     */
+    public static <T> Iterables<T> newBuilder(final Iterable<T> source) {
+        return new Iterables<T>(source);
     }
     /**
      * Creates an integer iteratable builder which returns numbers from the start position in the count size.
@@ -179,6 +188,18 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public static <T> Iterables<T> repeat(final T t, int count) {
         return from(Interactive.repeat(t, count));
+    }
+    /**
+     * @param <T> the element type
+     * @return a function which wraps its iterable parameter into an iterablebuilder instance
+     */
+    public static <T> Func1<Iterable<T>, Iterables<T>> toBuilder() {
+        return new Func1<Iterable<T>, Iterables<T>>() {
+            @Override
+            public Iterables<T> call(Iterable<T> param1) {
+                return from(param1);
+            }
+        };
     }
     /** The backing iterable. */
     protected final Iterable<T> it;
@@ -271,7 +292,6 @@ public final class Iterables<T> implements Iterable<T> {
      * @param <V> the value type for the comparison, must be self comparable
      * @param valueSelector the value selector function
      * @return the pair of the first minimum element and value, null if the sequence was empty
-     * @since 0.96
      */
     public <V extends Comparable<? super V>> Pair<T, V> argAndMin(
             Func1<? super T, ? extends V> valueSelector) {
@@ -389,7 +409,7 @@ public final class Iterables<T> implements Iterable<T> {
      * @param other the second iterable
      * @return the new iterable
      */
-    public Iterables<T> concat(Iterable<? extends T> other) {
+    public Iterables<T> concatWith(Iterable<? extends T> other) {
         return from(Interactive.concat(it, other));
     }
     /**
@@ -397,8 +417,8 @@ public final class Iterables<T> implements Iterable<T> {
      * @param values the array values
      * @return the created iterable builder
      */
-    public Iterables<T> concat(final T... values) {
-        return concat(Interactive.toIterable(values));
+    public Iterables<T> concatWith(final T... values) {
+        return concatWith(Interactive.toIterable(values));
     }
     /**
      * Creates an iterable builder which contains the concatenation
@@ -407,7 +427,7 @@ public final class Iterables<T> implements Iterable<T> {
      * @return the created iterable
      */
     @SuppressWarnings("unchecked")
-    public Iterables<T> concatAll(Iterable<? extends Iterable<? extends T>> others) {
+    public Iterables<T> concatWithAll(Iterable<? extends Iterable<? extends T>> others) {
         return from(Interactive.concat(Interactive.startWith(others, it)));
     }
     /**
@@ -417,7 +437,7 @@ public final class Iterables<T> implements Iterable<T> {
      * @param value the value to check
      * @return the new iterable
      */
-    public Iterables<Boolean> contains(final T value) {
+    public Iterables<Boolean> contains(final Object value) {
         return from(Interactive.contains(it, value));
     }
     /**
@@ -449,23 +469,6 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.dematerialize((Iterable<Notification<T>>)it));
     }
     /**
-     * Creates an iterable which ensures that subsequent values of T are not equal  (reference and equals).
-     * @return the new iterable
-     */
-    public Iterables<T> distinctNext() {
-        return from(Interactive.distinctNext(it));
-    }
-    /**
-     * Creates an iterable which ensures that subsequent values of
-     * T are not equal in respect to the extracted keys (reference and equals).
-     * @param <U> the key type
-     * @param keySelector the function to extract the keys which will be compared
-     * @return the new iterable
-     */
-    public <U> Iterables<T> distinctNext(final Func1<T, U> keySelector) {
-        return from(Interactive.distinctNext(it, keySelector));
-    }
-    /**
      * Returns an iterable which filters its elements based if they vere ever seen before in
      * the current iteration.
      * Value equality is computed by reference equality and <code>equals()</code>
@@ -485,6 +488,47 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public <U> Iterables<T> distinct(Func1<? super T, ? extends U> keySelector) {
         return from(Interactive.distinct(it, keySelector, Functions.<T>identity()));
+    }
+    /**
+     * Creates an iterable which ensures that subsequent values of T are not equal 
+     * (reference and equals).
+     * @return the new iterable
+     */
+    public Iterables<T> distinctNext() {
+        return from(Interactive.distinctNext(it));
+    }
+    /**
+     * Creates an iterable which ensures that subsequent values of
+     * T are not equal in respect to the extracted keys (reference and equals).
+     * @param <U> the key type
+     * @param keySelector the function to extract the keys which will be compared
+     * @return the new iterable
+     */
+    public <U> Iterables<T> distinctNext(final Func1<T, U> keySelector) {
+        return from(Interactive.distinctNext(it, keySelector));
+    }
+    /**
+     * Returns an iterable which executes the given action after
+     * the stream completes.
+     * <p>The returned iterator forwards all <code>remove()</code> calls
+     * to the source.</p>
+     * @param action the action to invoke
+     * @return the new iterable
+     */
+    public Iterables<T> doOnCompleted(Action0 action) {
+        return from(Interactive.finish(it, action));
+    }
+    /**
+     * Construct a new iterable which will invoke the specified action
+     * before the source value gets relayed through it.
+     * Can be used to inject side-effects before returning a value.
+     * <p>The returned iterator forwards all <code>remove()</code> calls
+     * to the source.</p>
+     * @param action the action to invoke before each next() is returned.
+     * @return the new iterable
+     */
+    public Iterables<T> doOnNext(Action1<? super T> action) {
+        return from(Interactive.doOnNext(it, action));
     }
     /**
      * Returns an iterable which reiterates over and over again on <code>source</code>
@@ -515,15 +559,28 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.endWith(it, value));
     }
     /**
-     * Returns an iterable which executes the given action after
-     * the stream completes.
+     * Creates an iterable which filters this iterable with the
+     * given predicate factory function. The predicate returned by the factory receives an index
+     * telling how many elements were processed thus far.
+     * Use this construct if you want to use some memorizing predicat function (e.g., filter by subsequent distinct, filter by first occurrences only)
+     * which need to be invoked per iterator() basis.
      * <p>The returned iterator forwards all <code>remove()</code> calls
      * to the source.</p>
-     * @param action the action to invoke
+     * @param predicate the predicate function
      * @return the new iterable
      */
-    public Iterables<T> finish(Action0 action) {
-        return from(Interactive.finish(it, action));
+    public Iterables<T> filter(final Func1<? super T, Boolean> predicate) {
+        return from(Interactive.where(it, predicate));
+    }
+    /**
+     * Creates an iterable which filters this iterable with the
+     * given predicate factory function. The predicate returned by the factory receives an index
+     * telling how many elements were processed thus far.
+     * @param predicate the predicate
+     * @return the new iterable
+     */
+    public Iterables<T> filterIndexed(final Func2<Integer, ? super T, Boolean> predicate) {
+        return from(Interactive.where(it, predicate));
     }
     /**
      * Returns the first element from the iterable sequence or
@@ -532,6 +589,34 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public T first() {
         return Interactive.first(it);
+    }
+    /**
+     * Creates an iterable which returns a stream of Us for each source Ts.
+     * The iterable stream of Us is returned by the supplied selector function.
+     * <p>The returned iterator forwards all <code>remove()</code> calls
+     * to the current source (which might not accept it).
+     * @param <U> the output element type
+     * @param selector the selector for multiple Us for each T
+     * @return the new iterable
+     */
+    public <U> Iterables<U> flatMap(final Func1<? super T, ? extends Iterable<? extends U>> selector) {
+        return from(Interactive.selectMany(it, selector));
+    }
+    /**
+     * Creates an iterable which traverses the source iterable,
+     * and based on the key selector, groups values the elements into GroupedIterables,
+     * which can be interated over later on.
+     * The equivalence of the keys are determined via reference
+     * equality and <code>equals()</code> equality.
+     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
+     * for its <code>remove()</code> method.</p>
+     * @param <K> the result group element type
+     * @param keySelector the key selector
+     * @return the new iterable
+     */
+    public <K> Iterables<GroupedIterable<K, T>> groupBy(
+            final Func1<? super T, ? extends K> keySelector) {
+        return from(Interactive.groupBy(it, keySelector, Functions.<T>identity()));
     }
     /**
      * Creates an iterable which traverses the source iterable,
@@ -547,81 +632,27 @@ public final class Iterables<T> implements Iterable<T> {
      * @param valueSelector the value selector
      * @return the new iterable
      */
-    public <K, V> Iterables<GroupedIterable<K, V>> groupBy0(
+    public <K, V> Iterables<GroupedIterable<K, V>> groupBy(
             final Func1<? super T, ? extends K> keySelector,
             final Func1<? super T, ? extends V> valueSelector) {
         return from(Interactive.groupBy(it, keySelector, valueSelector));
     }
     /**
-     * Creates an iterable which traverses the source iterable,
-     * and based on the key selector, groups values the elements into GroupedIterables,
-     * which can be interated over later on.
-     * The equivalence of the keys are determined via reference
-     * equality and <code>equals()</code> equality.
-     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
-     * for its <code>remove()</code> method.</p>
-     * @param <K> the result group element type
-     * @param keySelector the key selector
-     * @return the new iterable
+     * Add the elements of the sequence into the supplied collection.
+     * @param <U> a collection type
+     * @param out the output collection
+     * @return the same out value
      */
-    public <K> Iterables<GroupedIterable<K, T>> groupBy0(
-            final Func1<? super T, ? extends K> keySelector) {
-        return from(Interactive.groupBy(it, keySelector, Functions.<T>identity()));
-    }
-    /**
-     * Creates an iterable which traverses the source iterable,
-     * and based on the key selector, groups values the elements into GroupedIterables,
-     * which can be interated over later on.
-     * The equivalence of the keys are determined via reference
-     * equality and <code>equals()</code> equality.
-     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
-     * for its <code>remove()</code> method.</p>
-     * @param <K> the result group element type
-     * @param keySelector the key selector
-     * @return the new iterable
-     */
-    public <K> Iterables<Pair<K, Iterables<T>>> groupBy(
-            final Func1<? super T, ? extends K> keySelector) {
-        return groupBy(keySelector, Functions.<T>identity());
-    }
-    /**
-     * Creates an iterable which traverses the source iterable,
-     * and based on the key selector, groups values extracted by valueSelector into
-     * a pair of Key and IterableBuilder instances,
-     * which can be interated over later on.
-     * The equivalence of the keys are determined via reference
-     * equality and <code>equals()</code> equality.
-     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
-     * for its <code>remove()</code> method.</p>
-     * @param <K> the result group element type
-     * @param <V> the result group keys
-     * @param keySelector the key selector
-     * @param valueSelector the value selector
-     * @return the new iterable
-     */
-    public <K, V> Iterables<Pair<K, Iterables<V>>> groupBy(
-            final Func1<? super T, ? extends K> keySelector,
-            final Func1<? super T, ? extends V> valueSelector) {
-        return from(Interactive.select(Interactive.groupBy(it, keySelector, valueSelector),
-                new Func1<GroupedIterable<K, V>, Pair<K, Iterables<V>>>() {
-                    @Override
-                    public Pair<K, Iterables<V>> call(
-                            GroupedIterable<K, V> param1) {
-                        return Pair.of(param1.key(), from(param1));
-                    }
-                }));
-    }
-    /**
-     * Construct a new iterable which will invoke the specified action
-     * before the source value gets relayed through it.
-     * Can be used to inject side-effects before returning a value.
-     * <p>The returned iterator forwards all <code>remove()</code> calls
-     * to the source.</p>
-     * @param action the action to invoke before each next() is returned.
-     * @return the new iterable
-     */
-    public Iterables<T> invoke(Action1<? super T> action) {
-        return from(Interactive.invoke(it, action));
+    public <U extends Collection<? super T>> U into(U out) {
+        Iterator<T> it = iterator();
+        try {
+            while (it.hasNext()) {
+                out.add(it.next());
+            }
+        } finally {
+            Interactive.unsubscribe(it);
+        }
+        return out;
     }
     /**
      * Returns a single true if the target iterable is empty.
@@ -650,6 +681,30 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public T last() {
         return Interactive.last(it);
+    }
+    /**
+     * Creates an iterable which is a transforms the source
+     * elements by using the selector function.
+     * The function receives the current element.
+     * @param <U> the output element type
+     * @param selector the selector function
+     * @return the new iterable
+     */
+    public <U> Iterables<U> map(final Func1<? super T, ? extends U> selector) {
+        return from(Interactive.map(it, selector));
+    }
+    /**
+     * Creates an iterable which is a transforms the source
+     * elements by using the selector function.
+     * The function receives the current index and the current element.
+     * <p>The returned iterator forwards all <code>remove()</code> calls
+     * to the source.</p>
+     * @param <U> the output element type
+     * @param selector the selector function
+     * @return the new iterable
+     */
+    public <U> Iterables<U> mapIndexed(final Func2<Integer, ? super T, ? extends U> selector) {
+        return from(Interactive.select(it, selector));
     }
     /**
      * Transforms the sequence of the source iterable into an option sequence of
@@ -859,6 +914,20 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.orderBy(it, keySelector, keyComparator));
     }
     /**
+     * Runs this iterable and prints the values.
+     * <p>Is the same as using {@code this.run(Interactive.print())}.</p>
+     */
+    public void print() {
+        Interactive.run(it, Interactive.print());
+    }
+    /**
+     * Runs this iterable and prints the values.
+     * <p>Is the same as using {@code this.run(Interactive.println())}.</p>
+     */
+    public void println() {
+        Interactive.run(it, Interactive.println());
+    }
+    /**
      * Applies the <code>func</code> function for a shared instance of the source,
      * e.g., <code>func.invoke(share(source))</code>.
      * @param <U> the return types
@@ -894,6 +963,20 @@ public final class Iterables<T> implements Iterable<T> {
      */
     public <U> Iterables<U> publish(final Func1<? super Iterable<T>, ? extends Iterable<U>> func) {
         return from(Interactive.publish(it, func));
+    }
+    /**
+     * Consumes the sequence and removes all items via the Iterator.remove().
+     */
+    public void removeAll() {
+        Iterator<T> it = iterator();
+        try {
+            while (it.hasNext()) {
+                it.next();
+                it.remove();
+            }
+        } finally {
+            Interactive.unsubscribe(it);
+        }
     }
     /**
      * The returned iterable ensures that the source iterable is only traversed once, regardless of
@@ -968,42 +1051,6 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.scan(it, seed, aggregator));
     }
     /**
-     * Creates an iterable which is a transforms the source
-     * elements by using the selector function.
-     * The function receives the current element.
-     * @param <U> the output element type
-     * @param selector the selector function
-     * @return the new iterable
-     */
-    public <U> Iterables<U> select(final Func1<? super T, ? extends U> selector) {
-        return from(Interactive.select(it, selector));
-    }
-    /**
-     * Creates an iterable which is a transforms the source
-     * elements by using the selector function.
-     * The function receives the current index and the current element.
-     * <p>The returned iterator forwards all <code>remove()</code> calls
-     * to the source.</p>
-     * @param <U> the output element type
-     * @param selector the selector function
-     * @return the new iterable
-     */
-    public <U> Iterables<U> select(final Func2<Integer, ? super T, ? extends U> selector) {
-        return from(Interactive.select(it, selector));
-    }
-    /**
-     * Creates an iterable which returns a stream of Us for each source Ts.
-     * The iterable stream of Us is returned by the supplied selector function.
-     * <p>The returned iterator forwards all <code>remove()</code> calls
-     * to the current source (which might not accept it).
-     * @param <U> the output element type
-     * @param selector the selector for multiple Us for each T
-     * @return the new iterable
-     */
-    public <U> Iterables<U> selectMany(final Func1<? super T, ? extends Iterable<? extends U>> selector) {
-        return from(Interactive.selectMany(it, selector));
-    }
-    /**
      * Returns an iterable which ensures the source iterable is
      * only traversed once and clients may take values from each other,
      * e.g., they share the same iterator.
@@ -1038,6 +1085,26 @@ public final class Iterables<T> implements Iterable<T> {
         return from(Interactive.startWith(it, value));
     }
     /**
+     * Returns each pair of subsequent elements as pairs.
+     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
+     * for its <code>remove()</code> method.</p>
+     * @return the iterable builder
+     */
+    public Iterables<Pair<T, T>> subsequent() {
+        return from(Interactive.subsequent(it));
+    }
+    /**
+     * Returns each pair of subsequent elements as pairs.
+     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
+     * for its <code>remove()</code> method.</p>
+     * @param count the number of subsequent elements
+     * @return the iterable builder
+     */
+    public Iterables<Iterables<T>> subsequent(int count) {
+        return from(Interactive.subsequent(it, count))
+                .map(Iterables.<T>toBuilder());
+    }
+    /**
      * Computes and signals the sum of the values of the BigDecimal source.
      * The source may not send nulls.
      * @return the observable for the sum value
@@ -1067,6 +1134,7 @@ public final class Iterables<T> implements Iterable<T> {
     public Iterables<Double> sumDouble() {
         return from(Interactive.sumDouble((Iterable<Double>)it));
     }
+    
     /**
      * Computes and signals the sum of the values of the Float source.
      * The source may not send nulls.
@@ -1158,7 +1226,28 @@ public final class Iterables<T> implements Iterable<T> {
     public T[] toArray(T[] a) {
         return toList().toArray(a);
     }
-    
+    /**
+     * Convinience method to create a hashmap from the elements.
+     * @param <K> the key type
+     * @param keySelector the key selector
+     * @return the map
+     */
+    public <K> Map<K, T> toHashMap(Func1<? super T, ? extends K> keySelector) {
+        return toMap(keySelector, Functions.<T>identity(), IxHelperFunctions.<K, T>hashMapProvider());
+    }
+    /**
+     * Convinience method to create a hash-multimap with list from the elements.
+     * @param <K> the key type
+     * @param keySelector the key selector
+     * @return the multimap
+     */
+    public <K> Map<K, List<T>> toHashMultimap(Func1<? super T, ? extends K> keySelector) {
+        return toMultimap(
+                keySelector,
+                Functions.<T>identity(),
+                IxHelperFunctions.<K, List<T>>hashMapProvider(),
+                IxHelperFunctions.<T>arrayListProvider());
+    }
     /**
      * Iterates over and returns all elements in a list.
      * @return the list of the values from this iterable
@@ -1169,75 +1258,18 @@ public final class Iterables<T> implements Iterable<T> {
         return result;
     }
     /**
-     * Converts this iterable into an observable builder
-     * which uses the default scheduler of {@link rx.Observable} to emit values.
-     * @return the observable builder
+     * Convert the iterable values into a map representation.
+     * <p>If an element maps to the same key, the existing value will be overwritten.</p>
+     * <p>See Functions.hashMapProvider() and others for some standard map implementations.</p>
+     * @param <K> the key type
+     * @param keySelector the function to extract a key from an element
+     * @param mapProvider the map provider
+     * @return the filled-in map.
      */
-    public Observable<T> toObservable() {
-        return Observable.from(it);
-    }
-    /**
-     * Converts this iterable into an observable builder
-     * which uses the supplied Scheduler to emit values.
-     * @param scheduler the scheduler
-     * @return the observable builder
-     */
-    public Observable<T> toObservable(Scheduler scheduler) {
-        return Observable.from(it, scheduler);
-    }
-    /**
-     * Creates an iterable which filters this iterable with the
-     * given predicate factory function. The predicate returned by the factory receives an index
-     * telling how many elements were processed thus far.
-     * Use this construct if you want to use some memorizing predicat function (e.g., filter by subsequent distinct, filter by first occurrences only)
-     * which need to be invoked per iterator() basis.
-     * <p>The returned iterator forwards all <code>remove()</code> calls
-     * to the source.</p>
-     * @param filter the predicate function
-     * @return the new iterable
-     */
-    public Iterables<T> where(final Func1<? super T, Boolean> filter) {
-        return from(Interactive.where(it, filter));
-    }
-    /**
-     * Creates an iterable which filters this iterable with the
-     * given predicate factory function. The predicate returned by the factory receives an index
-     * telling how many elements were processed thus far.
-     * @param predicate the predicate
-     * @return the new iterable
-     */
-    public Iterables<T> where(final Func2<Integer, ? super T, Boolean> predicate) {
-        return from(Interactive.where(it, predicate));
-    }
-    /**
-     * Pairs each element from this and the oher iterable source and
-     * combines them into a new value by using the <code>combiner</code>
-     * function.
-     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
-     * for its <code>remove()</code> method.</p>
-     * @param <U> the right source type
-     * @param <V> the result type
-     * @param right the right source
-     * @param combiner the combiner function
-     * @return the new iterable
-     */
-    public <U, V> Iterables<V> zip(final Iterable<? extends U> right,
-            final Func2<? super T, ? super U, ? extends V> combiner) {
-        return from(Interactive.zip(it, right, combiner));
-    }
-    /**
-     * Runs this iterable and prints the values.
-     * <p>Is the same as using {@code this.run(Interactive.print())}.</p>
-     */
-    public void print() {
-        Interactive.run(it, Interactive.print());
-    }
-    /**
-     * Runs this iterable and prints the values.
-     * <p>Is the same as using {@code this.run(Interactive.println())}.</p>
-     */
-    public void println() {
-        Interactive.run(it, Interactive.println());
+    public <K> Map<K, T> toMap(
+            Func1<? super T, ? extends K> keySelector,
+            Func0<? extends Map<K, T>> mapProvider) {
+        return toMap(keySelector, Functions.<T>identity(), mapProvider);
     }
     /**
      * Convert the iterable values into a map representation.
@@ -1266,20 +1298,6 @@ public final class Iterables<T> implements Iterable<T> {
             Interactive.unsubscribe(it);
         }
         return map;
-    }
-    /**
-     * Convert the iterable values into a map representation.
-     * <p>If an element maps to the same key, the existing value will be overwritten.</p>
-     * <p>See Functions.hashMapProvider() and others for some standard map implementations.</p>
-     * @param <K> the key type
-     * @param keySelector the function to extract a key from an element
-     * @param mapProvider the map provider
-     * @return the filled-in map.
-     */
-    public <K> Map<K, T> toMap(
-            Func1<? super T, ? extends K> keySelector,
-            Func0<? extends Map<K, T>> mapProvider) {
-        return toMap(keySelector, Functions.<T>identity(), mapProvider);
     }
     /**
      * Convert the values into a multimap representation where each
@@ -1321,88 +1339,36 @@ public final class Iterables<T> implements Iterable<T> {
         return result;
     }
     /**
-     * Convinience method to create a hashmap from the elements.
-     * @param <K> the key type
-     * @param keySelector the key selector
-     * @return the map
+     * Converts this iterable into an observable builder
+     * which uses the default scheduler of {@link rx.Observable} to emit values.
+     * @return the observable builder
      */
-    public <K> Map<K, T> toHashMap(Func1<? super T, ? extends K> keySelector) {
-        return toMap(keySelector, Functions.<T>identity(), IxHelperFunctions.<K, T>hashMapProvider());
+    public Observable<T> toObservable() {
+        return Observable.from(it);
     }
     /**
-     * Convinience method to create a hash-multimap with list from the elements.
-     * @param <K> the key type
-     * @param keySelector the key selector
-     * @return the multimap
+     * Converts this iterable into an observable builder
+     * which uses the supplied Scheduler to emit values.
+     * @param scheduler the scheduler
+     * @return the observable builder
      */
-    public <K> Map<K, List<T>> toHashMultimap(Func1<? super T, ? extends K> keySelector) {
-        return toMultimap(
-                keySelector,
-                Functions.<T>identity(),
-                IxHelperFunctions.<K, List<T>>hashMapProvider(),
-                IxHelperFunctions.<T>arrayListProvider());
+    public Observable<T> toObservable(Scheduler scheduler) {
+        return Observable.from(it, scheduler);
     }
     /**
-     * Returns each pair of subsequent elements as pairs.
+     * Pairs each element from this and the oher iterable source and
+     * combines them into a new value by using the <code>combiner</code>
+     * function.
      * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
      * for its <code>remove()</code> method.</p>
-     * @return the iterable builder
+     * @param <U> the right source type
+     * @param <V> the result type
+     * @param right the right source
+     * @param combiner the combiner function
+     * @return the new iterable
      */
-    public Iterables<Pair<T, T>> subsequent() {
-        return from(Interactive.subsequent(it));
-    }
-    /**
-     * Returns each pair of subsequent elements as pairs.
-     * <p>The returned iterator will throw an <code>UnsupportedOperationException</code>
-     * for its <code>remove()</code> method.</p>
-     * @param count the number of subsequent elements
-     * @return the iterable builder
-     */
-    public Iterables<Iterables<T>> subsequent(int count) {
-        return from(Interactive.subsequent(it, count))
-                .select(Iterables.<T>toBuilder());
-    }
-    /**
-     * @param <T> the element type
-     * @return a function which wraps its iterable parameter into an iterablebuilder instance
-     */
-    public static <T> Func1<Iterable<T>, Iterables<T>> toBuilder() {
-        return new Func1<Iterable<T>, Iterables<T>>() {
-            @Override
-            public Iterables<T> call(Iterable<T> param1) {
-                return from(param1);
-            }
-        };
-    }
-    /**
-     * Add the elements of the sequence into the supplied collection.
-     * @param <U> a collection type
-     * @param out the output collection
-     * @return the same out value
-     */
-    public <U extends Collection<? super T>> U into(U out) {
-        Iterator<T> it = iterator();
-        try {
-            while (it.hasNext()) {
-                out.add(it.next());
-            }
-        } finally {
-            Interactive.unsubscribe(it);
-        }
-        return out;
-    }
-    /**
-     * Consumes the sequence and removes all items via the Iterator.remove().
-     */
-    public void removeAll() {
-        Iterator<T> it = iterator();
-        try {
-            while (it.hasNext()) {
-                it.next();
-                it.remove();
-            }
-        } finally {
-            Interactive.unsubscribe(it);
-        }
+    public <U, V> Iterables<V> zip(final Iterable<? extends U> right,
+            final Func2<? super T, ? super U, ? extends V> combiner) {
+        return from(Interactive.zip(it, right, combiner));
     }
 }
