@@ -27,6 +27,9 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+/**
+ * Test the concat operator.
+ */
 public class TestInteractiveConcat {
 	/**
 	 * Test if concat works correctly when one of the input sequences is empty. 

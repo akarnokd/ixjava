@@ -15,7 +15,10 @@
  */
 package ix;
 
-import static ix.internal.operators.Interactive.*;
+import static ix.internal.operators.Interactive.concat;
+import static ix.internal.operators.Interactive.size;
+import static ix.internal.operators.Interactive.take;
+import static ix.internal.operators.Interactive.toIterable;
 
 import org.junit.Test;
 

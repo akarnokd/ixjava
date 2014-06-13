@@ -37,6 +37,10 @@ public final class GroupedIterable<K, V> extends Iterables<V> {
 		this.key = key;
 		this.values = (List<V>)this.it;
 	}
+	/**
+	 * Returns the key associated with this group.
+	 * @return the key associated with this group
+	 */
 	public K getKey() {
 		return key;
 	}

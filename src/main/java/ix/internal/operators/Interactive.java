@@ -1,18 +1,18 @@
 /*
-* Copyright 2011-2014 David Karnok
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*     http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
+ * Copyright 2011-2014 David Karnok
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ix.internal.operators;
 
 import ix.CloseableIterable;
@@ -100,15 +100,38 @@ public final class Interactive {
             ((Subscription)iter).unsubscribe();
         }
     }
+    /**
+     * Creates an onNext notification.
+     * @param <T> the value type
+     * @param value the value to wrap
+     * @return the notification
+     */
     static <T> Notification<T> some(T value) {
         return Notification.createOnNext(value);
     }
+    /**
+     * Creates an onError notification.
+     * @param <T> the value type
+     * @param t the throwable
+     * @return the notification
+     */
     static <T> Notification<T> error(Throwable t) {
         return Notification.createOnError(t);
     }
+    /**
+     * Creates an onCompleted notification.
+     * @param <T> the value type
+     * @return the notification
+     */
     static <T> Notification<T> none() {
         return Notification.createOnCompleted();
     }
+    /**
+     * Extracts the notification value, exception or throws NoSuchElementException.
+     * @param <T> the value type
+     * @param notif the notification to extract from
+     * @return the value
+     */
     static <T> T value(Notification<T> notif) {
         if (notif.isOnNext()) {
             return notif.getValue();
