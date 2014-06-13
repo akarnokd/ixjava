@@ -13,30 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
-
-import java.util.Iterator;
-import rx.Subscription;
-
 /**
- * An iterator which supports a close() method. Usage:
- * <pre><code>
- * CloseableIterator&lt;T&gt; it = citerable.iterator();
- * try {
- *     while (it.hasNext()) {
- *         doSomething(it.next());
- *         if (condition) {
- *             break;
- *         }
- *     }
- * } finally {
- *     it.close();
- * }
- * it.close();
- * </code></pre>
- * @author akarnokd, 2011.10.26.
- * @param <T> the element type
+ * Contains exception classes.
  */
-public interface CloseableIterator<T> extends Iterator<T>, Subscription {
-
-}
+package ix;

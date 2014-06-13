@@ -13,24 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix;
-
-import static ix.internal.operators.Interactive.*;
-
-import org.junit.Test;
-
 /**
- * Test the Interactive.take operator.
+ * Contains operator implementations.
  */
-public class TestInteractiveTake {
-	/**
-	 * Test take().
-	 */
-	@Test
-	public void takeOk() {
-		Iterable<Integer> prefix = toIterable(1, 2);
-		Iterable<Integer> i = concat(prefix, toIterable(3, 4));
-		TestUtil.assertEqual(take(i, size(prefix)), prefix);
-	}
-
-}
+package ix.internal.operators;

@@ -13,24 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix;
 
-import static ix.internal.operators.Interactive.*;
-
-import org.junit.Test;
+package ix.functions;
 
 /**
- * Test the Interactive.take operator.
+ * An action with one parameter and exception.
+ * @param <T> the first parameter type
+ * @param <E> the exception type
  */
-public class TestInteractiveTake {
+public interface Action1E<T, E extends Exception> {
 	/**
-	 * Test take().
+	 * Invoke the action.
+	 * @param t the first parameter
+	 * @throws E the exception
 	 */
-	@Test
-	public void takeOk() {
-		Iterable<Integer> prefix = toIterable(1, 2);
-		Iterable<Integer> i = concat(prefix, toIterable(3, 4));
-		TestUtil.assertEqual(take(i, size(prefix)), prefix);
-	}
-
+	void call(T t) throws E;
 }

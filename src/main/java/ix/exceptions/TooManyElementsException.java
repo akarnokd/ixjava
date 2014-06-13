@@ -13,13 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix.exceptions;
 
 /**
  * Exception for cases when too many elements are contained
  * within a collection or observable. Its the dual
  * of NoSuchElementException.
- * @author akarnokd, 2011.01.30.
  */
 public class TooManyElementsException extends RuntimeException {
 	/** */

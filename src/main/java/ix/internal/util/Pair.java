@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix.internal.util;
 
 /**
  * A pair of two objects.
- * @author akarnokd, 2011.03.21.
  * @param <T> the first type
  * @param <U> the second type
  */

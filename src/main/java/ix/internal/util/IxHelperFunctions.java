@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package ix.util;
+package ix.internal.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -37,7 +37,6 @@ import rx.functions.Func2;
 
 /**
  * Helper class with function types.
- * @author akarnokd
  */
 public final class IxHelperFunctions {
     /**

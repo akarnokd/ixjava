@@ -13,19 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package ix;
 
-package ix.util;
+import java.util.Iterator;
+import rx.Subscription;
 
 /**
- * A parameterless action with exception.
- * @author akarnokd
- * @param <E> the exception
- * @since 0.96
+ * An iterator which supports a close() method. Usage:
+ * <pre><code>
+ * CloseableIterator&lt;T&gt; it = citerable.iterator();
+ * try {
+ *     while (it.hasNext()) {
+ *         doSomething(it.next());
+ *         if (condition) {
+ *             break;
+ *         }
+ *     }
+ * } finally {
+ *     it.close();
+ * }
+ * it.close();
+ * </code></pre>
+ * @param <T> the element type
  */
-public interface Action0E<E extends Exception> {
-	/**
-	 * Invoke the action.
-	 * @throws E the exception
-	 */
-	void call() throws E;
+public interface CloseableIterator<T> extends Iterator<T>, Subscription {
+
 }

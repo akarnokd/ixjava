@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix.internal.util;
 
+
+import ix.GroupedIterable;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,7 +26,6 @@ import java.util.LinkedList;
  * which holds the values in a <code>LinkedList</code>.
  * @param <K> the key type
  * @param <V> the value type
- * @author akarnokd, 2011.02.03.
  */
 public class DefaultGroupedIterable<K, V> implements GroupedIterable<K, V> {
 	/** The key. */

@@ -24,8 +24,6 @@ import org.junit.Assert;
 
 /**
  * Test utility methods.
- * @author akarnokd, 2013.01.08.
- * @since 0.97
  */
 public final class TestUtil {
 	/** Utility class. */
@@ -38,7 +36,7 @@ public final class TestUtil {
 	 */
 	public static String makeString(
 			Iterable<?> source) {
-		Iterator<String> iterator = Interactive.join(source, ", ").iterator();
+		Iterator<String> iterator = Iterables.from(source).join(", ").iterator();
 		return iterator.hasNext() ? iterator.next() : "";
 	}
 	/**
@@ -82,8 +80,8 @@ public final class TestUtil {
 	public static <T> void assertCompare(
 			Iterable<? extends T> expected, 
 			Iterable<? extends T> actual, boolean eq) {
-		List<? extends T> expectedList = IterableBuilder.from(expected).toList();
-		List<? extends T> actualList = IterableBuilder.from(actual).toList();
+		List<? extends T> expectedList = Iterables.from(expected).toList();
+		List<? extends T> actualList = Iterables.from(actual).toList();
 		if (eq != expectedList.equals(actualList)) {
 			fail(expectedList, actualList);
 		}

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix;
 
 /**
  * The base interface for an Enumerable-Enumerator
@@ -24,7 +24,6 @@ package ix.util;
  * from normal Java for such
  * kind of iteration is the <code>java.sql.ResultSet</code>.
  * @param <T> the element type
- * @author akarnokd, 2011.02.04.
  */
 public interface Enumerator<T> {
 	/**

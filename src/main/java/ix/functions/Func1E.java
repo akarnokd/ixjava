@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ix.util;
+package ix.functions;
 
 /**
  * The function interface which takes one parameter and returns something.
@@ -22,7 +22,6 @@ package ix.util;
  * may consider using wildcards: 
  * <p><code>&lt;T, U&gt; U someMethod(Func1&lt;? super T, ? extends U&gt; f);</code></p>
  * 
- * @author akarnokd
  * @param <Param1> the first parameter
  * @param <Return> the return type
  * @param <E> the exception

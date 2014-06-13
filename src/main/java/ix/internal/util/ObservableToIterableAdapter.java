@@ -13,18 +13,17 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package ix.util;
+package ix.internal.util;
 
+import ix.CloseableIterable;
+import ix.CloseableIterator;
 import rx.Observable;
-
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * Base class to help receive values from an observable sequence
  * through customizable iterator and observer.
- * @author akarnokd, 2013.01.12.
- * @since 0.97
  * @param <T> the observed element type
  * @param <U> the iterated element type
  */

@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package ix.util;
+package ix.functions;
 
 /**
- * An action with two parameters and exception.
- * @author karnokd, 2012.01.24.
- * @param <T> the first parameter type
- * @param <V> the second parameter type
- * @param <E> the exception type
- * @since 0.96
+ * A parameterless action with exception.
+ * @param <E> the exception
  */
-public interface Action2E<T, V, E extends Exception> {
+public interface Action0E<E extends Exception> {
 	/**
 	 * Invoke the action.
-	 * @param t the first parameter
-	 * @param u the second parameter
 	 * @throws E the exception
 	 */
-	void call(T t, V u) throws E;
+	void call() throws E;
 }

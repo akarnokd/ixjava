@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package ix.util;
+package ix.internal.util;
 
 import java.util.NoSuchElementException;
 
 /**
  * A simple circular buffer with absolute indices.
- * @author akarnokd, 2011.02.04.
  * @param <T> the contained element type
  */
 public class CircularBuffer<T> {

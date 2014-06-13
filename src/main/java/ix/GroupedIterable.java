@@ -15,22 +15,13 @@
  */
 package ix;
 
-import static ix.internal.operators.Interactive.*;
-
-import org.junit.Test;
-
 /**
- * Test the Interactive.take operator.
+ * The extension interface to an iterable which
+ * holds a group key for its contents.
+ * @param <K> the group key type
+ * @param <V> the value type
  */
-public class TestInteractiveTake {
-	/**
-	 * Test take().
-	 */
-	@Test
-	public void takeOk() {
-		Iterable<Integer> prefix = toIterable(1, 2);
-		Iterable<Integer> i = concat(prefix, toIterable(3, 4));
-		TestUtil.assertEqual(take(i, size(prefix)), prefix);
-	}
-
+public interface GroupedIterable<K, V> extends Iterable<V> {
+	/** @return the key of this iterable. */
+	K key();
 }

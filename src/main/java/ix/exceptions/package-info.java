@@ -13,20 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
-
 /**
- * The base interface for an Enumerable-Enumerator
- * pair of iteration method where the
- * enumerator has <code>next()</code> to
- * advance the iteration and <code>current()</code>
- * to return the current element. An example
- * from normal Java for such
- * kind of iteration is the <code>java.sql.ResultSet</code>.
- * @param <T> the element type
- * @author akarnokd, 2011.02.04.
+ * Contains exception classes.
  */
-public interface Enumerable<T> {
-	/** @return the enumerator. */
-	Enumerator<T> enumerator();
-}
+package ix.exceptions;

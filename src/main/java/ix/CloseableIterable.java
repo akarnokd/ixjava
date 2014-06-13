@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix;
+
 
 /**
- * The extension interface to an iterable which
- * holds a group key for its contents.
- * @param <K> the group key type
- * @param <V> the value type
- * @author akarnokd, 2011.02.03.
+ * An iterable type which returns iterators that support a close() method.
+ * @param <T> the iterator element type
  */
-public interface GroupedIterable<K, V> extends Iterable<V> {
-	/** @return the key of this iterable. */
-	K key();
+public interface CloseableIterable<T> extends Iterable<T> {
+	@Override
+	CloseableIterator<T> iterator();
 }

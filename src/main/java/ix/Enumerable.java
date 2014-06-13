@@ -13,21 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package ix.util;
+package ix;
 
 /**
- * An action with one parameter and exception.
- * @author karnokd, 2012.01.24.
- * @param <T> the first parameter type
- * @param <E> the exception type
- * @since 0.96
+ * The base interface for an Enumerable-Enumerator
+ * pair of iteration method where the
+ * enumerator has <code>next()</code> to
+ * advance the iteration and <code>current()</code>
+ * to return the current element. An example
+ * from normal Java for such
+ * kind of iteration is the <code>java.sql.ResultSet</code>.
+ * @param <T> the element type
  */
-public interface Action1E<T, E extends Exception> {
-	/**
-	 * Invoke the action.
-	 * @param t the first parameter
-	 * @throws E the exception
-	 */
-	void call(T t) throws E;
+public interface Enumerable<T> {
+	/** @return the enumerator. */
+	Enumerator<T> enumerator();
 }

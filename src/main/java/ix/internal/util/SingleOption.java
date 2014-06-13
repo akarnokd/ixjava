@@ -13,7 +13,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package ix.util;
+package ix.internal.util;
 
 import rx.Notification;
 import rx.exceptions.Exceptions;
@@ -27,8 +27,6 @@ import rx.exceptions.Exceptions;
  * a new value or exception. If the caller attempts to remove
  * a value or exception after a value, it will result in IllegalStateException.</p>
  * <p>The class is not thread safe.</p>
- * @author akarnokd, 2013.01.12.
- * @since 0.97
  * @param <T> the contained value type
  */
 public final class SingleOption<T> {

@@ -13,15 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
-
-
 /**
- * An iterable type which returns iterators that support a close() method.
- * @author akarnokd, 2011.10.26.
- * @param <T> the iterator element type
+ * Contains utility classes to support the internal implementations.
  */
-public interface CloseableIterable<T> extends Iterable<T> {
-	@Override
-	CloseableIterator<T> iterator();
-}
+package ix.internal.util;

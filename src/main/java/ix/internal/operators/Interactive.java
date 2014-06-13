@@ -13,18 +13,19 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-package ix;
+package ix.internal.operators;
 
-import ix.util.CircularBuffer;
-import ix.util.CloseableIterable;
-import ix.util.CloseableIterator;
-import ix.util.DefaultGroupedIterable;
-import ix.util.Enumerable;
-import ix.util.Enumerator;
-import ix.util.GroupedIterable;
-import ix.util.IxHelperFunctions;
-import ix.util.Pair;
-import ix.util.SingleContainer;
+import ix.CloseableIterable;
+import ix.CloseableIterator;
+import ix.Enumerable;
+import ix.Enumerator;
+import ix.GroupedIterable;
+import ix.internal.util.CircularBuffer;
+import ix.internal.util.DefaultGroupedIterable;
+import ix.internal.util.IxHelperFunctions;
+import ix.internal.util.LinkedBuffer;
+import ix.internal.util.Pair;
+import ix.internal.util.SingleContainer;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -66,42 +67,9 @@ import rx.schedulers.Schedulers;
  * of the <code>Reactive</code> operators.
  * <p>The implementations of the operators are partially derived
  * from the Reactive operators.</p>
- * @author akarnokd, 2011.02.02.
  * @see rx.Observable
  */
 public final class Interactive {
-    /**
-     * A linked buffer, which can be only filled and queried.
-     * @author akarnokd, 2011.02.03.
-     * @param <T> the element type
-     */
-    public static class LinkedBuffer<T> {
-        /** The node. */
-        public static class N<T> {
-            /** The element value. */
-            T value;
-            /** The next node. */
-            N<T> next;
-        }
-        /** The head pointer. */
-        final N<T> head = new N<T>();
-        /** The tail pointer. */
-        N<T> tail = head;
-        /** The size. */
-        int size;
-        /**
-         * Add a new value.
-         * @param value the new value
-         */
-        public void add(T value) {
-            N<T> n = new N<T>();
-            n.value = value;
-            tail.next = n;
-            tail = n;
-            size++;
-        }
-    }
-    
     /** The common empty iterator. */
     private static final Iterator<Object> EMPTY_ITERATOR = new Iterator<Object>() {
         @Override
@@ -124,7 +92,11 @@ public final class Interactive {
             return EMPTY_ITERATOR;
         }
     };
-    static void unsubscribe(Iterator<?> iter) {
+    /**
+     * Call unsubscribe on the iterator if it implements the Subscription interface.
+     * @param iter the iterator to unsubscribe
+     */
+    public static void unsubscribe(Iterator<?> iter) {
         if (iter instanceof Subscription) {
             ((Subscription)iter).unsubscribe();
         }

@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.operators;
+package ix.internal.operators;
 
-import ix.util.ObservableToIterableAdapter;
-import ix.util.ObserverToIteratorSink;
-import ix.util.SingleOption;
+import ix.internal.util.ObservableToIterableAdapter;
+import ix.internal.util.ObserverToIteratorSink;
+import ix.internal.util.SingleOption;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,8 +30,6 @@ import rx.Subscription;
  * Convert the given observable instance into a classical iterable instance.
  * <p>The resulting iterable does not support the {@code remove()} method.</p>
  * @param <T> the element type to iterate
- * @author akarnokd, 2013.01.13.
- * @since 0.97
  */
 public final class ToIterable<T> extends
 		ObservableToIterableAdapter<T, T> {

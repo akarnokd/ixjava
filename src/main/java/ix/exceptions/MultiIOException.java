@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ix.util;
+package ix.exceptions;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +23,6 @@ import java.util.List;
  * Exception that collects other IOException instances.
  * <p>Note: unfortunately, we can't use Java 7's addSuppressed for 
  * this purpose as Reactive4Java is aimed at Java 6.</p>
- * @author akarnokd, 2013.01.08.
- * @since 0.97
  */
 public class MultiIOException extends IOException {
 	/** */

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ix.util;
+package ix.internal.util;
 
 /**
  * Helper class that stores a single element.
@@ -27,7 +27,6 @@ package ix.util;
  * e.g., <code>hasNext()</code> is idempotent, but <code>next()</code> might 
  * be called without <code>hasNext()</code> to be called at all.
  * The container is not thread-safe.
- * @author akarnokd, 2011.02.03.
  * @param <T> the contained element type
  */
 public class SingleContainer<T> {

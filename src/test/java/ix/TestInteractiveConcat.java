@@ -15,6 +15,8 @@
  */
 package ix;
 
+import ix.internal.operators.Interactive;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,10 +27,6 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-/**
- * @author akarnokd, 2013.01.04.
- * @since 0.97
- */
 public class TestInteractiveConcat {
 	/**
 	 * Test if concat works correctly when one of the input sequences is empty. 

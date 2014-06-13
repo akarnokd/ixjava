@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package ix.util;
+package ix.functions;
 
 /**
  * The function interface which takes two parameter and returns something.
  * When <code>Func1</code> is used in a method parameter declaration, you
  * may consider using wildcards: 
  * <p><code>&lt;T, U, V&gt; V someMethod(Func2&lt;? super T, ? super U, ? extends V&gt; f);</code></p>
- * @author akarnokd, 2011.01.27
  * @param <Return> the return type
  * @param <Param1> the first parameter
  * @param <Param2> the second parameter
