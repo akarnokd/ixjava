@@ -23,7 +23,7 @@ import java.util.List;
  * @param <K> the group key type
  * @param <V> the value type
  */
-public final class GroupedIterable<K, V> extends Iterables<V> {
+public final class GroupedIterable<K, V> extends Ix<V> {
 	/** The group key. */
 	protected final K key;
 	/** The values in the group. */

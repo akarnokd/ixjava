@@ -36,7 +36,7 @@ public final class TestUtil {
 	 */
 	public static String makeString(
 			Iterable<?> source) {
-		Iterator<String> iterator = Iterables.from(source).join(", ").iterator();
+		Iterator<String> iterator = Ix.from(source).join(", ").iterator();
 		return iterator.hasNext() ? iterator.next() : "";
 	}
 	/**
@@ -80,8 +80,8 @@ public final class TestUtil {
 	public static <T> void assertCompare(
 			Iterable<? extends T> expected, 
 			Iterable<? extends T> actual, boolean eq) {
-		List<? extends T> expectedList = Iterables.from(expected).toList();
-		List<? extends T> actualList = Iterables.from(actual).toList();
+		List<? extends T> expectedList = Ix.from(expected).toList();
+		List<? extends T> actualList = Ix.from(actual).toList();
 		if (eq != expectedList.equals(actualList)) {
 			fail(expectedList, actualList);
 		}

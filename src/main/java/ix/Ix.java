@@ -18,7 +18,6 @@ package ix;
 import ix.internal.operators.Interactive;
 import ix.internal.operators.ToIterable;
 import ix.internal.util.IxHelperFunctions;
-import ix.internal.util.Pair;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -46,7 +45,7 @@ import rx.functions.Functions;
  * {@link rx.Observable} class.</p>
  * @param <T> the element type
  */
-public class Iterables<T> implements Iterable<T> {
+public class Ix<T> implements Iterable<T> {
     /**
      * Creates an iterable builder which contains the concatenation
      * of all the iterables returned by the iterable.
@@ -54,7 +53,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param sources the source iterables
      * @return the created iterable
      */
-    public static <T> Iterables<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
+    public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
         return from(Interactive.concat(sources));
     }
     /**
@@ -64,7 +63,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param func the function that returns an iterable.
      * @return the new iterable
      */
-    public static <T> Iterables<T> defer(
+    public static <T> Ix<T> defer(
             final Func0<? extends Iterable<T>> func) {
         return from(Interactive.defer(func));
     }
@@ -75,11 +74,11 @@ public class Iterables<T> implements Iterable<T> {
      * @param source the source sequence
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> from(final Iterable<T> source) {
-        if (source instanceof Iterables) {
-            return (Iterables<T>)source;
+    public static <T> Ix<T> from(final Iterable<T> source) {
+        if (source instanceof Ix) {
+            return (Ix<T>)source;
         }
-        return new Iterables<T>(source);
+        return new Ix<T>(source);
     }
     /**
      * Creates a new iterable builder by wrapping the given observable.
@@ -88,7 +87,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param source the source observable
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> from(Observable<T> source) {
+    public static <T> Ix<T> from(Observable<T> source) {
         return from(new ToIterable<T>(source));
     }
     /**
@@ -99,7 +98,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param ts the array of ts
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> from(final T... ts) {
+    public static <T> Ix<T> from(final T... ts) {
         return from(Interactive.toIterable(ts));
     }
     /**
@@ -152,7 +151,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param ts the array of ts
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> fromPart(int from, int to, final T... ts) {
+    public static <T> Ix<T> fromPart(int from, int to, final T... ts) {
         return from(Interactive.toIterablePart(from, to, ts));
     }
     /**
@@ -173,7 +172,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param next the function that computes the next value.
      * @return the new iterable
      */
-    public static <T> Iterables<T> generate(T seed, Func1<? super T, Boolean> predicate, Func1<? super T, ? extends T> next) {
+    public static <T> Ix<T> generate(T seed, Func1<? super T, Boolean> predicate, Func1<? super T, ? extends T> next) {
         return from(Interactive.generate(seed, predicate, next));
     }
     /**
@@ -183,8 +182,8 @@ public class Iterables<T> implements Iterable<T> {
      * @param source the source sequence
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> newBuilder(final Iterable<T> source) {
-        return new Iterables<T>(source);
+    public static <T> Ix<T> newBuilder(final Iterable<T> source) {
+        return new Ix<T>(source);
     }
     /**
      * Creates an integer iteratable builder which returns numbers from the start position in the count size.
@@ -194,7 +193,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param count the number of elements to return, negative count means counting down from the start.
      * @return the iterator.
      */
-    public static Iterables<Integer> range(int start, int count) {
+    public static Ix<Integer> range(int start, int count) {
         return from(Interactive.range(start, count));
     }
     /**
@@ -205,7 +204,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param count the number of elements to return, negative count means counting down from the start.
      * @return the iterator.
      */
-    public static Iterables<Long> range(long start, long count) {
+    public static Ix<Long> range(long start, long count) {
         return from(Interactive.range(start, count));
     }
     /**
@@ -216,7 +215,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param t the value to repeat
      * @return the created iterable builder
      */
-    public static <T> Iterables<T> repeat(final T t) {
+    public static <T> Ix<T> repeat(final T t) {
         return from(Interactive.repeat(t));
     }
     /**
@@ -227,17 +226,17 @@ public class Iterables<T> implements Iterable<T> {
      * @param count the repeat amount
      * @return the iterable
      */
-    public static <T> Iterables<T> repeat(final T t, int count) {
+    public static <T> Ix<T> repeat(final T t, int count) {
         return from(Interactive.repeat(t, count));
     }
     /**
      * @param <T> the element type
      * @return a function which wraps its iterable parameter into an iterablebuilder instance
      */
-    public static <T> Func1<Iterable<T>, Iterables<T>> toBuilder() {
-        return new Func1<Iterable<T>, Iterables<T>>() {
+    public static <T> Func1<Iterable<T>, Ix<T>> toBuilder() {
+        return new Func1<Iterable<T>, Ix<T>>() {
             @Override
-            public Iterables<T> call(Iterable<T> param1) {
+            public Ix<T> call(Iterable<T> param1) {
                 return from(param1);
             }
         };
@@ -248,7 +247,7 @@ public class Iterables<T> implements Iterable<T> {
      * Constructor.
      * @param source the backing iterable
      */
-    protected Iterables(Iterable<T> source) {
+    protected Ix(Iterable<T> source) {
         this.it = source;
     }
     /**
@@ -270,7 +269,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param divide the function which takes the last intermediate value and a total count of Ts seen and should return the final aggregation value.
      * @return the new iterable
      */
-    public <U, V> Iterables<V> aggregate(
+    public <U, V> Ix<V> aggregate(
             final Func2<? super U, ? super T, ? extends U> sum,
             final Func2<? super U, ? super Integer, ? extends V> divide) {
         return from(Interactive.aggregate(it, sum, divide));
@@ -284,7 +283,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param predicate the predicate
      * @return the new iterable
      */
-    public Iterables<Boolean> all(final Func1<? super T, Boolean> predicate) {
+    public Ix<Boolean> all(final Func1<? super T, Boolean> predicate) {
         return from(Interactive.all(it, predicate));
     }
     /**
@@ -293,7 +292,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the new iterable with a single true or false
      */
-    public Iterables<Boolean> any() {
+    public Ix<Boolean> any() {
         return from(Interactive.any(it));
     }
     /**
@@ -301,7 +300,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param predicate the predicate tester function
      * @return the new iterable
      */
-    public Iterables<Boolean> any(
+    public Ix<Boolean> any(
             final Func1<? super T, Boolean> predicate
     ) {
         return from(Interactive.any(it, predicate));
@@ -358,7 +357,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the observable for the average value
      */
     @SuppressWarnings("unchecked")
-    public Iterables<BigDecimal> averageBigDecimal() {
+    public Ix<BigDecimal> averageBigDecimal() {
         return from(Interactive.averageBigDecimal((Iterable<BigDecimal>)it));
     }
     /**
@@ -370,7 +369,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<BigDecimal> averageBigInteger() {
+    public Ix<BigDecimal> averageBigInteger() {
         return from(Interactive.averageBigInteger((Iterable<BigInteger>)it));
     }
     /**
@@ -380,7 +379,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> averageDouble() {
+    public Ix<Double> averageDouble() {
         return from(Interactive.averageDouble((Iterable<Double>)it));
     }
     /**
@@ -390,7 +389,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Float> averageFloat() {
+    public Ix<Float> averageFloat() {
         return from(Interactive.averageFloat((Iterable<Float>)it));
     }
     /**
@@ -401,7 +400,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> averageInt() {
+    public Ix<Double> averageInt() {
         return from(Interactive.averageInt((Iterable<Integer>)it));
         
     }
@@ -413,7 +412,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> averageLong() {
+    public Ix<Double> averageLong() {
         return from(Interactive.averageLong((Iterable<Long>)it));
     }
     /**
@@ -424,7 +423,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param bufferSize the buffer size.
      * @return the new iterable
      */
-    public Iterables<List<T>> buffer(int bufferSize) {
+    public Ix<List<T>> buffer(int bufferSize) {
         return from(Interactive.buffer(it, bufferSize));
     }
     /**
@@ -435,7 +434,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param other the second iterable
      * @return the new iterable
      */
-    public Iterables<T> concatWith(Iterable<? extends T> other) {
+    public Ix<T> concatWith(Iterable<? extends T> other) {
         return from(Interactive.concat(it, other));
     }
     /**
@@ -443,7 +442,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param values the array values
      * @return the created iterable builder
      */
-    public Iterables<T> concatWith(final T... values) {
+    public Ix<T> concatWith(final T... values) {
         return concatWith(Interactive.toIterable(values));
     }
     /**
@@ -453,7 +452,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the created iterable
      */
     @SuppressWarnings("unchecked")
-    public Iterables<T> concatWithAll(Iterable<? extends Iterable<? extends T>> others) {
+    public Ix<T> concatWithAll(Iterable<? extends Iterable<? extends T>> others) {
         return from(Interactive.concat(Interactive.startWith(others, it)));
     }
     /**
@@ -463,7 +462,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param value the value to check
      * @return the new iterable
      */
-    public Iterables<Boolean> contains(final Object value) {
+    public Ix<Boolean> contains(final Object value) {
         return from(Interactive.contains(it, value));
     }
     /**
@@ -472,7 +471,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the new iterable
      */
-    public Iterables<Integer> count() {
+    public Ix<Integer> count() {
         return from(Interactive.count(it));
     }
     /**
@@ -481,7 +480,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the new iterable
      */
-    public Iterables<Long> countLong() {
+    public Ix<Long> countLong() {
         return from(Interactive.countLong(it));
     }
     /**
@@ -491,7 +490,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public Iterables<T> dematerialize() {
+    public Ix<T> dematerialize() {
         return from(Interactive.dematerialize((Iterable<Notification<T>>)it));
     }
     /**
@@ -500,7 +499,7 @@ public class Iterables<T> implements Iterable<T> {
      * Value equality is computed by reference equality and <code>equals()</code>
      * @return the new iterable
      */
-    public Iterables<T> distinct() {
+    public Ix<T> distinct() {
         return from(Interactive.distinct(it));
     }
     /**
@@ -512,7 +511,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the key selector for only-once filtering
      * @return the new iterable
      */
-    public <U> Iterables<T> distinct(Func1<? super T, ? extends U> keySelector) {
+    public <U> Ix<T> distinct(Func1<? super T, ? extends U> keySelector) {
         return from(Interactive.distinct(it, keySelector, Functions.<T>identity()));
     }
     /**
@@ -520,7 +519,7 @@ public class Iterables<T> implements Iterable<T> {
      * (reference and equals).
      * @return the new iterable
      */
-    public Iterables<T> distinctNext() {
+    public Ix<T> distinctNext() {
         return from(Interactive.distinctNext(it));
     }
     /**
@@ -530,7 +529,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the function to extract the keys which will be compared
      * @return the new iterable
      */
-    public <U> Iterables<T> distinctNext(final Func1<T, U> keySelector) {
+    public <U> Ix<T> distinctNext(final Func1<T, U> keySelector) {
         return from(Interactive.distinctNext(it, keySelector));
     }
     /**
@@ -541,7 +540,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param action the action to invoke
      * @return the new iterable
      */
-    public Iterables<T> doOnCompleted(Action0 action) {
+    public Ix<T> doOnCompleted(Action0 action) {
         return from(Interactive.doOnCompleted(it, action));
     }
     /**
@@ -553,7 +552,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param action the action to invoke before each next() is returned.
      * @return the new iterable
      */
-    public Iterables<T> doOnNext(Action1<? super T> action) {
+    public Ix<T> doOnNext(Action1<? super T> action) {
         return from(Interactive.doOnNext(it, action));
     }
     /**
@@ -568,7 +567,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     
-    public Iterables<T> doWhile(
+    public Ix<T> doWhile(
             final Func0<Boolean> gate) {
         return from(Interactive.doWhile(it, gate));
     }
@@ -581,7 +580,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param value the value to append
      * @return the new iterable
      */
-    public Iterables<T> endWith(final T value) {
+    public Ix<T> endWith(final T value) {
         return from(Interactive.endWith(it, value));
     }
     /**
@@ -595,7 +594,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param predicate the predicate function
      * @return the new iterable
      */
-    public Iterables<T> filter(final Func1<? super T, Boolean> predicate) {
+    public Ix<T> filter(final Func1<? super T, Boolean> predicate) {
         return from(Interactive.filter(it, predicate));
     }
     /**
@@ -605,7 +604,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param predicate the predicate
      * @return the new iterable
      */
-    public Iterables<T> filterIndexed(final Func2<Integer, ? super T, Boolean> predicate) {
+    public Ix<T> filterIndexed(final Func2<Integer, ? super T, Boolean> predicate) {
         return from(Interactive.filterIndexed(it, predicate));
     }
     /**
@@ -625,7 +624,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param selector the selector for multiple Us for each T
      * @return the new iterable
      */
-    public <U> Iterables<U> flatMap(final Func1<? super T, ? extends Iterable<? extends U>> selector) {
+    public <U> Ix<U> flatMap(final Func1<? super T, ? extends Iterable<? extends U>> selector) {
         return from(Interactive.flatMap(it, selector));
     }
     /**
@@ -652,7 +651,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the key selector
      * @return the new iterable
      */
-    public <K> Iterables<GroupedIterable<K, T>> groupBy(
+    public <K> Ix<GroupedIterable<K, T>> groupBy(
             final Func1<? super T, ? extends K> keySelector) {
         return from(Interactive.groupBy(it, keySelector, Functions.<T>identity()));
     }
@@ -670,7 +669,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param valueSelector the value selector
      * @return the new iterable
      */
-    public <K, V> Iterables<GroupedIterable<K, V>> groupBy(
+    public <K, V> Ix<GroupedIterable<K, V>> groupBy(
             final Func1<? super T, ? extends K> keySelector,
             final Func1<? super T, ? extends V> valueSelector) {
         return from(Interactive.groupBy(it, keySelector, valueSelector));
@@ -696,7 +695,7 @@ public class Iterables<T> implements Iterable<T> {
      * Returns a single true if the target iterable is empty.
      * @return the new iterable
      */
-    public Iterables<Boolean> isEmpty() {
+    public Ix<Boolean> isEmpty() {
         return from(Interactive.isEmpty(it));
     }
     @Override
@@ -710,7 +709,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param separator the separator to use
      * @return the new iterable
      */
-    public Iterables<String> join(String separator) {
+    public Ix<String> join(String separator) {
         return from(Interactive.join(it, separator));
     }
     /**
@@ -728,7 +727,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param selector the selector function
      * @return the new iterable
      */
-    public <U> Iterables<U> map(final Func1<? super T, ? extends U> selector) {
+    public <U> Ix<U> map(final Func1<? super T, ? extends U> selector) {
         return from(Interactive.map(it, selector));
     }
     /**
@@ -741,7 +740,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param selector the selector function
      * @return the new iterable
      */
-    public <U> Iterables<U> mapIndexed(final Func2<Integer, ? super T, ? extends U> selector) {
+    public <U> Ix<U> mapIndexed(final Func2<Integer, ? super T, ? extends U> selector) {
         return from(Interactive.mapIndexed(it, selector));
     }
     /**
@@ -753,7 +752,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the new iterable
      */
-    public Iterables<Notification<T>> materialize() {
+    public Ix<Notification<T>> materialize() {
         return from(Interactive.materialize(it));
     }
     /**
@@ -762,7 +761,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public <U extends Comparable<? super U>> Iterables<U> max() {
+    public <U extends Comparable<? super U>> Ix<U> max() {
         return from(Interactive.max((Iterable<U>)it));
     }
     /**
@@ -770,7 +769,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param comparator the comparator to use
      * @return the new iterable
      */
-    public Iterables<T> max(Comparator<? super T> comparator) {
+    public Ix<T> max(Comparator<? super T> comparator) {
         return from(Interactive.max(it, comparator));
     }
     /**
@@ -780,7 +779,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public <U extends Comparable<? super U>> Iterables<List<U>> maxBy() {
+    public <U extends Comparable<? super U>> Ix<List<U>> maxBy() {
         return from(Interactive.maxBy((Iterable<U>)it));
     }
     /**
@@ -789,7 +788,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param comparator the key comparator
      * @return the new iterable
      */
-    public Iterables<List<T>> maxBy(Comparator<? super T> comparator) {
+    public Ix<List<T>> maxBy(Comparator<? super T> comparator) {
         return from(Interactive.maxBy(it, comparator));
     }
     /**
@@ -799,7 +798,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the selector for keys
      * @return the new iterable
      */
-    public <U extends Comparable<? super U>> Iterables<List<T>> mayBy(Func1<? super T, U> keySelector) {
+    public <U extends Comparable<? super U>> Ix<List<T>> mayBy(Func1<? super T, U> keySelector) {
         return from(Interactive.maxBy(it, keySelector));
     }
     /**
@@ -810,7 +809,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keyComparator the key comparator
      * @return the new iterable
      */
-    public <U> Iterables<List<T>> mayBy(Func1<? super T, U> keySelector, Comparator<? super U> keyComparator) {
+    public <U> Ix<List<T>> mayBy(Func1<? super T, U> keySelector, Comparator<? super U> keyComparator) {
         return from(Interactive.maxBy(it, keySelector, keyComparator));
     }
     /**
@@ -823,7 +822,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param bufferSize the size of the buffering
      * @return the new iterable
      */
-    public Iterables<T> memoize(int bufferSize) {
+    public Ix<T> memoize(int bufferSize) {
         return from(Interactive.memoize(it, bufferSize));
     }
     /**
@@ -834,7 +833,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the new iterable
      */
-    public Iterables<T> memoizeAll() {
+    public Ix<T> memoizeAll() {
         return from(Interactive.memoizeAll(it));
     }
     /**
@@ -843,7 +842,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public <U extends Comparable<? super U>> Iterables<U> min() {
+    public <U extends Comparable<? super U>> Ix<U> min() {
         return from(Interactive.min((Iterable<U>)it));
     }
     /**
@@ -853,7 +852,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param comparator the comparator to use
      * @return the new iterable
      */
-    public Iterables<T> min(Comparator<? super T> comparator) {
+    public Ix<T> min(Comparator<? super T> comparator) {
         return from(Interactive.min(it, comparator));
     }
     /**
@@ -862,7 +861,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param comparator the key comparator
      * @return the new iterable
      */
-    public Iterables<List<T>> minBy(Comparator<? super T> comparator) {
+    public Ix<List<T>> minBy(Comparator<? super T> comparator) {
         return from(Interactive.minBy(it, comparator));
     }
     /**
@@ -874,7 +873,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the selector for keys
      * @return the new iterable
      */
-    public <U extends Comparable<? super U>> Iterables<List<T>> minBy(Func1<? super T, U> keySelector) {
+    public <U extends Comparable<? super U>> Ix<List<T>> minBy(Func1<? super T, U> keySelector) {
         return from(Interactive.minBy(it, keySelector));
     }
     /**
@@ -887,7 +886,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keyComparator the key comparator
      * @return the new iterable
      */
-    public <U> Iterables<List<T>> minBy(Func1<? super T, U> keySelector, Comparator<? super U> keyComparator) {
+    public <U> Ix<List<T>> minBy(Func1<? super T, U> keySelector, Comparator<? super U> keyComparator) {
         return from(Interactive.minBy(it, keySelector, keyComparator));
     }
     /**
@@ -899,7 +898,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public <U extends Comparable<? super U>> Iterables<List<U>> minxBy() {
+    public <U extends Comparable<? super U>> Ix<List<U>> minxBy() {
         return from(Interactive.minBy((Iterable<U>)it));
     }
     /**
@@ -912,7 +911,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param token the type token
      * @return the new iterable
      */
-    public <U> Iterables<U> ofType(final Class<U> token) {
+    public <U> Ix<U> ofType(final Class<U> token) {
         return from(Interactive.ofType(it, token));
     }
     /**
@@ -925,7 +924,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable
      */
     @SuppressWarnings("unchecked")
-    public <U extends Comparable<? super U>> Iterables<U> orderBy() {
+    public <U extends Comparable<? super U>> Ix<U> orderBy() {
         return from(Interactive.orderBy((Iterable<U>)it));
     }
     /**
@@ -936,7 +935,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param comparator the value comparator
      * @return the new iterable
      */
-    public Iterables<T> orderBy(Comparator<? super T> comparator) {
+    public Ix<T> orderBy(Comparator<? super T> comparator) {
         return from(Interactive.orderBy(it, comparator));
     }
     /**
@@ -948,7 +947,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keySelector the key selector for comparison
      * @return the new iterable
      */
-    public <U extends Comparable<? super U>> Iterables<T> orderBy(Func1<? super T, ? extends U> keySelector) {
+    public <U extends Comparable<? super U>> Ix<T> orderBy(Func1<? super T, ? extends U> keySelector) {
         return from(Interactive.orderBy(it, keySelector));
     }
     /**
@@ -961,7 +960,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param keyComparator the key comparator function
      * @return the new iterable
      */
-    public <U> Iterables<T> orderBy(Func1<? super T, ? extends U> keySelector, Comparator<? super U> keyComparator) {
+    public <U> Ix<T> orderBy(Func1<? super T, ? extends U> keySelector, Comparator<? super U> keyComparator) {
         return from(Interactive.orderBy(it, keySelector, keyComparator));
     }
     /**
@@ -985,7 +984,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param func invoke the function on the buffering iterable and return an iterator over it.
      * @return the new iterable
      */
-    public <U> Iterables<U> prune(Func1<? super Iterable<? extends T>, ? extends Iterable<U>> func) {
+    public <U> Ix<U> prune(Func1<? super Iterable<? extends T>, ? extends Iterable<U>> func) {
         return from(Interactive.prune(it, func));
     }
     /**
@@ -999,7 +998,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param initial the initial value to append to the output stream
      * @return the new iterable
      */
-    public <U> Iterables<U> publish(final Func1<? super Iterable<? super T>, ? extends Iterable<? extends U>> func,
+    public <U> Ix<U> publish(final Func1<? super Iterable<? super T>, ? extends Iterable<? extends U>> func,
             final U initial) {
         return from(Interactive.publish(it, func, initial));
     }
@@ -1012,7 +1011,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param func invoke the function on the buffering iterable and return an iterator over it.
      * @return the new iterable
      */
-    public <U> Iterables<U> publish(final Func1<? super Iterable<T>, ? extends Iterable<U>> func) {
+    public <U> Ix<U> publish(final Func1<? super Iterable<T>, ? extends Iterable<U>> func) {
         return from(Interactive.publish(it, func));
     }
     /**
@@ -1038,7 +1037,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param func invoke the function on the buffering iterable and return an iterator over it.
      * @return the new iterable
      */
-    public <U> Iterables<U> replay(final Func1<? super Iterable<T>, ? extends Iterable<U>> func) {
+    public <U> Ix<U> replay(final Func1<? super Iterable<T>, ? extends Iterable<U>> func) {
         return from(Interactive.replay(it, func));
     }
     /**
@@ -1051,7 +1050,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param bufferSize the buffer size
      * @return the new iterable
      */
-    public <U> Iterables<U> replay(final Func1<? super Iterable<T>, ? extends Iterable<U>> func,
+    public <U> Ix<U> replay(final Func1<? super Iterable<T>, ? extends Iterable<U>> func,
             final int bufferSize) {
         return from(Interactive.replay(it, func, bufferSize));
     }
@@ -1071,7 +1070,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param aggregator the function which takes the current running aggregation value, the current element and produces a new aggregation value.
      * @return the new iterable
      */
-    public <U> Iterables<U> scan(final Func2<? super U, ? super T, ? extends U> aggregator) {
+    public <U> Ix<U> scan(final Func2<? super U, ? super T, ? extends U> aggregator) {
         return from(Interactive.scan(it, aggregator));
     }
     /**
@@ -1085,7 +1084,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param aggregator the function which takes the current running aggregation value, the current element and produces a new aggregation value.
      * @return the new iterable
      */
-    public <U> Iterables<U> scan(final U seed,
+    public <U> Ix<U> scan(final U seed,
             final Func2<? super U, ? super T, ? extends U> aggregator) {
         return from(Interactive.scan(it, seed, aggregator));
     }
@@ -1095,7 +1094,7 @@ public class Iterables<T> implements Iterable<T> {
      * e.g., they share the same iterator.
      * @return the new iterable
      */
-    public Iterables<T> share() {
+    public Ix<T> share() {
         return from(Interactive.share(it));
     }
     /**
@@ -1106,7 +1105,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param num the number of elements to skip at the end
      * @return the new iterable
      */
-    public Iterables<T> skipLast(final int num) {
+    public Ix<T> skipLast(final int num) {
         return from(Interactive.skipLast(it, num));
     }
     /**
@@ -1120,7 +1119,7 @@ public class Iterables<T> implements Iterable<T> {
      * @return the new iterable.
      */
     @SuppressWarnings("unchecked")
-    public Iterables<T> startWith(T value) {
+    public Ix<T> startWith(T value) {
         return from(Interactive.startWith(it, value));
     }
     /**
@@ -1129,7 +1128,7 @@ public class Iterables<T> implements Iterable<T> {
      * for its <code>remove()</code> method.</p>
      * @return the iterable builder
      */
-    public Iterables<Pair<T, T>> subsequent() {
+    public Ix<Pair<T, T>> subsequent() {
         return from(Interactive.subsequent(it));
     }
     /**
@@ -1139,9 +1138,9 @@ public class Iterables<T> implements Iterable<T> {
      * @param count the number of subsequent elements
      * @return the iterable builder
      */
-    public Iterables<Iterables<T>> subsequent(int count) {
+    public Ix<Ix<T>> subsequent(int count) {
         return from(Interactive.subsequent(it, count))
-                .map(Iterables.<T>toBuilder());
+                .map(Ix.<T>toBuilder());
     }
     /**
      * Computes and signals the sum of the values of the BigDecimal source.
@@ -1150,7 +1149,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<BigDecimal> sumBigDecimal() {
+    public Ix<BigDecimal> sumBigDecimal() {
         return from(Interactive.sumBigDecimal((Iterable<BigDecimal>)it));
     }
     /**
@@ -1160,7 +1159,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<BigInteger> sumBigInteger() {
+    public Ix<BigInteger> sumBigInteger() {
         return from(Interactive.sumBigInteger((Iterable<BigInteger>)it));
     }
     
@@ -1171,7 +1170,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> sumDouble() {
+    public Ix<Double> sumDouble() {
         return from(Interactive.sumDouble((Iterable<Double>)it));
     }
     /**
@@ -1181,7 +1180,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Float> sumFloat() {
+    public Ix<Float> sumFloat() {
         return from(Interactive.sumFloat((Iterable<Float>)it));
     }
     /**
@@ -1191,7 +1190,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Integer> sumInt() {
+    public Ix<Integer> sumInt() {
         return from(Interactive.sumInt((Iterable<Integer>)it));
     }
     /**
@@ -1202,7 +1201,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> sumIntAsDouble() {
+    public Ix<Double> sumIntAsDouble() {
         return from(Interactive.sumIntAsDouble((Iterable<Integer>)it));
     }
     /**
@@ -1212,7 +1211,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Long> sumLong() {
+    public Ix<Long> sumLong() {
         return from(Interactive.sumLong((Iterable<Long>)it));
     }
     /**
@@ -1223,7 +1222,7 @@ public class Iterables<T> implements Iterable<T> {
      */
     
     @SuppressWarnings("unchecked")
-    public Iterables<Double> sumLongAsDouble() {
+    public Ix<Double> sumLongAsDouble() {
         return from(Interactive.sumLongAsDouble((Iterable<Long>)it));
     }
     /**
@@ -1234,7 +1233,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param num the number of items to take
      * @return the new iterable
      */
-    public Iterables<T> take(int num) {
+    public Ix<T> take(int num) {
         return from(Interactive.take(it, num));
     }
     /**
@@ -1245,7 +1244,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param num the number of elements to skip at the end
      * @return the new iterable
      */
-    public Iterables<T> takeLast(int num) {
+    public Ix<T> takeLast(int num) {
         return from(Interactive.takeLast(it, num));
     }
     /**
@@ -1407,7 +1406,7 @@ public class Iterables<T> implements Iterable<T> {
      * @param combiner the combiner function
      * @return the new iterable
      */
-    public <U, V> Iterables<V> zip(final Iterable<? extends U> right,
+    public <U, V> Ix<V> zip(final Iterable<? extends U> right,
             final Func2<? super T, ? super U, ? extends V> combiner) {
         return from(Interactive.zip(it, right, combiner));
     }

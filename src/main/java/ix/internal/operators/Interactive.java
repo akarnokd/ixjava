@@ -20,9 +20,9 @@ import ix.CloseableIterator;
 import ix.Enumerable;
 import ix.Enumerator;
 import ix.GroupedIterable;
+import ix.Pair;
 import ix.internal.util.IxHelperFunctions;
 import ix.internal.util.LinkedBuffer;
-import ix.internal.util.Pair;
 
 import java.io.Closeable;
 import java.io.IOException;
