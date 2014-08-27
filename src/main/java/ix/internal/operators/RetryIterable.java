@@ -24,6 +24,7 @@ import rx.Notification;
 
 public final class RetryIterable<T> implements Iterable<T> {
 	private final int count;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public RetryIterable(int count, Iterable<? extends T> source) {

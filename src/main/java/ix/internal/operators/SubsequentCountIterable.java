@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 
 public final class SubsequentCountIterable<T> implements
 		Iterable<Iterable<T>> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final int count;
 

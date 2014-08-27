@@ -20,16 +20,24 @@ import ix.internal.util.CircularBuffer;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Memoizes the source sequence with a given buffer size.
+ *
+ * @param <T> the element type
+ */
 public final class MemoizeIterable<T> implements Iterable<T> {
-	private final Iterable<? extends T> source;
+	/** The buffer size. */
 	private final int bufferSize;
 	/** The source iterator. */
 	Iterator<? extends T> it;
 	/** The ring buffer of the memory. */
 	final CircularBuffer<T> buffer;
-
+	/**
+	 * Constructor, sets the buffer size and takes an iterator from source.
+	 * @param source the source iterable
+	 * @param bufferSize the buffer size
+	 */
 	public MemoizeIterable(Iterable<? extends T> source, int bufferSize) {
-		this.source = source;
 		this.bufferSize = bufferSize;
 		it = source.iterator();
 		buffer = new CircularBuffer<T>(bufferSize);

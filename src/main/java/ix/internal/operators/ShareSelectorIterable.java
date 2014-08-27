@@ -20,6 +20,7 @@ import java.util.Iterator;
 import rx.functions.Func1;
 
 public final class ShareSelectorIterable<T, U> implements Iterable<U> {
+	/** The source sequence. */
 	private final Iterable<T> source;
 	private final Func1<? super Iterable<T>, ? extends Iterable<U>> selector;
 

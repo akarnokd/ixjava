@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class OnErrorResumeNext<T> implements Iterable<T> {
+	/** The source sequences. */
 	private final Iterable<? extends Iterable<? extends T>> sources;
 
 	public OnErrorResumeNext(

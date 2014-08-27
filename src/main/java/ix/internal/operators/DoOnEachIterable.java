@@ -27,6 +27,7 @@ import rx.functions.Action1;
 public final class DoOnEachIterable<T> implements Iterable<T> {
 	private final Action1<? super Throwable> error;
 	private final Action0 finish;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public DoOnEachIterable(Action1<? super Throwable> error,

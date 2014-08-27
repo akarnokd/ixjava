@@ -20,6 +20,7 @@ import java.util.Iterator;
 import rx.functions.Func2;
 
 public final class ScanIterable<U, T> implements Iterable<U> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Func2<? super U, ? super T, ? extends U> aggregator;
 	private final U seed;

@@ -18,10 +18,22 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence which repeates the same value a certain number of times.
+ *
+ * @param <T> the value type
+ */
 public final class RepeatCountIterable<T> implements Iterable<T> {
+	/** The repeat count. */
 	private final int count;
+	/** The value to repeat. */
 	private final T value;
 
+	/**
+	 * Constructor, initializes the fields.
+	 * @param count the repeat count
+	 * @param value the value to repeat
+	 */
 	public RepeatCountIterable(int count, T value) {
 		this.count = count;
 		this.value = value;

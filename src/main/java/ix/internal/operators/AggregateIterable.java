@@ -23,11 +23,28 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 import rx.functions.Func2;
 
-public final class AggregateIterable<V, T, U> implements Iterable<V> {
+/**
+ * Aggregates the source values via a sum function and
+ * applies a divide function to return the final result.
+ *
+ * @param <T> the source sequence element type
+ * @param <U> the the accumulated type
+ * @param <V> the result type
+ */
+public final class AggregateIterable<T, U, V> implements Iterable<V> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
+	/** The summing function. */
 	private final Func2<? super U, ? super T, ? extends U> sum;
+	/** The divider function. */
 	private final Func2<? super U, ? super Integer, ? extends V> divide;
 
+	/**
+	 * Constructor, initializes the fields.
+	 * @param source the source sequence
+	 * @param sum the sum function
+	 * @param divide the division function
+	 */
 	public AggregateIterable(Iterable<? extends T> source,
 			Func2<? super U, ? super T, ? extends U> sum,
 			Func2<? super U, ? super Integer, ? extends V> divide) {

@@ -20,7 +20,14 @@ import ix.internal.util.SingleContainer;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence that returns a single true if the source sequence contains any
+ * element.
+ * 
+ * @param <T> the element type
+ */
 public final class AnyIterable<T> implements Iterable<Boolean> {
+	/** The source sequence. */
 	private final Iterable<T> source;
 
 	public AnyIterable(Iterable<T> source) {

@@ -18,10 +18,19 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence with long values from a start value producing count values.
+ */
 public final class LongRangeIterable implements Iterable<Long> {
+	/** The start value. */
 	private final long start;
+	/** The number of elements to return. */
 	private final long count;
-
+	/**
+	 * Constructor, sets the fields.
+	 * @param start the start value
+	 * @param count number of values
+	 */
 	public LongRangeIterable(long start, long count) {
 		this.start = start;
 		this.count = count;

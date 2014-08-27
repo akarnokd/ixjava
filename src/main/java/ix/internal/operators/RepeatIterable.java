@@ -17,9 +17,18 @@ package ix.internal.operators;
 
 import java.util.Iterator;
 
+/**
+ * Iterable sequence which repeates the same value indefinitely.
+ *
+ * @param <T> the value type
+ */
 public final class RepeatIterable<T> implements Iterable<T> {
+	/** The value to repeat. */
 	private final T value;
-
+	/**
+	 * Constructor, sets the value.
+	 * @param value the value to repeat
+	 */
 	public RepeatIterable(T value) {
 		this.value = value;
 	}

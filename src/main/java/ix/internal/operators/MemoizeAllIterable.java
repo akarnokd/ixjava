@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public final class MemoizeAllIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterator<? extends T> it;
 	private final LinkedBuffer<T> buffer;
 

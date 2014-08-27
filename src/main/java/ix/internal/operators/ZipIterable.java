@@ -23,14 +23,30 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 import rx.functions.Func2;
 
-public final class ZipIterable<V, T, U> implements Iterable<V> {
-	private final Iterable<? extends U> right;
-	private final Func2<? super T, ? super U, ? extends V> combiner;
+/**
+ * Iterable sequence containing the zipped values of two other sequences.
+ *
+ * @param <T> the first source value type
+ * @param <U> the second source value type
+ * @param <V> the result value type
+ */
+public final class ZipIterable<T, U, V> implements Iterable<V> {
+	/** The first source sequence. */
 	private final Iterable<? extends T> left;
+	/** The second source sequence. */
+	private final Iterable<? extends U> right;
+	/** The function that combines values from the two sources. */
+	private final Func2<? super T, ? super U, ? extends V> combiner;
 
-	public ZipIterable(Iterable<? extends U> right,
-			Func2<? super T, ? super U, ? extends V> combiner,
-			Iterable<? extends T> left) {
+	/**
+	 * Constructor, initializes the fields.
+	 * @param left the first sequence
+	 * @param right the second sequence
+	 * @param combiner the combinator function
+	 */
+	public ZipIterable(Iterable<? extends T> left, Iterable<? extends U> right,
+			Func2<? super T, ? super U, ? extends V> combiner
+			) {
 		this.right = right;
 		this.combiner = combiner;
 		this.left = left;

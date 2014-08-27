@@ -26,12 +26,30 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 import rx.functions.Func1;
 
+/**
+ * Iterable sequence that returns the minimum or maximum of the source sequence
+ * according to a key selector and key comparator.
+ *
+ * @param <T> the source value type
+ * @param <U> the key value type
+ */
 public final class MinMaxIterable<T, U> implements Iterable<List<T>> {
+	/** Returns a key for a value. */
 	private final Func1<? super T, ? extends U> keySelector;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
+	/** Find the maximum? */
 	private final boolean max;
+	/** Compares two keys. */
 	private final Comparator<? super U> keyComparator;
 
+	/**
+	 * Constructor, initializes the fields.
+	 * @param keySelector the key selector function
+	 * @param source the source sequenec
+	 * @param max find the maximum?
+	 * @param keyComparator the key comparator function
+	 */
 	public MinMaxIterable(Func1<? super T, ? extends U> keySelector,
 			Iterable<? extends T> source, boolean max,
 			Comparator<? super U> keyComparator) {

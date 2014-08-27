@@ -24,11 +24,26 @@ import java.util.NoSuchElementException;
 
 import rx.functions.Func1;
 
+/**
+ * Iterable sequence which sorts the source (finite) sequence accoring to the given
+ * key selector and key comparator functions.
+ *
+ * @param <T> the source type
+ * @param <U> the key type
+ */
 public final class OrderByIterable<T, U> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
+	/** The key comparator function. */
 	private final Comparator<? super U> keyComparator;
+	/** The key selector function. */
 	private final Func1<? super T, ? extends U> keySelector;
-
+	/**
+	 * Constructor, initializes the fields.
+	 * @param source the source sequence
+	 * @param keyComparator the key comparator function
+	 * @param keySelector the key selector function
+	 */
 	public OrderByIterable(Iterable<? extends T> source,
 			Comparator<? super U> keyComparator,
 			Func1<? super T, ? extends U> keySelector) {

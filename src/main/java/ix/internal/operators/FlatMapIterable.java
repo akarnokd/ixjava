@@ -22,6 +22,7 @@ import rx.functions.Func1;
 
 public final class FlatMapIterable<U, T> implements Iterable<U> {
 	private final Func1<? super T, ? extends Iterable<? extends U>> selector;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public FlatMapIterable(

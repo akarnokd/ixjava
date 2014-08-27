@@ -20,11 +20,26 @@ import java.util.NoSuchElementException;
 
 import rx.functions.Func1;
 
+/**
+ * Iterable sequence similar to a for-loop which generates sequence of values by
+ * using callback functions.
+ *
+ * @param <T> the value type
+ */
 public final class GenerateIterable<T> implements Iterable<T> {
+	/** The initial value. */
 	private final T seed;
+	/** Function to generate the next value. */
 	private final Func1<? super T, ? extends T> next;
+	/** Function to test for termination condition. */
 	private final Func1<? super T, Boolean> predicate;
 
+	/**
+	 * Constructor, sets the fields.
+	 * @param seed the initial value
+	 * @param next the function to generate the next value
+	 * @param predicate function to test for termination
+	 */
 	public GenerateIterable(T seed, Func1<? super T, ? extends T> next,
 			Func1<? super T, Boolean> predicate) {
 		this.seed = seed;

@@ -21,6 +21,7 @@ import java.util.NoSuchElementException;
 import rx.functions.Func0;
 
 public final class DoWhileIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Func0<Boolean> gate;
 

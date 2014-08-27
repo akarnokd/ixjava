@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class TakeLastIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final int num;
 

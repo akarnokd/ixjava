@@ -18,9 +18,18 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence with a specific single value.
+ *
+ * @param <T> the value type
+ */
 public final class JustIterable<T> implements Iterable<T> {
+	/** The value to return. */
 	private final T value;
-
+	/**
+	 * Constructor with the single value.
+	 * @param value the value
+	 */
 	public JustIterable(T value) {
 		this.value = value;
 	}

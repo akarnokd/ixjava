@@ -22,6 +22,7 @@ import rx.functions.Action0;
 
 public final class DoOnCompletedIterable<T> implements Iterable<T> {
 	private final Action0 action;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public DoOnCompletedIterable(Action0 action,

@@ -18,11 +18,24 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence which returns values from a range in an array of items.
+ *
+ * @param <T> the value type
+ */
 public final class PartialIterable<T> implements Iterable<T> {
+	/** The source index, inclusive. */
 	private final int from;
+	/** The array of values. */
 	private final T[] ts;
+	/** The destination index, exclusive. */
 	private final int to;
-
+	/**
+	 * Constructor, initalizes the fields.
+	 * @param from the source index, inclusive
+	 * @param ts the array of values
+	 * @param to the destination index, exclusive
+	 */
 	public PartialIterable(int from, T[] ts, int to) {
 		this.from = from;
 		this.ts = ts;

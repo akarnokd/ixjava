@@ -20,6 +20,7 @@ import java.util.Iterator;
 import rx.functions.Func2;
 
 public final class MapIndexedIterable<U, T> implements Iterable<U> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Func2<? super Integer, ? super T, ? extends U> selector;
 

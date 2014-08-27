@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class CountIterable<T> implements Iterable<Integer> {
+	/** The source sequence. */
 	private final Iterable<T> source;
 
 	public CountIterable(Iterable<T> source) {

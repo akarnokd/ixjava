@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public final class ConcatIterable<T> implements Iterable<T> {
+	/** The source sequences. */
 	private final Iterable<? extends Iterable<? extends T>> sources;
 
 	public ConcatIterable(Iterable<? extends Iterable<? extends T>> sources) {

@@ -24,6 +24,7 @@ import rx.functions.Func0;
 import rx.functions.Func2;
 
 public final class FilterIndexedIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Func0<? extends Func2<? super Integer, ? super T, Boolean>> predicateFactory;
 

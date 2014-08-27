@@ -18,10 +18,19 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence of integer values from a start value and count values.
+ */
 public final class RangeIterable implements Iterable<Integer> {
+	/** The start value. */
 	private final int start;
+	/** The number of values. */
 	private final int count;
-
+	/**
+	 * Constructor, initializes the fields.
+	 * @param start the start value
+	 * @param count the number of elements
+	 */
 	public RangeIterable(int start, int count) {
 		this.start = start;
 		this.count = count;

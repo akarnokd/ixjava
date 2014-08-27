@@ -16,15 +16,26 @@
 package ix.internal.operators;
 
 import rx.functions.Action1;
-
+/**
+ * Helper action that prints elements to the console.
+ *
+ * @param <T> the source value type
+ */
 public final class PrintAction1<T> implements Action1<T> {
+	/** The separator between elements. */
 	private final String separator;
+	/** The maximum length of a line. */
 	private final int maxLineLength;
 	/** Indicator for the first element. */
 	boolean first = true;
 	/** The current line length. */
 	int len;
 
+	/**
+	 * Constructor, initializes the fields.
+	 * @param separator the separator between elements
+	 * @param maxLineLength the maximum lenght of a line
+	 */
 	public PrintAction1(String separator, int maxLineLength) {
 		this.separator = separator;
 		this.maxLineLength = maxLineLength;

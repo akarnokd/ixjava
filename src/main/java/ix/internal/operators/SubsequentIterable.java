@@ -22,6 +22,7 @@ import java.util.NoSuchElementException;
 
 public final class SubsequentIterable<T> implements
 		Iterable<Pair<T, T>> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public SubsequentIterable(Iterable<? extends T> source) {

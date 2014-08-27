@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class LongCountIterable<T> implements Iterable<Long> {
+	/** The source sequence. */
 	private final Iterable<T> source;
 
 	public LongCountIterable(Iterable<T> source) {

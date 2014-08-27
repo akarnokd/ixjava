@@ -18,9 +18,18 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence which throws a specific exception when the first element is retrieved.
+ *
+ * @param <T> the value type, ignored
+ */
 public final class ErrorIterable<T> implements Iterable<T> {
+	/** The exception to throw on the first element. */
 	private final Throwable t;
-
+	/**
+	 * Constructor, sets the exception.
+	 * @param t the exception to throw
+	 */
 	public ErrorIterable(Throwable t) {
 		this.t = t;
 	}

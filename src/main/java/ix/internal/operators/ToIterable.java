@@ -31,8 +31,7 @@ import rx.Subscription;
  * <p>The resulting iterable does not support the {@code remove()} method.</p>
  * @param <T> the element type to iterate
  */
-public final class ToIterable<T> extends
-		ObservableToIterableAdapter<T, T> {
+public final class ToIterable<T> extends ObservableToIterableAdapter<T, T> {
 	/**
 	 * Constructor.
 	 * @param observable the observable to convert

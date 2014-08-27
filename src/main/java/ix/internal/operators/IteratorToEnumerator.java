@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public final class IteratorToEnumerator<T> implements Enumerator<T> {
+	/** The source sequence. */
 	private final Iterator<? extends T> it;
 	/** The current value. */
 	T value;

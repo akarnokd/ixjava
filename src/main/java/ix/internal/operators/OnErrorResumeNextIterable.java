@@ -25,6 +25,7 @@ import rx.functions.Func1;
 
 public final class OnErrorResumeNextIterable<T> implements
 		Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Func1<? super Throwable, ? extends Iterable<? extends T>> handler;
 

@@ -20,6 +20,7 @@ import java.util.Iterator;
 import rx.functions.Action1;
 
 public final class DoOnNextIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 	private final Action1<? super T> action;
 

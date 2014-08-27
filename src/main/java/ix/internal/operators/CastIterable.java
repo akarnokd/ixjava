@@ -18,6 +18,7 @@ package ix.internal.operators;
 import java.util.Iterator;
 
 public final class CastIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<?> source;
 	private final Class<T> token;
 

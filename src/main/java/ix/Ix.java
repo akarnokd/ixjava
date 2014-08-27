@@ -1391,7 +1391,7 @@ public class Ix<T> implements Iterable<T> {
      * @return the observable builder
      */
     public Observable<T> toObservable(Scheduler scheduler) {
-        return Observable.from(it, scheduler);
+        return Observable.from(it).subscribeOn(scheduler);
     }
     
     /**

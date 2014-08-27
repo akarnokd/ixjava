@@ -22,8 +22,8 @@ import java.util.NoSuchElementException;
 
 import rx.Notification;
 
-public final class MaterializeIterable<T> implements
-		Iterable<Notification<T>> {
+public final class MaterializeIterable<T> implements Iterable<Notification<T>> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
 
 	public MaterializeIterable(Iterable<? extends T> source) {

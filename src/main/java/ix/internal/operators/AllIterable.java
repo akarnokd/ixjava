@@ -23,10 +23,23 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 import rx.functions.Func1;
 
+/**
+ * Returns an iterable which returns a single true if
+ * the predicate matches all elements in the source sequence
+ * or false otherwise.
+ *
+ * @param <T> the source value type
+ */
 public final class AllIterable<T> implements Iterable<Boolean> {
+	/** The source. */
 	private final Iterable<? extends T> source;
+	/** The predicate. */
 	private final Func1<? super T, Boolean> predicate;
-
+	/**
+	 * Constructor, initializes the fields.
+	 * @param source the source sequence
+	 * @param predicate the predicate function
+	 */
 	public AllIterable(Iterable<? extends T> source,
 			Func1<? super T, Boolean> predicate) {
 		this.source = source;

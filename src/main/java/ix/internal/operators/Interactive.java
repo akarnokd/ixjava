@@ -88,7 +88,7 @@ public final class Interactive {
             final Iterable<? extends T> source,
             final Func2<? super U, ? super T, ? extends U> sum,
             final Func2<? super U, ? super Integer, ? extends V> divide) {
-        return new AggregateIterable<V, T, U>(source, sum, divide);
+        return new AggregateIterable<T, U, V>(source, sum, divide);
     }
     /**
      * Returns an iterable which contains true if all
@@ -2716,7 +2716,7 @@ public final class Interactive {
             final Iterable<? extends T> left,
             final Iterable<? extends U> right,
             final Func2<? super T, ? super U, ? extends V> combiner) {
-        return new ZipIterable<V, T, U>(right, combiner, left);
+        return new ZipIterable<T, U, V>(left, right, combiner);
     }
     /** The common empty iterator. */
     private static final Iterator<Object> EMPTY_ITERATOR = new Iterator<Object>() {

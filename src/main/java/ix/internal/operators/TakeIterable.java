@@ -18,10 +18,21 @@ package ix.internal.operators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Iterable sequence that takes the first elements of the source sequence.
+ *
+ * @param <T> the value type
+ */
 public final class TakeIterable<T> implements Iterable<T> {
+	/** The number of items to take. */
 	private final int num;
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
-
+	/**
+	 * Constructor, initializes the fields.
+	 * @param num the number of items to take
+	 * @param source the source sequence
+	 */
 	public TakeIterable(int num, Iterable<? extends T> source) {
 		this.num = num;
 		this.source = source;

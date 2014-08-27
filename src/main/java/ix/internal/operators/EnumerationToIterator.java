@@ -24,6 +24,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class EnumerationToIterator<T> implements Iterator<T> {
+	/** The source enumerator. */
 	private final Enumerator<? extends T> en;
 	/** The peek-ahead buffer. */
 	final SingleContainer<Notification<? extends T>> peek = new SingleContainer<Notification<? extends T>>();

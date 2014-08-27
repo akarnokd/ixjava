@@ -24,8 +24,16 @@ import java.util.NoSuchElementException;
 
 import rx.Notification;
 
+/**
+ * Iterable sequence containing a list of subsequent values from the source sequence
+ * up to a given buffer size each.
+ *
+ * @param <T> the value type
+ */
 public final class BufferIterable<T> implements Iterable<List<T>> {
+	/** The source sequence. */
 	private final Iterable<? extends T> source;
+	/** The buffer size. */
 	private final int bufferSize;
 
 	public BufferIterable(Iterable<? extends T> source, int bufferSize) {

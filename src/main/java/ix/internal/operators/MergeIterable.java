@@ -30,6 +30,7 @@ import rx.internal.util.SubscriptionList;
 
 public final class MergeIterable<T> implements Iterable<T> {
 	private final Scheduler scheduler;
+	/** The source sequences. */
 	private final Iterable<? extends Iterable<? extends T>> sources;
 
 	public MergeIterable(Scheduler scheduler,

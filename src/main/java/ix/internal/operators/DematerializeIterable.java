@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 import rx.Notification;
 
 public final class DematerializeIterable<T> implements Iterable<T> {
+	/** The source sequence. */
 	private final Iterable<? extends Notification<? extends T>> source;
 
 	public DematerializeIterable(
