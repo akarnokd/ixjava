@@ -52,7 +52,6 @@ import rx.functions.Actions;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.functions.Functions;
 import rx.schedulers.Schedulers;
 
 /**
@@ -501,7 +500,7 @@ public final class Interactive {
     
     public static <T> Iterable<T> distinct(
             final Iterable<? extends T> source) {
-        return distinct(source, Functions.<T>identity(), Functions.<T>identity());
+        return distinct(source, IxHelperFunctions.<T>identity(), IxHelperFunctions.<T>identity());
     }
     /**
      * Returns an iterable which filters its elements by an unique key
@@ -900,7 +899,7 @@ public final class Interactive {
             final Iterable<? extends T> source,
             final Func1<? super T, ? extends V> keySelector
     ) {
-        return groupBy(source, keySelector, Functions.<T>identity());
+        return groupBy(source, keySelector, IxHelperFunctions.<T>identity());
     }
     /**
      * Creates an iterable which traverses the source iterable,
@@ -974,7 +973,7 @@ public final class Interactive {
                 return param1.getKey();
             }
             
-        }, Functions.<GroupedIterable<V, U>>identity());
+        }, IxHelperFunctions.<GroupedIterable<V, U>>identity());
     }
     /**
      * Returns an iterable which invokes the given <code>next</code>
@@ -1185,7 +1184,7 @@ public final class Interactive {
     
     public static <T extends Comparable<? super T>> Iterable<List<T>> maxBy(
             final Iterable<? extends T> source) {
-        return minMax(source, Functions.<T>identity(), IxHelperFunctions.<T>comparator(), true);
+        return minMax(source, IxHelperFunctions.<T>identity(), IxHelperFunctions.<T>comparator(), true);
     }
     /**
      * Returns an iterator which will produce a single List of the maximum values encountered
@@ -1199,7 +1198,7 @@ public final class Interactive {
     public static <T> Iterable<List<T>> maxBy(
             final Iterable<? extends T> source,
             final Comparator<? super T> comparator) {
-        return minMax(source, Functions.<T>identity(), comparator, true);
+        return minMax(source, IxHelperFunctions.<T>identity(), comparator, true);
     }
     /**
      * Returns an iterator which will produce a single List of the maximum values encountered
@@ -1360,7 +1359,7 @@ public final class Interactive {
     
     public static <T extends Comparable<? super T>> Iterable<List<T>> minBy(
             final Iterable<? extends T> source) {
-        return minMax(source, Functions.<T>identity(), IxHelperFunctions.<T>comparator(), false);
+        return minMax(source, IxHelperFunctions.<T>identity(), IxHelperFunctions.<T>comparator(), false);
     }
     /**
      * Returns an iterator which will produce a single List of the minimum values encountered
@@ -1374,7 +1373,7 @@ public final class Interactive {
     public static <T> Iterable<List<T>> minBy(
             final Iterable<? extends T> source,
             final Comparator<? super T> comparator) {
-        return minMax(source, Functions.<T>identity(), comparator, false);
+        return minMax(source, IxHelperFunctions.<T>identity(), comparator, false);
     }
     /**
      * Returns an iterator which will produce a single List of the minimum values encountered
@@ -1762,7 +1761,7 @@ public final class Interactive {
     public static <T extends Comparable<? super T>> Iterable<T> orderBy(
             final Iterable<? extends T> source
     ) {
-        return orderBy(source, Functions.<T>identity(), IxHelperFunctions.<T>comparator());
+        return orderBy(source, IxHelperFunctions.<T>identity(), IxHelperFunctions.<T>comparator());
     }
     /**
      * Returns an iterable which traverses the entire
@@ -1779,7 +1778,7 @@ public final class Interactive {
             final Iterable<? extends T> source,
             final Comparator<? super T> comparator
     ) {
-        return orderBy(source, Functions.<T>identity(), comparator);
+        return orderBy(source, IxHelperFunctions.<T>identity(), comparator);
     }
     /**
      * Returns an iterable which traverses the entire

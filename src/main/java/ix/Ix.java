@@ -36,7 +36,6 @@ import rx.functions.Action1;
 import rx.functions.Func0;
 import rx.functions.Func1;
 import rx.functions.Func2;
-import rx.functions.Functions;
 
 /**
  * An iterable builder which offers methods to chain the
@@ -512,7 +511,7 @@ public class Ix<T> implements Iterable<T> {
      * @return the new iterable
      */
     public <U> Ix<T> distinct(Func1<? super T, ? extends U> keySelector) {
-        return from(Interactive.distinct(it, keySelector, Functions.<T>identity()));
+        return from(Interactive.distinct(it, keySelector, IxHelperFunctions.<T>identity()));
     }
     /**
      * Creates an iterable which ensures that subsequent values of T are not equal 
@@ -653,7 +652,7 @@ public class Ix<T> implements Iterable<T> {
      */
     public <K> Ix<GroupedIterable<K, T>> groupBy(
             final Func1<? super T, ? extends K> keySelector) {
-        return from(Interactive.groupBy(it, keySelector, Functions.<T>identity()));
+        return from(Interactive.groupBy(it, keySelector, IxHelperFunctions.<T>identity()));
     }
     /**
      * Creates an iterable which traverses the source iterable,
@@ -1271,7 +1270,7 @@ public class Ix<T> implements Iterable<T> {
      * @return the map
      */
     public <K> Map<K, T> toHashMap(Func1<? super T, ? extends K> keySelector) {
-        return toMap(keySelector, Functions.<T>identity(), IxHelperFunctions.<K, T>hashMapProvider());
+        return toMap(keySelector, IxHelperFunctions.<T>identity(), IxHelperFunctions.<K, T>hashMapProvider());
     }
     /**
      * Convinience method to create a hash-multimap with list from the elements.
@@ -1282,7 +1281,7 @@ public class Ix<T> implements Iterable<T> {
     public <K> Map<K, List<T>> toHashMultimap(Func1<? super T, ? extends K> keySelector) {
         return toMultimap(
                 keySelector,
-                Functions.<T>identity(),
+                IxHelperFunctions.<T>identity(),
                 IxHelperFunctions.<K, List<T>>hashMapProvider(),
                 IxHelperFunctions.<T>arrayListProvider());
     }
@@ -1307,7 +1306,7 @@ public class Ix<T> implements Iterable<T> {
     public <K> Map<K, T> toMap(
             Func1<? super T, ? extends K> keySelector,
             Func0<? extends Map<K, T>> mapProvider) {
-        return toMap(keySelector, Functions.<T>identity(), mapProvider);
+        return toMap(keySelector, IxHelperFunctions.<T>identity(), mapProvider);
     }
     /**
      * Convert the iterable values into a map representation.

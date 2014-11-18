@@ -527,7 +527,21 @@ public final class IxHelperFunctions {
             }
         };
     }
-    
+    /** A function that returns its parameter. */
+    private static final Func1<Object, Object> IDENTITY = new Func1<Object, Object>() {
+        @Override
+        public Object call(Object t1) {
+            return t1;
+        };
+    };
+    /**
+     * @param <T> the input and result type
+     * @return a function which returns the single parameter value as its result.
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Func1<T, T> identity() {
+        return (Func1<T, T>)IDENTITY;
+    }
     /** Utility class. */
     private IxHelperFunctions() {
     }
