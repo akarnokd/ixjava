@@ -8,5 +8,13 @@
 
 .gradle
 .m2
-/.nb-gradle/private/
+/.nb-gradle/
 /bin/
+.settings/
+.nb-gradle-properties
+.classpath
+.project
+.settings
+.metadata
+.checkstyle
+bin/
