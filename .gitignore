@@ -18,3 +18,4 @@
 .metadata
 .checkstyle
 bin/
+!/gradle/wrapper/gradle-wrapper.jar
