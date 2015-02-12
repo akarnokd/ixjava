@@ -7,6 +7,8 @@ The aim is to provide pull-based datastream support with the same naming as in R
 
 # Releases
 
+<a href='https://travis-ci.org/akarnokd/ixjava/builds'><img src='https://travis-ci.org/akarnokd/ixjava.svg?branch=master'></a>
+
 You can download any necessary JAR files manually from
 
 https://oss.sonatype.org/content/groups/public/com/github/akarnokd/ixjava/
