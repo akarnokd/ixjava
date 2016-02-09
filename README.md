@@ -19,7 +19,7 @@ Alternatively, you can use the usual maven dependency management to get the file
 
 ```
 dependencies {
-    compile "com.github.akarnokd:ixjava:0.90.0"
+    compile "com.github.akarnokd:ixjava:0.91.0"
 }
 ```
 
@@ -27,7 +27,7 @@ dependencies {
 
 ```
 <dependencies>
-		<dependency org="com.github.akarnokd" name="ixjava" rev="0.90.0" />
+		<dependency org="com.github.akarnokd" name="ixjava" rev="0.91.0" />
 </dependencies>
 ```
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 David Karnok
+ * Copyright 2011-2016 David Karnok
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2216,6 +2216,18 @@ public final class Interactive {
     public static int size(Iterable<?> iterable) {
         return first(count(iterable));
     }
+    
+    /**
+     * Skips the specified amount of items at the beginning of the source sequence.
+     * @param <T> the element type
+     * @param source the source iterable
+     * @param num the number of elements to skip
+     * @return the new iterable
+     */
+    public static <T> Iterable<T> skip(final Iterable<? extends T> source, final int num) {
+        return new Skip<T>(source, num);
+    }
+    
     /**
      * Returns an iterable which skips the last <code>num</code> elements from the
      * source iterable.

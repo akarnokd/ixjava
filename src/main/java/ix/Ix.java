@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 David Karnok
+ * Copyright 2011-2016 David Karnok
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1096,6 +1096,16 @@ public class Ix<T> implements Iterable<T> {
     public Ix<T> share() {
         return from(Interactive.share(it));
     }
+    
+    /**
+     * Skips the specified amount of items at the beginning of the source sequence.
+     * @param num the number of elements to skip
+     * @return the new iterable
+     */
+    public Ix<T> skip(final int num) {
+        return from(Interactive.skip(it, num));
+    }
+    
     /**
      * Returns an iterable which skips the last <code>num</code> elements from the
      * source iterable.
