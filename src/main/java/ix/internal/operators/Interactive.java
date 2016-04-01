@@ -769,8 +769,35 @@ public final class Interactive {
      * @return the first element
      */
     public static <T> T first(Iterable<? extends T> src) {
-        return src.iterator().next();
+        Iterator<? extends T> itor = src.iterator();
+        try {
+            return itor.next();
+        } finally {
+            unsubscribe(itor);
+        }
     }
+    
+    /**
+     * Returns the first element from the sequence or the default
+     * value if this sequence is empty
+     * @param <T> the value type
+     * @param src the source sequence
+     * @param defaultValue the default value to return
+     * @return the first or default value
+     * @since 0.91.2
+     */
+    public static <T> T firstOrDefault(Iterable<? extends T> src, T defaultValue) {
+        Iterator<? extends T> itor = src.iterator();
+        try {
+            if (itor.hasNext()) {
+                return itor.next();
+            }
+            return defaultValue;
+        } finally {
+            Interactive.unsubscribe(itor);
+        }
+    }
+
     
     /**
      * Returns an iterable which runs the source iterable and
@@ -1083,16 +1110,45 @@ public final class Interactive {
         Iterator<? extends T> it = source.iterator();
         try {
             if (it.hasNext()) {
-                T t = null;
-                while (it.hasNext()) {
+                T t;
+                
+                do {
                     t = it.next();
-                }
+                } while (it.hasNext());
+                
                 return t;
             }
         } finally {
             unsubscribe(it);
         }
         throw new NoSuchElementException();
+    }
+
+    /**
+     * Returns the last element of this sequence or the default value if
+     * this sequence is empty.
+     * @param <T> the source element type
+     * @param source the source of Ts
+     * @param defaultValue the default value to return if this sequence is empty
+     * @return the last value
+     */
+    public static <T> T lastOrDefault(
+            final Iterable<? extends T> source, T defaultValue) {
+        Iterator<? extends T> it = source.iterator();
+        try {
+            if (it.hasNext()) {
+                T t;
+                
+                do {
+                    t = it.next();
+                } while (it.hasNext());
+                
+                return t;
+            }
+            return defaultValue;
+        } finally {
+            unsubscribe(it);
+        }
     }
     /**
      * Creates an iterable which is a transforms the source

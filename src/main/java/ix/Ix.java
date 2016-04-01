@@ -108,7 +108,7 @@ public class Ix<T> implements Iterable<T> {
      * @param value the value to return
      * @return the new iterable
      */
-    public static <T> Iterable<T> just(final T value) {
+    public static <T> Ix<T> just(final T value) {
         return from(Interactive.just(value));
     }
     /**
@@ -124,10 +124,16 @@ public class Ix<T> implements Iterable<T> {
      * @param t the exception to throw
      * @return the new iterable
      */
-    public static <T> Iterable<T> error(
+    public static <T> Ix<T> error(
             final Throwable t) {
         return from(Interactive.<T>error(t));
     }
+    
+    /**
+     * The singleton instance of an empty Ix.
+     */
+    static final Ix<Object> EMPTY = from(Interactive.empty());
+    
     /**
      * Returns an empty iterable which will not produce elements.
      * Its <code>hasNext()</code> returns always false,
@@ -137,8 +143,9 @@ public class Ix<T> implements Iterable<T> {
      * @param <T> the element type, irrelevant
      * @return the iterable
      */
-    public static <T> Iterable<T> empty() {
-        return Interactive.empty();
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> empty() {
+        return (Ix<T>)EMPTY;
     }
     /**
      * Creates a new iterable builder instance by wrapping the given
@@ -614,6 +621,18 @@ public class Ix<T> implements Iterable<T> {
     public T first() {
         return Interactive.first(it);
     }
+    
+    /**
+     * Returns the first element from the sequence or the default
+     * value if this sequence is empty
+     * @param defaultValue the default value to return
+     * @return the first or default value
+     * @since 0.91.2
+     */
+    public T firstOrDefault(T defaultValue) {
+        return Interactive.firstOrDefault(it, defaultValue);
+    }
+    
     /**
      * Creates an iterable which returns a stream of Us for each source Ts.
      * The iterable stream of Us is returned by the supplied selector function.
@@ -712,12 +731,24 @@ public class Ix<T> implements Iterable<T> {
         return from(Interactive.join(it, separator));
     }
     /**
-     * Returns the last element of the iterable or throws a <code>NoSuchElementException</code> if the iterable is empty.
+     * Returns the last element of the iterable or throws a 
+     * <code>NoSuchElementException</code> if the iterable is empty.
      * @return the last value
      */
     public T last() {
         return Interactive.last(it);
     }
+    
+    /**
+     * Returns the last element of this sequence or the default value if
+     * this sequence is empty.
+     * @param defaultValue the default value to return if this sequence is empty
+     * @return the last or default value
+     */
+    public T lastOrDefault(T defaultValue) {
+        return Interactive.lastOrDefault(it, defaultValue);
+    }
+    
     /**
      * Creates an iterable which is a transforms the source
      * elements by using the selector function.
