@@ -20,7 +20,10 @@ package ix.internal.util;
  * @param <T> the element type
  */
 public final class LinkedBuffer<T> {
-    /** The node. */
+    /** 
+     * The node.
+     * @param <T> the element type 
+     */
     public static class N<T> {
         /** The element value. */
         public T value;
