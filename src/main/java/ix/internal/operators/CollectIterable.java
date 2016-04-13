@@ -26,15 +26,15 @@ import rx.functions.*;
  * @param <C> the target collection type
  * @since 0.92.3
  */
-public final class CollectIterable<T, C extends Collection<? super T>> implements Iterable<C> {
+public final class CollectIterable<T, C> implements Iterable<C> {
 
     final Iterable<? extends T> source;
     
     final Func0<C> collectionSupplier;
     
-    final Action2<C, T> collector;
+    final Action2<C, ? super T> collector;
     
-    public CollectIterable(Iterable<? extends T> source, Func0<C> collectionSupplier, Action2<C, T> collector) {
+    public CollectIterable(Iterable<? extends T> source, Func0<C> collectionSupplier, Action2<C, ? super T> collector) {
         this.source = source;
         this.collectionSupplier = collectionSupplier;
         this.collector = collector;
@@ -49,8 +49,8 @@ public final class CollectIterable<T, C extends Collection<? super T>> implement
         return new CollectIterator<T, C>(collection, it, collector);
     }
     
-    static final class CollectIterator<T, C extends Collection<? super T>> implements Iterator<C> {
-        final Action2<C, T> collector;
+    static final class CollectIterator<T, C> implements Iterator<C> {
+        final Action2<C, ? super T> collector;
         
         C collection;
         
@@ -58,7 +58,7 @@ public final class CollectIterable<T, C extends Collection<? super T>> implement
         
         boolean once;
         
-        public CollectIterator(C collection, Iterator<? extends T> it, Action2<C, T> collector) {
+        public CollectIterator(C collection, Iterator<? extends T> it, Action2<C, ? super T> collector) {
             this.collection = collection;
             this.it = it;
             this.collector = collector;
@@ -70,7 +70,7 @@ public final class CollectIterable<T, C extends Collection<? super T>> implement
                 once = true;
                 final C c = collection;
                 final Iterator<? extends T> o = it;
-                final Action2<C, T> a = collector;
+                final Action2<C, ? super T> a = collector;
                 while (o.hasNext()) {
                     a.call(c, o.next());
                 }
