@@ -15,27 +15,14 @@
  */
 package ix;
 
-import ix.internal.operators.Interactive;
-import ix.internal.operators.ToIterable;
+import java.math.*;
+import java.util.*;
+
+import ix.internal.operators.*;
 import ix.internal.util.IxHelperFunctions;
-
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import rx.Notification;
+import rx.*;
 import rx.Observable;
-import rx.Scheduler;
-import rx.functions.Action0;
-import rx.functions.Action1;
-import rx.functions.Func0;
-import rx.functions.Func1;
-import rx.functions.Func2;
+import rx.functions.*;
 
 /**
  * An iterable builder which offers methods to chain the
@@ -55,6 +42,17 @@ public class Ix<T> implements Iterable<T> {
     public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
         return from(Interactive.concat(sources));
     }
+    
+    /**
+     * Concatenates the array of Iterable sources into a single Iterable sequence.
+     * @param sources the sources to concatenate
+     * @return the created iterable
+     * @since 0.92.3
+     */
+    public static <T> Ix<T> concat(Iterable<? extends T>... sources) {
+        return from(Interactive.concat(Arrays.asList(sources)));
+    }
+    
     /**
      * Defers the source iterable creation to registration time and
      * calls the given <code>func</code> for the actual source.
@@ -213,6 +211,20 @@ public class Ix<T> implements Iterable<T> {
     public static Ix<Long> range(long start, long count) {
         return from(Interactive.range(start, count));
     }
+    
+    /**
+     * Reduces the values of this sequence into a single value by using a
+     * reducer function.
+     * @param reducer the reducer function that receives the first item or
+     * the result of the previous application of the function as the first parameter
+     * and the current item as the second parameter.
+     * @return the new Iterable
+     * @since 0.92.3
+     */
+    public final Ix<T> reduce(Func2<T, T, T> reducer) {
+        return from(new ReduceIterable<T>(this, reducer));
+    }
+    
     /**
      * Creates an iterable builder which repeats the given
      * value indefinitely.
@@ -432,6 +444,20 @@ public class Ix<T> implements Iterable<T> {
     public Ix<List<T>> buffer(int bufferSize) {
         return from(Interactive.buffer(it, bufferSize));
     }
+    
+    /**
+     * Collects all values from this sequence into a custom collection via the collector
+     * action and returns the collection as a single element.
+     * @param collectionSupplier the function that creates a collection for individual iterations
+     * @param collector the action that is called by the collection instance and the current
+     * element in the sequence
+     * @return the new iterable
+     * @since 0.92.3
+     */
+    public <C extends Collection<? super T>> Ix<C> collect(Func0<C> collectionSupplier, Action2<C, T> collector) {
+        return from(new CollectIterable<T, C>(this, collectionSupplier, collector));
+    }
+    
     /**
      * Concatenate this iterable with the other iterable in a way, that calling the second <code>iterator()</code>
      * only happens when there is no more element in the first iterator.
