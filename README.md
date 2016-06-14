@@ -27,7 +27,7 @@ dependencies {
 
 ```
 <dependencies>
-		<dependency org="com.github.akarnokd" name="ixjava" rev="0.92.3" />
+		<dependency org="com.github.akarnokd" name="ixjava" rev="0.92.5" />
 </dependencies>
 ```
 
