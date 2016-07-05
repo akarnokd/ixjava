@@ -16,27 +16,6 @@
 
 package ix;
 
-import org.junit.*;
+public class IxTest {
 
-public class LastOrDefaultTest {
-
-    @Test
-    public void nonEmpty() {
-        int v = Ix.just(1).lastOrDefault(2);
-        
-        Assert.assertEquals(1, v);
-    }
-
-    @Test
-    public void empty() {
-        int v = Ix.<Integer>empty().lastOrDefault(2);
-        
-        Assert.assertEquals(2, v);
-    }
-
-    @Test
-    public void longerNonEmpty() {
-        int v = Ix.range(100, 100).lastOrDefault(1);
-        Assert.assertEquals(199, v);
-    }
 }
