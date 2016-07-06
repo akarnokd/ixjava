@@ -16,32 +16,28 @@
 
 package ix;
 
-import rx.functions.Func1;
+import java.util.Arrays;
 
-enum FunctionHelper {
-    ;
-    
-    enum Identity implements Func1<Object, Object> {
-        INSTANCE
-        ;
+import org.junit.*;
+
+public class FromTest {
+
+    @Test
+    public void normal() {
+        Ix<Integer> source = Ix.from(Arrays.asList(1, 2, 3, 4, 5));
         
-        @SuppressWarnings("unchecked")
-        public static <T> Func1<T, T> instance() {
-            return (Func1<T, T>)INSTANCE;
-        }
+        Assert.assertTrue(source.getClass().toString(), source instanceof IxWrapper);
         
-        @Override
-        public Object call(Object t) {
-            return t;
-        }
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
-    
-    enum NumberToLong implements Func1<Number, Long> {
-        INSTANCE;
+
+    @Test
+    public void noRewrapping() {
+        Ix<Integer> source = Ix.from(Ix.range(1, 5));
         
-        @Override
-        public Long call(Number t1) {
-            return t1.longValue();
-        }
+        Assert.assertFalse(source.getClass().toString(), source instanceof IxWrapper);
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
+
 }

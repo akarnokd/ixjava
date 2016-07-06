@@ -16,7 +16,7 @@
 
 package ix;
 
-import java.util.Iterator;
+import java.util.*;
 
 final class IxFromArray<T> extends Ix<T> {
 
@@ -60,12 +60,12 @@ final class IxFromArray<T> extends Ix<T> {
                 index = i + 1;
                 return array[i];
             }
-            return noelements();
+            throw new NoSuchElementException();
         }
 
         @Override
         public void remove() {
-            unsupported();
+            throw new UnsupportedOperationException();
         }
     }
 }

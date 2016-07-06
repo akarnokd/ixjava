@@ -16,7 +16,7 @@
 
 package ix;
 
-import java.util.Iterator;
+import java.util.*;
 
 final class IxCharacters extends Ix<Integer> {
 
@@ -63,12 +63,12 @@ final class IxCharacters extends Ix<Integer> {
                 index = i + 1;
                 return (int)source.charAt(i);
             }
-            return noelements();
+            throw new NoSuchElementException();
         }
         
         @Override
         public void remove() {
-            unsupported();
+            throw new UnsupportedOperationException();
         }
     }
 

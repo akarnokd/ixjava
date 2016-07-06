@@ -16,32 +16,17 @@
 
 package ix;
 
-import rx.functions.Func1;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-enum FunctionHelper {
-    ;
-    
-    enum Identity implements Func1<Object, Object> {
-        INSTANCE
-        ;
+public class ToListTest {
+
+    @Test
+    public void normal() {
+        Ix<Integer> source = Ix.just(1);
         
-        @SuppressWarnings("unchecked")
-        public static <T> Func1<T, T> instance() {
-            return (Func1<T, T>)INSTANCE;
-        }
+        assertEquals(1, source.iterator().next().intValue());
         
-        @Override
-        public Object call(Object t) {
-            return t;
-        }
-    }
-    
-    enum NumberToLong implements Func1<Number, Long> {
-        INSTANCE;
-        
-        @Override
-        public Long call(Number t1) {
-            return t1.longValue();
-        }
+        IxTestHelper.assertValues(source, 1);
     }
 }

@@ -32,6 +32,20 @@ public class FlattenIterableTest {
         });
         
         IxTestHelper.assertValues(source, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6);
+        
+        IxTestHelper.assertNoRemove(source);
+    }
+
+    @Test
+    public void normalViaConcatMap() {
+        Ix<Integer> source = Ix.range(1, 5).concatMap(new Func1<Integer, Iterable<Integer>>() {
+            @Override
+            public Iterable<Integer> call(Integer v) {
+                return Ix.range(v, 2);
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6);
     }
 
     @Test
@@ -58,4 +72,27 @@ public class FlattenIterableTest {
         IxTestHelper.assertValues(source);
     }
 
+    @Test
+    public void rangeJust() {
+        Ix<Integer> source = Ix.range(1, 2).flatMap(new Func1<Integer, Iterable<Integer>>() {
+            @Override
+            public Iterable<Integer> call(Integer v) {
+                return Ix.just(v);
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2);
+    }
+    
+    @Test
+    public void rangeEmpty() {
+        Ix<Integer> source = Ix.range(1, 2).flatMap(new Func1<Integer, Iterable<Integer>>() {
+            @Override
+            public Iterable<Integer> call(Integer v) {
+                return Ix.empty();
+            }
+        });
+        
+        IxTestHelper.assertValues(source);
+    }
 }

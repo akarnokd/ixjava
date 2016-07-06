@@ -40,4 +40,28 @@ public class ReduceTest {
         
         assertEquals(55, source.first().intValue());
     }
+    
+    @Test
+    public void aggregate() {
+        Ix<Integer> source = Ix.range(1, 10).reduce(new Func2<Integer, Integer, Integer>() {
+            @Override
+            public Integer call(Integer a, Integer b) {
+                return a + b;
+            }
+        });
+        
+        assertEquals(55, source.first().intValue());
+    }
+    
+    @Test
+    public void aggregateEmpty() {
+        Ix<Integer> source = Ix.<Integer>empty().reduce(new Func2<Integer, Integer, Integer>() {
+            @Override
+            public Integer call(Integer a, Integer b) {
+                return a + b;
+            }
+        });
+        
+        IxTestHelper.assertValues(source);
+    }
 }

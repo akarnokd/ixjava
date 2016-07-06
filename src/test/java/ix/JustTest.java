@@ -16,17 +16,17 @@
 
 package ix;
 
+import java.util.*;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class JustTest {
 
+    @SuppressWarnings("unchecked")
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.just(1);
+        Ix<List<Integer>> source = Ix.range(1, 10).toList();
         
-        assertEquals(1, source.iterator().next().intValue());
-        
-        IxTestHelper.assertValues(source, 1);
+        IxTestHelper.assertValues(source, Arrays.<Integer>asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
     }
 }

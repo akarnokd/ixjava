@@ -16,7 +16,7 @@
 
 package ix;
 
-import java.util.Iterator;
+import java.util.*;
 
 final class IxRange extends Ix<Integer> {
 
@@ -57,12 +57,12 @@ final class IxRange extends Ix<Integer> {
                 index = i + 1;
                 return i;
             }
-            return noelements();
+            throw new NoSuchElementException();
         }
         
         @Override
         public void remove() {
-            unsupported();
+            throw new UnsupportedOperationException();
         }
     }
 

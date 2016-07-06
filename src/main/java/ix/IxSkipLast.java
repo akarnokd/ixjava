@@ -66,12 +66,8 @@ final class IxSkipLast<T> extends IxSource<T, T> {
                 size = s;
             }
 
-            if (s == 0) {
-                value = it.next();
-            } else {
-                value = fromObject(poll());
-                offer(toObject(it.next()));
-            }
+            value = fromObject(poll());
+            offer(toObject(it.next()));
 
             hasValue = true;
             

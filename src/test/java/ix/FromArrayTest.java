@@ -16,7 +16,7 @@
 
 package ix;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class FromArrayTest {
 
@@ -33,5 +33,49 @@ public class FromArrayTest {
         
         IxTestHelper.assertValues(source, 2, 3, 4, 5, 6, 7, 8);
     }
+    
+    @Test
+    public void empty() {
+        Ix<Integer> source = Ix.fromArray();
+        
+        Assert.assertSame(source.getClass().toString(), source, Ix.empty());
+    }
 
+    @Test
+    public void just() {
+        Ix<Integer> source = Ix.fromArray(1);
+        
+        Assert.assertTrue(source.getClass().toString(), source instanceof IxScalarCallable);
+    }
+
+    @Test
+    public void rangeChecks() {
+        try {
+            Ix.fromArrayRange(-1, 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=-1, end=1, length=10", ex.getMessage());
+        }
+        
+        try {
+            Ix.fromArrayRange(1, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=1, end=-1, length=10", ex.getMessage());
+        }
+        
+        try {
+            Ix.fromArrayRange(12, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=12, end=-1, length=10", ex.getMessage());
+        }
+        
+        try {
+            Ix.fromArrayRange(1, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=1, end=12, length=10", ex.getMessage());
+        }
+    } 
 }

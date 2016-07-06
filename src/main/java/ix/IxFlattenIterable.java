@@ -19,7 +19,6 @@ package ix;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import rx.exceptions.Exceptions;
 import rx.functions.Func1;
 
 final class IxFlattenIterable<T, R> extends IxSource<T, R> {
@@ -35,11 +34,7 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
     @Override
     public Iterator<R> iterator() {
         if (source instanceof Callable) {
-            try {
-                return (Iterator<R>)(mapper.call(((Callable<T>)source).call()).iterator());
-            } catch (Exception e) {
-                Exceptions.propagate(e);
-            }
+            return (Iterator<R>)(mapper.call(checkedCall((Callable<T>)source)).iterator());
         }
         return new FlattenIterator<T, R>(source.iterator(), mapper);
     }
@@ -64,11 +59,7 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
                 if (it.hasNext()) {
                     Iterable<? extends R> inner = mapper.call(it.next());
                     if (inner instanceof Callable) {
-                        try {
-                            value = ((Callable<R>)inner).call();
-                        } catch (Exception e) {
-                            Exceptions.propagate(e);
-                        }
+                        value = checkedCall((Callable<R>)inner);
                         hasValue = true;
                         return true;
                     }

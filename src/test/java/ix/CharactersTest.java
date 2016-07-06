@@ -16,7 +16,7 @@
 
 package ix;
 
-import org.junit.Test;
+import org.junit.*;
 
 public class CharactersTest {
 
@@ -28,5 +28,40 @@ public class CharactersTest {
                 (int)'H', (int)'e', (int)'l', (int)'l', 
                         (int)'o', (int)' ', (int)'w', (int)'o', (int)'r', (int)'l', 
                         (int)'d', (int)'!');
+        
+        IxTestHelper.assertNoRemove(source);
     }
+    
+    @Test
+    public void rangeChecks() {
+        String s = "Hello world";
+        
+        try {
+            Ix.characters(s, -1, 1);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=-1, end=1, length=11", ex.getMessage());
+        }
+        
+        try {
+            Ix.characters(s, 1, -1);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=1, end=-1, length=11", ex.getMessage());
+        }
+        
+        try {
+            Ix.characters(s, 12, -1);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=12, end=-1, length=11", ex.getMessage());
+        }
+        
+        try {
+            Ix.characters(s, 1, 12);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=1, end=12, length=11", ex.getMessage());
+        }
+    } 
 }

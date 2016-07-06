@@ -57,12 +57,12 @@ final class IxJust<T> extends Ix<T> implements IxScalarCallable<T> {
                 empty = true;
                 return value;
             }
-            return noelements();
+            throw new NoSuchElementException();
         }
         
         @Override
         public void remove() {
-            unsupported();
+            throw new UnsupportedOperationException();
         }
     }
 }

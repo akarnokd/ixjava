@@ -16,32 +16,16 @@
 
 package ix;
 
-import rx.functions.Func1;
+import org.junit.*;
 
-enum FunctionHelper {
-    ;
-    
-    enum Identity implements Func1<Object, Object> {
-        INSTANCE
-        ;
+public class HideTest {
+
+    @Test
+    public void normal() {
+        Ix<Integer> source = Ix.just(1);
+
+        Assert.assertTrue(source instanceof IxScalarCallable);
         
-        @SuppressWarnings("unchecked")
-        public static <T> Func1<T, T> instance() {
-            return (Func1<T, T>)INSTANCE;
-        }
-        
-        @Override
-        public Object call(Object t) {
-            return t;
-        }
-    }
-    
-    enum NumberToLong implements Func1<Number, Long> {
-        INSTANCE;
-        
-        @Override
-        public Long call(Number t1) {
-            return t1.longValue();
-        }
+        Assert.assertFalse((source.hide()) instanceof IxScalarCallable);
     }
 }

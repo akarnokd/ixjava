@@ -16,6 +16,55 @@
 
 package ix;
 
+import java.io.IOException;
+import java.util.concurrent.Callable;
+
+import org.junit.*;
+
 public class IxTest {
+
+    @Test(expected = RuntimeException.class)
+    public void checkedCallWraps() {
+        
+        Ix.checkedCall(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                throw new IOException();
+            }
+        });
+    }
+    
+    @Test(expected = InternalError.class)
+    public void checkedCallNoWrapsError() {
+        
+        Ix.checkedCall(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                throw new InternalError();
+            }
+        });
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void checkedCallNoWrapping() {
+        
+        Ix.checkedCall(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                throw new IllegalArgumentException();
+            }
+        });
+    }
+    
+    @Test
+    public void nullCheck() {
+        Ix.nullCheck(1, "Should not fail");
+        try {
+            Ix.nullCheck(null, "Failure");
+            Assert.fail("Failed to throw NPE");
+        } catch (NullPointerException ex) {
+            Assert.assertEquals("Failure", ex.getMessage());
+        }
+    }
 
 }
