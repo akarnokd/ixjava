@@ -79,5 +79,13 @@ public class FromArrayTest {
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=1, end=12, length=10", ex.getMessage());
         }
+        
+        try {
+            Ix.fromArrayRange(12, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=12, end=12, length=10", ex.getMessage());
+        }
+
     } 
 }

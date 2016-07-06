@@ -31,7 +31,18 @@ public class CharactersTest {
         
         IxTestHelper.assertNoRemove(source);
     }
-    
+
+    @Test
+    public void normalRange() {
+        Ix<Integer> source = Ix.characters("Hello world!", 2, 8);
+        
+        IxTestHelper.assertValues(source,
+                (int)'l', (int)'l', 
+                        (int)'o', (int)' ', (int)'w', (int)'o');
+        
+        IxTestHelper.assertNoRemove(source);
+    }
+
     @Test
     public void rangeChecks() {
         String s = "Hello world";
@@ -62,6 +73,13 @@ public class CharactersTest {
             Assert.fail("Failed to throw IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=1, end=12, length=11", ex.getMessage());
+        }
+        
+        try {
+            Ix.characters(s, 12, 12);
+            Assert.fail("Failed to throw IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            Assert.assertEquals("start=12, end=12, length=11", ex.getMessage());
         }
     } 
 }

@@ -54,7 +54,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     public static Ix<Integer> characters(CharSequence cs) {
-        return characters(cs, 0, cs.length());
+        return new IxCharacters(cs, 0, cs.length());
     }
     
     public static Ix<Integer> characters(CharSequence cs, int start, int end) {
@@ -276,6 +276,18 @@ public abstract class Ix<T> implements Iterable<T> {
             it.next();
             it.remove();
         }
+    }
+    
+    public final Ix<T> skipWhile(Pred<? super T> predicate) {
+        return new IxSkipWhile<T>(this, predicate);
+    }
+    
+    public final Ix<T> takeWhile(Pred<? super T> predicate) {
+        return new IxTakeWhile<T>(this, predicate);
+    }
+    
+    public final Ix<T> takeUntil(Pred<? super T> stopPredicate) {
+        return new IxTakeUntil<T>(this, stopPredicate);
     }
     
     // --------------------------------------------------------------------------------------------
