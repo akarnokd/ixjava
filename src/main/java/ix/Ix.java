@@ -102,14 +102,14 @@ public abstract class Ix<T> implements Iterable<T> {
     public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
         return new IxFlattenIterable<Iterable<? extends T>, T>(
                 (Iterable)sources, 
-                FunctionHelper.Identity.<Iterable<? extends T>>instance());
+                IdentityHelper.<Iterable<? extends T>>instance());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T> Ix<T> merge(Iterable<? extends Iterable<? extends T>> sources) {
         return new IxFlattenIterable<Iterable<? extends T>, T>(
                 (Iterable)sources, 
-                FunctionHelper.Identity.<Iterable<? extends T>>instance());
+                IdentityHelper.<Iterable<? extends T>>instance());
     }
 
     //---------------------------------------------------------------------------------------
@@ -237,7 +237,7 @@ public abstract class Ix<T> implements Iterable<T> {
     
     @SuppressWarnings("unchecked")
     public final Ix<Long> toLong() {
-        return ((Ix<Number>)this).map(FunctionHelper.NumberToLong.INSTANCE);
+        return ((Ix<Number>)this).map(NumberToLongHelper.INSTANCE);
     }
 
     public final Ix<T> skip(int n) {
@@ -270,6 +270,14 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxFlattenIterable<T, R>(this, mapper);
     }
 
+    public final void removeAll() {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+    }
+    
     // --------------------------------------------------------------------------------------------
     // Helper methods
     // --------------------------------------------------------------------------------------------
@@ -287,22 +295,6 @@ public abstract class Ix<T> implements Iterable<T> {
             throw new NullPointerException(message);
         }
         return value;
-    }
-    
-    /**
-     * Convenience method to throw UnsupportedOperationException();
-     */
-    protected static void unsupported() {
-        throw new UnsupportedOperationException();
-    }
-    
-    /**
-     * Convenience method to throw NoSuchElementException();
-     * @param <U> the value type
-     * @return never returns as it throws
-     */
-    protected static <U> U noelements() {
-        throw new NoSuchElementException();
     }
     
     /**

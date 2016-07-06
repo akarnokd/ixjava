@@ -16,32 +16,30 @@
 
 package ix;
 
-import rx.functions.Func1;
+import org.junit.*;
 
-enum FunctionHelper {
-    ;
-    
-    enum Identity implements Func1<Object, Object> {
-        INSTANCE
-        ;
+public class EmptyTest {
+
+    @Test
+    public void normal() {
+        Ix<Integer> source = Ix.empty();
         
-        @SuppressWarnings("unchecked")
-        public static <T> Func1<T, T> instance() {
-            return (Func1<T, T>)INSTANCE;
-        }
+        IxTestHelper.assertValues(source);
         
-        @Override
-        public Object call(Object t) {
-            return t;
-        }
+        IxTestHelper.assertNoRemove(source);
     }
     
-    enum NumberToLong implements Func1<Number, Long> {
-        INSTANCE;
+    @Test
+    public void removeThrows() {
+        Ix<Integer> source = Ix.empty();
         
-        @Override
-        public Long call(Number t1) {
-            return t1.longValue();
+        IxTestHelper.assertNoRemove(source);
+        
+        try {
+            source.iterator().remove();
+            Assert.fail("Should have thrown UnsupportedOperationException");
+        } catch (UnsupportedOperationException ex) {
+            // expected
         }
     }
 }

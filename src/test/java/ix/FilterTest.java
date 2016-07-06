@@ -16,7 +16,9 @@
 
 package ix;
 
-import org.junit.Test;
+import java.util.*;
+
+import org.junit.*;
 
 public class FilterTest {
 
@@ -56,4 +58,17 @@ public class FilterTest {
         IxTestHelper.assertValues(source);
     }
 
+    @Test
+    public void removeComposes() {
+        List<Integer> list = Ix.range(1, 10).toList().first();
+        
+        Ix.from(list).filter(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return (v & 1) != 0;
+            }
+        }).removeAll();
+        
+        Assert.assertEquals(Arrays.asList(2, 4, 6, 8, 10), list);
+    }
 }

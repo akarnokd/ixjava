@@ -16,16 +16,28 @@
 
 package ix;
 
-import org.junit.Test;
+import org.junit.*;
 
-public class JustTest {
+public class HelperTest {
 
     @Test
-    public void normal() {
-        Ix<Integer> source = Ix.just(1);
-        
-        IxTestHelper.assertValues(source, 1);
-        
-        IxTestHelper.assertNoRemove(source);
+    public void toListHelper() {
+        Assert.assertEquals(1, ToListHelper.values().length);
+
+        Assert.assertNotNull(ToListHelper.valueOf("INSTANCE"));
+    }
+    
+    @Test
+    public void identityHelper() {
+        Assert.assertEquals(1, IdentityHelper.values().length);
+
+        Assert.assertNotNull(IdentityHelper.valueOf("INSTANCE"));
+    }
+    
+    @Test
+    public void numberToLongHelper() {
+        Assert.assertEquals(1, NumberToLongHelper.values().length);
+
+        Assert.assertNotNull(NumberToLongHelper.valueOf("INSTANCE"));
     }
 }

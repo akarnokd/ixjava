@@ -19,8 +19,6 @@ package ix;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import rx.exceptions.Exceptions;
-
 final class IxFlattenArrayIterable<T> extends Ix<T> {
 
     final Iterable<T>[] sources;
@@ -57,11 +55,7 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
                     Iterable<? extends T> inner = sources[i];
                     index = i + 1;
                     if (inner instanceof Callable) {
-                        try {
-                            value = ((Callable<T>)inner).call();
-                        } catch (Exception e) {
-                            Exceptions.propagate(e);
-                        }
+                        value = checkedCall(((Callable<T>)inner));
                         hasValue = true;
                         return true;
                     }

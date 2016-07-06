@@ -16,7 +16,7 @@
 
 package ix;
 
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * A base iterator that manages
@@ -56,7 +56,7 @@ public abstract class IxBaseIterator<T, R> implements Iterator<R> {
     @Override
     public final R next() {
         if (!hasValue && !hasNext()) {
-            return Ix.noelements();
+            throw new NoSuchElementException();
         }
         R v = value;
         hasValue = false;
@@ -66,6 +66,6 @@ public abstract class IxBaseIterator<T, R> implements Iterator<R> {
     
     @Override
     public void remove() {
-        Ix.unsupported();
+        throw new UnsupportedOperationException();
     }
 }

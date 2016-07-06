@@ -39,11 +39,11 @@ final class IxEmpty extends Ix<Object> implements Iterator<Object> {
 
     @Override
     public Object next() {
-        return noelements();
+        throw new NoSuchElementException();
     }
     
     @Override
     public void remove() {
-        unsupported();
+        throw new UnsupportedOperationException();
     }
 }

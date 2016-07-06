@@ -25,6 +25,8 @@ public class FromArrayTest {
         Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
     @Test

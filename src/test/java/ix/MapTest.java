@@ -16,7 +16,9 @@
 
 package ix;
 
-import org.junit.Test;
+import java.util.*;
+
+import org.junit.*;
 
 import rx.functions.Func1;
 
@@ -32,5 +34,19 @@ public class MapTest {
         });
         
         IxTestHelper.assertValues(source, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+    }
+    
+    @Test
+    public void removeComposes() {
+        List<Integer> list = Ix.range(1, 10).toList().first();
+        
+        Ix.from(list).map(new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer v) {
+                return v + 1;
+            }
+        }).removeAll();
+        
+        Assert.assertEquals(Arrays.asList(), list);
     }
 }
