@@ -33,14 +33,11 @@ if (!hasProperty('mainClass')) {
     ext.mainClass = ''
 }
 
-
-
-apply from: file('gradle/maven.gradle')
-
 repositories {
     mavenCentral()
 }
 
+apply from: file('gradle/maven.gradle')
 apply plugin: 'maven'
 apply plugin: 'osgi'
 
@@ -78,10 +75,6 @@ jar {
     }
 }
 
-apply plugin: 'license'
-
-apply from: file('gradle/license.gradle')
-
 jmh {
     jmhVersion = '1.11.3'
     humanOutputFile = null
@@ -109,6 +102,10 @@ test {
 }
 
 license {
+    header rootProject.file('HEADER')
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    skipExistingHeaders true
+    ignoreFailures true
     excludes(["**/*.md", "**/*.txt"])
 }
 
