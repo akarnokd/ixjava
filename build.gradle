@@ -122,13 +122,14 @@ jacocoTestReport {
 
 build.dependsOn jacocoTestReport
 
+check.dependsOn jacocoTestReport
+
 pmd {
     toolVersion = '5.4.2'
     ignoreFailures = true
     sourceSets = [sourceSets.main]
     ruleSets = []
     ruleSetFiles = files('pmd.xml')
-
 }
 
 pmdMain {
@@ -139,7 +140,7 @@ pmdMain {
 }
 
 task pmdPrint(dependsOn: 'pmdMain') << {
-    File file = new File('build/reports/pmd/main.xml')
+    File file = rootProject.file('build/reports/pmd/main.xml')
     if (file.exists()) {
 
         println("Listing first 100 PMD violations")
@@ -156,6 +157,7 @@ task pmdPrint(dependsOn: 'pmdMain') << {
 }
 
 build.dependsOn pmdPrint
+check.dependsOn pmdPrint
 
 animalsniffer {
     annotation = 'rx.internal.util.SuppressAnimalSniffer'
