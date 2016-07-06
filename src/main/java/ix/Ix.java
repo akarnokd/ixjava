@@ -129,17 +129,17 @@ public abstract class Ix<T> implements Iterable<T> {
         return concatArray(sources); // concat and merge are the same in the Iterable world
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
         return new IxFlattenIterable<Iterable<? extends T>, T>(
-                (Iterable<Iterable<? extends T>>)sources, 
+                (Iterable)sources, 
                 FunctionHelper.Identity.<Iterable<? extends T>>instance());
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T> Ix<T> merge(Iterable<? extends Iterable<? extends T>> sources) {
         return new IxFlattenIterable<Iterable<? extends T>, T>(
-                (Iterable<Iterable<? extends T>>)sources, 
+                (Iterable)sources, 
                 FunctionHelper.Identity.<Iterable<? extends T>>instance());
     }
 
