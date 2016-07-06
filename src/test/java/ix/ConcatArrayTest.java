@@ -16,7 +16,9 @@
 
 package ix;
 
-import org.junit.Test;
+import java.util.Arrays;
+
+import org.junit.*;
 
 public class ConcatArrayTest {
 
@@ -29,6 +31,16 @@ public class ConcatArrayTest {
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void normalViaMerge() {
+        Ix<Integer> source = Ix.mergeArray(Ix.range(1, 5), Ix.range(6, 5));
+        
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    }
+
+    
     @SuppressWarnings("unchecked")
     @Test
     public void just() {
@@ -67,4 +79,38 @@ public class ConcatArrayTest {
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6);
     }
 
+    @Test
+    public void emptyArray() {
+        @SuppressWarnings("unchecked")
+        Ix<Integer> source = Ix.concatArray();
+        
+        Assert.assertSame(source.getClass().toString(), source, Ix.empty());
+    }
+
+    @Test
+    public void justArray() {
+        @SuppressWarnings("unchecked")
+        Ix<Integer> source = Ix.concatArray(Ix.just(1));
+        
+        Assert.assertTrue(source.getClass().toString(), source instanceof IxScalarCallable);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void concatIterable() {
+        Ix<Integer> source = Ix.concat(Arrays.asList(Ix.range(1, 5), Ix.range(6, 5)));
+        
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void concatIterableViaMerge() {
+        Ix<Integer> source = Ix.merge(Arrays.asList(Ix.range(1, 5), Ix.range(6, 5)));
+        
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+    }
+    
 }
