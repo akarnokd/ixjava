@@ -75,6 +75,19 @@ jar {
     }
 }
 
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact (sourcesJar) { 
+                classifier = 'sources'
+            }
+        }
+    }
+}
+
 jmh {
     jmhVersion = '1.11.3'
     humanOutputFile = null

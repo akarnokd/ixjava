@@ -83,18 +83,19 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxFromArray<T>(start, end, values);
     }
 
-    public static <T> Ix<T> concatArray(Iterable<T>... sources) {
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> concatArray(Iterable<? extends T>... sources) {
         int n = sources.length;
         if (n == 0) {
             return empty();
         }
         if (n == 1) {
-            return from(sources[0]);
+            return from((Iterable<T>)sources[0]);
         }
-        return new IxFlattenArrayIterable<T>(sources);
+        return new IxFlattenArrayIterable<T>((Iterable<T>[])sources);
     }
 
-    public static <T> Ix<T> mergeArray(Iterable<T>... sources) {
+    public static <T> Ix<T> mergeArray(Iterable<? extends T>... sources) {
         return concatArray(sources); // concat and merge are the same in the Iterable world
     }
 
@@ -113,13 +114,9 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     //---------------------------------------------------------------------------------------
-    // Instance operators
+    // Leaving the Iterable world
     //---------------------------------------------------------------------------------------
-    
-    public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
-        return new IxMap<T, R>(this, mapper);
-    }
-    
+
     @SuppressWarnings("unchecked")
     public final T first() {
         if (this instanceof Callable) {
@@ -174,6 +171,36 @@ public abstract class Ix<T> implements Iterable<T> {
                 return t;
             }
         }
+    }
+    
+    public final void removeAll() {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+    }
+    
+    public final void foreach(Action1<? super T> action) {
+        for (T t : this) {
+            action.call(t);
+        }
+    }
+    
+    public final void foreachWhile(Pred<? super T> action) {
+        for (T t : this) {
+            if (!action.test(t)) {
+                break;
+            }
+        }
+    }
+
+    //---------------------------------------------------------------------------------------
+    // Instance operators
+    //---------------------------------------------------------------------------------------
+    
+    public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
+        return new IxMap<T, R>(this, mapper);
     }
     
     public final Ix<T> filter(Pred<T> predicate) {
@@ -270,14 +297,6 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxFlattenIterable<T, R>(this, mapper);
     }
 
-    public final void removeAll() {
-        Iterator<T> it = iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-        }
-    }
-    
     public final Ix<T> skipWhile(Pred<? super T> predicate) {
         return new IxSkipWhile<T>(this, predicate);
     }
