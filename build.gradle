@@ -7,14 +7,19 @@ buildscript {
     }
 
     dependencies {
-        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.9.0'
+        classpath 'gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1'
         classpath "me.champeau.gradle:jmh-gradle-plugin:0.2.0"
+        classpath 'ru.vyarus:gradle-animalsniffer-plugin:1.1.0'
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: "me.champeau.gradle.jmh"
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+apply plugin: 'ru.vyarus.animalsniffer'
+apply plugin: "com.github.hierynomus.license"
 
 sourceCompatibility = '1.6'
 targetCompatibility = '1.6'
@@ -40,7 +45,10 @@ apply plugin: 'maven'
 apply plugin: 'osgi'
 
 dependencies {
+    signature 'org.codehaus.mojo.signature:java16:1.1@signature'
+
     compile "io.reactivex:rxjava:1.1.6"
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -98,4 +106,60 @@ test {
         events "started", "failed" // "skipped", "passed"
     //    showStandardStreams = true
     }
+}
+
+license {
+    excludes(["**/*.md", "**/*.txt"])
+}
+
+jacoco {
+    toolVersion = '0.7.7.201606060606' // See http://www.eclemma.org/jacoco/.
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+build.dependsOn jacocoTestReport
+
+pmd {
+    toolVersion = '5.4.2'
+    ignoreFailures = true
+    sourceSets = [sourceSets.main]
+    ruleSets = []
+    ruleSetFiles = files('pmd.xml')
+
+}
+
+pmdMain {
+    reports {
+        html.enabled = true
+        xml.enabled = true
+    }
+}
+
+task pmdPrint(dependsOn: 'pmdMain') << {
+    File file = new File('build/reports/pmd/main.xml')
+    if (file.exists()) {
+
+        println("Listing first 100 PMD violations")
+
+        file.eachLine { line, count ->
+            if (count <= 100) {
+               println(line)
+            }
+        }
+
+    } else {
+        println("PMD file not found.")
+    }
+}
+
+build.dependsOn pmdPrint
+
+animalsniffer {
+    annotation = 'rx.internal.util.SuppressAnimalSniffer'
 }

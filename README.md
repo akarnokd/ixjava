@@ -11,6 +11,9 @@ and interactive dataflows.**
 # Releases
 
 <a href='https://travis-ci.org/akarnokd/ixjava/builds'><img src='https://travis-ci.org/akarnokd/ixjava.svg?branch=1.x'></a>
+[![codecov.io](http://codecov.io/github/akarnokd/ixjava/coverage.svg?branch=1.x)](http://codecov.io/github/akarnokd/ixjava?branch=1.x)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.akarnokd/ixjava/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.akarnokd/ixjava)
+
 
 **gradle**
 

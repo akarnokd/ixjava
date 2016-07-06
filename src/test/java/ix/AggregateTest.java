@@ -17,16 +17,31 @@
 package ix;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class JustTest {
+public class AggregateTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.just(1);
         
-        assertEquals(1, source.iterator().next().intValue());
+        Ix<Integer> source = Ix.range(1, 10).sumInt();
+        
+        IxTestHelper.assertValues(source, 55);
+    }
+    
+    @Test
+    public void just() {
+        
+        Ix<Integer> source = Ix.just(1).sumInt();
         
         IxTestHelper.assertValues(source, 1);
     }
+
+    @Test
+    public void empty() {
+        
+        Ix<Integer> source = Ix.<Integer>empty().sumInt();
+        
+        IxTestHelper.assertValues(source);
+    }
+
 }

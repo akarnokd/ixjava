@@ -16,17 +16,21 @@
 
 package ix;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import java.util.Iterator;
 
-public class JustTest {
+/**
+ * A base iterator that references an upstream iterator and manages
+ * the state between hasNext() and the next() calls; plus defines
+ * the remove() to throw UnsupportedOperationException.
+ * @param <T> the source value type
+ * @param <R> the result value type
+ */
+public abstract class IxSourceIterator<T, R> extends IxBaseIterator<T, R> {
 
-    @Test
-    public void normal() {
-        Ix<Integer> source = Ix.just(1);
-        
-        assertEquals(1, source.iterator().next().intValue());
-        
-        IxTestHelper.assertValues(source, 1);
+    /** The upstream's iterator. */
+    protected final Iterator<T> it;
+    
+    public IxSourceIterator(Iterator<T> it) {
+        this.it = it;
     }
 }

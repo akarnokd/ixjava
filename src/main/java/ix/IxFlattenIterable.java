@@ -1,0 +1,101 @@
+/*
+ * Copyright 2011-2016 David Karnok
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package ix;
+
+import java.util.Iterator;
+import java.util.concurrent.Callable;
+
+import rx.exceptions.Exceptions;
+import rx.functions.Func1;
+
+final class IxFlattenIterable<T, R> extends IxSource<T, R> {
+
+    final Func1<? super T, ? extends Iterable<? extends R>> mapper;
+    
+    public IxFlattenIterable(Iterable<T> source, Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+        super(source);
+        this.mapper = mapper;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public Iterator<R> iterator() {
+        if (source instanceof Callable) {
+            try {
+                return (Iterator<R>)(mapper.call(((Callable<T>)source).call()).iterator());
+            } catch (Exception e) {
+                Exceptions.propagate(e);
+            }
+        }
+        return new FlattenIterator<T, R>(source.iterator(), mapper);
+    }
+    
+    static final class FlattenIterator<T, R> extends IxSourceIterator<T, R> {
+
+        final Func1<? super T, ? extends Iterable<? extends R>> mapper;
+
+        Iterator<? extends R> current;
+        
+        public FlattenIterator(Iterator<T> it, Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+            super(it);
+            this.mapper = mapper;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected boolean moveNext() {
+            Iterator<? extends R> c = current;
+            
+            while (c == null) {
+                if (it.hasNext()) {
+                    Iterable<? extends R> inner = mapper.call(it.next());
+                    if (inner instanceof Callable) {
+                        try {
+                            value = ((Callable<R>)inner).call();
+                        } catch (Exception e) {
+                            Exceptions.propagate(e);
+                        }
+                        hasValue = true;
+                        return true;
+                    }
+                    
+                    c = inner.iterator();
+                    
+                    if (c.hasNext()) {
+                        current = c;
+                        break;
+                    } else {
+                        c = null;
+                    }
+                } else {
+                    done = true;
+                    return false;
+                }
+            }
+            
+            value = c.next();
+            hasValue = true;
+            
+            if (!c.hasNext()) {
+                current = null;
+            }
+            return true;
+        }
+        
+    }
+
+}

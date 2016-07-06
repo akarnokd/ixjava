@@ -16,17 +16,23 @@
 
 package ix;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import rx.functions.Func1;
 
-public class JustTest {
-
-    @Test
-    public void normal() {
-        Ix<Integer> source = Ix.just(1);
+enum FunctionHelper {
+    ;
+    
+    enum Identity implements Func1<Object, Object> {
+        INSTANCE
+        ;
         
-        assertEquals(1, source.iterator().next().intValue());
+        @SuppressWarnings("unchecked")
+        public static <T> Func1<T, T> instance() {
+            return (Func1<T, T>)INSTANCE;
+        }
         
-        IxTestHelper.assertValues(source, 1);
+        @Override
+        public Object call(Object t) {
+            return t;
+        }
     }
 }

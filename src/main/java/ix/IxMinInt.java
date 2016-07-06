@@ -18,50 +18,41 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
+final class IxMinInt extends IxSource<Integer, Integer> {
 
-final class IxCollect<T, C> extends IxSource<T, C> {
-
-    final Func0<C> initialFactory;
-    
-    final Action2<C, T> collector;
-    
-    public IxCollect(Iterable<T> source, Func0<C> initialFactory, Action2<C, T> collector) {
+    public IxMinInt(Iterable<Integer> source) {
         super(source);
-        this.initialFactory = initialFactory;
-        this.collector = collector;
     }
 
     @Override
-    public Iterator<C> iterator() {
-        return new CollectorIterator<T, C>(source.iterator(), collector, initialFactory.call());
+    public Iterator<Integer> iterator() {
+        return new MinIntIterator(source.iterator());
     }
 
-    static final class CollectorIterator<T, C> extends IxSourceIterator<T, C> {
+    static final class MinIntIterator extends IxSourceIterator<Integer, Integer> {
 
-        final Action2<C, T> collector;
-        
-        public CollectorIterator(Iterator<T> it, Action2<C, T> collector, C value) {
+        public MinIntIterator(Iterator<Integer> it) {
             super(it);
-            this.collector = collector;
-            this.value = value;
         }
 
         @Override
         protected boolean moveNext() {
-            Iterator<T> it = this.it;
-            
-            Action2<C, T> coll = collector;
-            
-            C c = value;
-            
+            Iterator<Integer> it = this.it;
+            if (!it.hasNext()) {
+                done = true;
+                return false;
+            }
+            int sum = it.next();
+
             while (it.hasNext()) {
-                coll.call(c, it.next());
+                sum = Math.min(sum, it.next());
             }
             
+            value = sum;
             hasValue = true;
             done = true;
             return true;
         }
+        
     }
 }

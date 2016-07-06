@@ -17,16 +17,21 @@
 package ix;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-public class JustTest {
+public class FromArrayTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.just(1);
+        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         
-        assertEquals(1, source.iterator().next().intValue());
-        
-        IxTestHelper.assertValues(source, 1);
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
+
+    @Test
+    public void range() {
+        Ix<Integer> source = Ix.fromArrayRange(1, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        IxTestHelper.assertValues(source, 2, 3, 4, 5, 6, 7, 8);
+    }
+
 }

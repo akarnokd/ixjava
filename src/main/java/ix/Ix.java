@@ -96,6 +96,53 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxCharacters(cs, start, end);
     }
     
+    public static <T> Ix<T> fromArray(T... values) {
+        int n = values.length;
+        if (n == 0) {
+            return empty();
+        }
+        if (n == 1) {
+            return just(values[0]);
+        }
+        return new IxFromArray<T>(0, values.length, values);
+    }
+
+    public static <T> Ix<T> fromArrayRange(int start, int end, T... values) {
+        if (start < 0 || end < 0 || start > values.length || end > values.length) {
+            throw new IndexOutOfBoundsException("start=" + start + ", end=" + end + ", length=" + values.length);
+        }
+        return new IxFromArray<T>(start, end, values);
+    }
+
+    public static <T> Ix<T> concatArray(Iterable<T>... sources) {
+        int n = sources.length;
+        if (n == 0) {
+            return empty();
+        }
+        if (n == 1) {
+            return from(sources[0]);
+        }
+        return new IxFlattenArrayIterable<T>(sources);
+    }
+
+    public static <T> Ix<T> mergeArray(Iterable<T>... sources) {
+        return concatArray(sources); // concat and merge are the same in the Iterable world
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
+        return new IxFlattenIterable<Iterable<? extends T>, T>(
+                (Iterable<Iterable<? extends T>>)sources, 
+                FunctionHelper.Identity.<Iterable<? extends T>>instance());
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> merge(Iterable<? extends Iterable<? extends T>> sources) {
+        return new IxFlattenIterable<Iterable<? extends T>, T>(
+                (Iterable<Iterable<? extends T>>)sources, 
+                FunctionHelper.Identity.<Iterable<? extends T>>instance());
+    }
+
     //---------------------------------------------------------------------------------------
     // Instance operators
     //---------------------------------------------------------------------------------------
@@ -208,4 +255,74 @@ public abstract class Ix<T> implements Iterable<T> {
         return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector())
                 .map(ToListHelper.<T>toArray());
     }
+    
+    public final Ix<T> reduce(Func2<T, T, T> reducer) {
+        return new IxAggregate<T>(this, reducer);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<Integer> maxInt() {
+        return new IxMaxInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Integer> minInt() {
+        return new IxMinInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Integer> sumInt() {
+        return new IxSumInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> maxLong() {
+        return new IxMaxLong((Ix<Long>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> minLong() {
+        return new IxMinLong((Ix<Long>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> sumLong() {
+        return new IxSumLong((Ix<Long>)this);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> toLong() {
+        return ((Ix<Number>)this).map(ReduceHelper.NumberToLong.INSTANCE);
+    }
+
+    public final Ix<T> skip(int n) {
+        if (n == 0) {
+            return this;
+        }
+        return new IxSkip<T>(this, n);
+    }
+
+    public final Ix<T> take(int n) {
+        return new IxTake<T>(this, n);
+    }
+
+    public final Ix<T> skipLast(int n) {
+        if (n == 0) {
+            return this;
+        }
+        return new IxSkipLast<T>(this, n);
+    }
+    
+    public final Ix<T> takeLast(int n) {
+        return new IxTakeLast<T>(this, n);
+    }
+    
+    public final <R> Ix<R> flatMap(Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+        return new IxFlattenIterable<T, R>(this, mapper);
+    }
+    
+    public final <R> Ix<R> concatMap(Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+        return new IxFlattenIterable<T, R>(this, mapper);
+    }
+
 }

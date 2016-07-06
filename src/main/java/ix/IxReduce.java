@@ -37,7 +37,7 @@ final class IxReduce<T, C> extends IxSource<T, C> {
         return new CollectorIterator<T, C>(source.iterator(), reducer, initialFactory.call());
     }
 
-    static final class CollectorIterator<T, C> extends IxBaseIterator<T, C> {
+    static final class CollectorIterator<T, C> extends IxSourceIterator<T, C> {
 
         final Func2<C, T, C> reducer;
         

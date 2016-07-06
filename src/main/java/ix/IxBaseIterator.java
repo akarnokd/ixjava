@@ -19,25 +19,23 @@ package ix;
 import java.util.Iterator;
 
 /**
- * A base iterator that references an upstream iterator and manages
- * the state between hasNext() and the next() calls.
+ * A base iterator that manages
+ * the state between hasNext() and the next() calls; plus defines
+ * the remove() to throw UnsupportedOperationException.
  * @param <T> the source value type
  * @param <R> the result value type
  */
-abstract class IxBaseIterator<T, R> implements Iterator<R> {
-
-    protected final Iterator<T> it;
+public abstract class IxBaseIterator<T, R> implements Iterator<R> {
     
+    /** Inidicates a value is available for consumption. */
     protected boolean hasValue;
     
+    /** Indicates there are no more data available. */
     protected boolean done;
     
+    /** The current value if hasValue is true. */
     protected R value;
 
-    public IxBaseIterator(Iterator<T> it) {
-        this.it = it;
-    }
-    
     /**
      * Move the stream forward by a single element.
      * @return what the hasNext should return
@@ -56,7 +54,7 @@ abstract class IxBaseIterator<T, R> implements Iterator<R> {
     }
     
     @Override
-    public R next() {
+    public final R next() {
         if (!hasValue && !hasNext()) {
             return Ix.noelements();
         }

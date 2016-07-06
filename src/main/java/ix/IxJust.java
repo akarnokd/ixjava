@@ -48,7 +48,7 @@ final class IxJust<T> extends Ix<T> implements IxScalarCallable<T> {
         
         @Override
         public boolean hasNext() {
-            return empty;
+            return !empty;
         }
 
         @Override
