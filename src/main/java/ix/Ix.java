@@ -19,6 +19,9 @@ package ix;
 import java.util.*;
 import java.util.concurrent.Callable;
 
+import rx.Observer;
+import rx.Subscriber;
+import rx.exceptions.Exceptions;
 import rx.functions.*;
 
 /**
@@ -113,91 +116,208 @@ public abstract class Ix<T> implements Iterable<T> {
                 IdentityHelper.<Iterable<? extends T>>instance());
     }
 
-    //---------------------------------------------------------------------------------------
-    // Leaving the Iterable world
-    //---------------------------------------------------------------------------------------
-
-    @SuppressWarnings("unchecked")
-    public final T first() {
-        if (this instanceof Callable) {
-            return checkedCall((Callable<T>) this);
-        }
-        return iterator().next();
+    public static <T> Ix<T> defer(Func0<? extends Iterable<? extends T>> factory) {
+        // TODO implement
+        throw new UnsupportedOperationException();
     }
 
-    @SuppressWarnings("unchecked")
-    public final T first(T defaultValue) {
-        if (this instanceof Callable) {
-            return checkedCall((Callable<T>) this);
-        }
-        Iterator<T> it = iterator();
-        if (it.hasNext()) {
-            return it.next();
-        }
-        return defaultValue;
+    public static <T> Ix<T> generate(Action1<Observer<T>> nextSupplier) {
+        // TODO implement
+        throw new UnsupportedOperationException();
     }
 
-    @SuppressWarnings("unchecked")
-    public final T last() {
-        if (this instanceof Callable) {
-            return checkedCall((Callable<T>) this);
-        }
-        Iterator<T> it = iterator();
-        if (!it.hasNext()) {
-            throw new NoSuchElementException();
-        }
-        
-        for (;;) {
-            T t = it.next();
-            if (!it.hasNext()) {
-                return t;
-            }
-        }
+    public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier, Action1<? super S> stateDisposer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
     }
     
-    @SuppressWarnings("unchecked")
-    public final T last(T defaultValue) {
-        if (this instanceof Callable) {
-            return checkedCall((Callable<T>) this);
-        }
-        Iterator<T> it = iterator();
-        if (!it.hasNext()) {
-            return defaultValue;
-        }
-        
-        for (;;) {
-            T t = it.next();
-            if (!it.hasNext()) {
-                return t;
-            }
-        }
+    public static <T, R> Ix<R> zip(Iterable<? extends T>[] sources, FuncN<R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T, R> Ix<R> zip(Iterable<? extends Iterable<? extends T>> sources, FuncN<R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T1, T2, R> Ix<R> zip(
+            Iterable<T1> it1, Iterable<T2> it2, 
+            Func2<? super T1, ? super T2, ? extends R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T1, T2, T3, R> Ix<R> zip(
+            Iterable<T1> it1, Iterable<T2> it2, 
+            Iterable<T3> it3,
+            Func3<? super T1, ? super T2, ? super T3, ? extends R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T1, T2, T3, T4, R> Ix<R> zip(
+            Iterable<T1> it1, Iterable<T2> it2, 
+            Iterable<T3> it3, Iterable<T3> it4,
+            Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T> Ix<T> repeat(T value) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T> Ix<T> repeat(T value, long count) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public static <T> Ix<T> repeat(T value, Pred0 stopPredicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
     }
     
-    public final void removeAll() {
-        Iterator<T> it = iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-        }
-    }
-    
-    public final void foreach(Action1<? super T> action) {
-        for (T t : this) {
-            action.call(t);
-        }
-    }
-    
-    public final void foreachWhile(Pred<? super T> action) {
-        for (T t : this) {
-            if (!action.test(t)) {
-                break;
-            }
-        }
+    public static <T> Ix<T> forloop(T seed, Pred<? super T> condition, Func1<? super T, ? extends T> next) {
+        // TODO implement
+        throw new UnsupportedOperationException();
     }
 
     //---------------------------------------------------------------------------------------
     // Instance operators
     //---------------------------------------------------------------------------------------
+
+    public final <R> R as(Func1<? super Ix<T>, R> transformer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <R> Ix<R> compose(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<Boolean> any(Pred<? super T> predicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    
+    public final Ix<Boolean> all(Pred<? super T> predicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<Boolean> hasElements() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> ignoreElements() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> max(Comparator<? super T> comparator) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> max() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> min(Comparator<? super T> comparator) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> min() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<Boolean> contains(Object o) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<Integer> count() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<Long> countLong() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> distinct() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> distinct(Pred2<? super T, ? super T> comparer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <K> Ix<T> distinct(Func1<? super T, K> keySelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> distinctUntilChanged() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> distinctUntilChanged(Pred2<? super T, ? super T> comparer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <K> Ix<T> distinctUntilChanged(Func1<? super T, K> keySelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> doOnNext(Action1<? super T> action) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> doOnCompleted(Action1<? super T> action) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> startWith(T... value) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> endWith(T... value) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<String> join() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<String> join(CharSequence separator) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
     
     public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
         return new IxMap<T, R>(this, mapper);
@@ -307,6 +427,370 @@ public abstract class Ix<T> implements Iterable<T> {
     
     public final Ix<T> takeUntil(Pred<? super T> stopPredicate) {
         return new IxTakeUntil<T>(this, stopPredicate);
+    }
+    
+    public final Ix<List<T>> buffer(int size) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<List<T>> buffer(int size, int skip) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final <K> Ix<GroupedIx<K, T>> groupBy(Func1<? super T, ? extends K> keySelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <K, V> Ix<GroupedIx<K, V>> groupBy(Func1<? super T, ? extends K> keySelector,
+            Func1<? super T, ? extends V> valueSelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> repeat() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> repeat(long times) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> repeat(Pred0 predicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> repeat(long times, Pred0 predicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> publish() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> replay() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> replay(int size) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final <K> Ix<Map<K, T>> toMap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.toMap(keySelector, f);
+    }
+
+    public final <K, V> Ix<Map<K, V>> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <K> Ix<Map<K, Collection<T>>> toMultimap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.toMultimap(keySelector, f);
+    }
+
+    public final <K, V> Ix<Map<K, Collection<V>>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<Ix<T>> window(int size) {
+        return window(size, size);
+    }
+
+    public final Ix<Ix<T>> window(int size, int skip) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> concatWith(Iterator<? extends T> other) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final Ix<T> mergeWith(Iterator<? extends T> other) {
+        return concatWith(other);
+    }
+    
+    public final <U, R> Ix<R> zipWith(Iterator<U> other, Func2<? super T, ? super U, ? extends R> zipper) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> orderBy() {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> orderBy(Comparator<? super T> comparator) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final <K extends Comparable<? super K>> Ix<T> orderBy(Func1<? super T, K> keySelector) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> scan(Func2<T, T, T> scanner) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    public final <R> Ix<R> scan(Func0<R> initialFactory, Func2<R, T, R> scanner) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final Ix<T> remove(Pred<? super T> predicate) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final <R> Ix<R> transform(IxTransform<T, R> transformer) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+    
+    public final <R> Ix<R> lift(Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
+        // TODO implement
+        throw new UnsupportedOperationException();
+    }
+
+    //---------------------------------------------------------------------------------------
+    // Leaving the Iterable world
+    //---------------------------------------------------------------------------------------
+
+    @SuppressWarnings("unchecked")
+    public final T first() {
+        if (this instanceof Callable) {
+            return checkedCall((Callable<T>) this);
+        }
+        return iterator().next();
+    }
+
+    @SuppressWarnings("unchecked")
+    public final T first(T defaultValue) {
+        if (this instanceof Callable) {
+            return checkedCall((Callable<T>) this);
+        }
+        Iterator<T> it = iterator();
+        if (it.hasNext()) {
+            return it.next();
+        }
+        return defaultValue;
+    }
+
+    @SuppressWarnings("unchecked")
+    public final T last() {
+        if (this instanceof Callable) {
+            return checkedCall((Callable<T>) this);
+        }
+        Iterator<T> it = iterator();
+        if (!it.hasNext()) {
+            throw new NoSuchElementException();
+        }
+        
+        for (;;) {
+            T t = it.next();
+            if (!it.hasNext()) {
+                return t;
+            }
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final T last(T defaultValue) {
+        if (this instanceof Callable) {
+            return checkedCall((Callable<T>) this);
+        }
+        Iterator<T> it = iterator();
+        if (!it.hasNext()) {
+            return defaultValue;
+        }
+        
+        for (;;) {
+            T t = it.next();
+            if (!it.hasNext()) {
+                return t;
+            }
+        }
+    }
+    
+    public final void removeAll() {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+    }
+    
+    public final void foreach(Action1<? super T> action) {
+        for (T t : this) {
+            action.call(t);
+        }
+    }
+    
+    public final void foreachWhile(Pred<? super T> action) {
+        for (T t : this) {
+            if (!action.test(t)) {
+                break;
+            }
+        }
+    }
+
+    public final <U extends Collection<? super T>> U into(U collection) {
+        for (T v : this) {
+            collection.add(v);
+        }
+        return collection;
+    }
+
+    public final void print() {
+        print(", ", 80);
+    }
+
+    public final void print(CharSequence separator, int charsPerLine) {
+        boolean first = true;
+        int len = 0;
+        
+        for (T v : this) {
+            
+            String s = String.valueOf(v);
+
+            if (first) {
+                System.out.print(s);
+                len += s.length();
+                first = false;
+            } else {
+                System.out.print(separator);
+                len += separator.length();
+                if (len > charsPerLine) {
+                    System.out.println();;
+                    System.out.print(s);
+                    len = s.length();
+                }
+            }
+            
+        }
+    }
+
+    public final void println() {
+        for (T v : this) {
+            System.out.println(v);
+        }
+    }
+
+    public final void println(CharSequence prefix) {
+        for (T v : this) {
+            System.out.print(prefix);
+            System.out.println(v);
+        }
+    }
+
+    /**
+     * Iterates over this instance, dropping all values it produces.
+     */
+    public final void run() {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            it.next();
+        }
+    }
+
+    public final void subscribe() {
+        run();
+    }
+
+    public final void subscribe(Action1<? super T> consumer) {
+        for (T v : this) {
+            consumer.call(v);
+        }
+    }
+
+    public final void subscribe(Action1<? super T> consumer, Action1<Throwable> onError) {
+        try {
+            for (T v : this) {
+                consumer.call(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            onError.call(ex);
+        }
+    }
+
+    public final void subscribe(Action1<? super T> consumer, Action1<Throwable> onError, Action0 onCompleted) {
+        try {
+            for (T v : this) {
+                consumer.call(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            onError.call(ex);
+            return;
+        }
+        onCompleted.call();
+    }
+
+    public final void subscribe(Observer<? super T> observer) {
+        try {
+            for (T v : this) {
+                observer.onNext(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            observer.onError(ex);
+            return;
+        }
+        observer.onCompleted();
+    }
+    
+    public final void subscribe(Subscriber<? super T> subscriber) {
+        try {
+            for (T v : this) {
+                if (subscriber.isUnsubscribed()) {
+                    return;
+                }
+                subscriber.onNext(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            if (subscriber.isUnsubscribed()) {
+                return;
+            }
+            subscriber.onError(ex);
+            return;
+        }
+        if (subscriber.isUnsubscribed()) {
+            return;
+        }
+        subscriber.onCompleted();
     }
     
     // --------------------------------------------------------------------------------------------
