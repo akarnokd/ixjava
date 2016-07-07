@@ -26,7 +26,9 @@ import rx.functions.*;
 
 /**
  * Base class and entry point for fluent iterables.
+ * 
  * @param <T> the value type
+ * @since 1.0
  */
 public abstract class Ix<T> implements Iterable<T> {
 
@@ -572,7 +574,7 @@ public abstract class Ix<T> implements Iterable<T> {
         // TODO implement
         throw new UnsupportedOperationException();
     }
-    
+
     public final <R> Ix<R> transform(IxTransform<T, R> transformer) {
         // TODO implement
         throw new UnsupportedOperationException();
@@ -792,7 +794,54 @@ public abstract class Ix<T> implements Iterable<T> {
         }
         subscriber.onCompleted();
     }
-    
+
+    /**
+     * Consumes this Iterable and removes all elements for
+     * which the predicate returns false; in other words,
+     * retain those elements of a mutable source that match
+     * the predicate.
+     * @param predicate the predicate called with the current
+     * element and should return true for elements to keep, false
+     * for elements to remove.
+     * @throws UnsupportedOperationException if the this Iterable
+     * doesn't allow removing elements.
+     * @see #removeAll(Pred)
+     * @since 1.0
+     */
+    public final void retainAll(Pred<? super T> predicate) {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            T v = it.next();
+            if (!predicate.test(v)) {
+                it.remove();
+            }
+        }
+    }
+
+    /**
+     * Consumes this Iterable and removes all elements for
+     * which the predicate returns true; in other words,
+     * remove those elements of a mutable source that match
+     * the predicate.
+     * @param predicate the predicate called with the current
+     * element and should return true for elements to remove, false
+     * for elements to keep.
+     * @throws UnsupportedOperationException if the this Iterable
+     * doesn't allow removing elements.
+     * @see #retainAll(Pred)
+     * @see #removeAll()
+     * @since 1.0
+     */
+    public final void removeAll(Pred<? super T> predicate) {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            T v = it.next();
+            if (predicate.test(v)) {
+                it.remove();
+            }
+        }
+    }
+
     // --------------------------------------------------------------------------------------------
     // Helper methods
     // --------------------------------------------------------------------------------------------
