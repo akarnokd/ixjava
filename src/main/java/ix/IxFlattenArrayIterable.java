@@ -32,7 +32,7 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
         return new FlattenIterator<T>(sources);
     }
     
-    static final class FlattenIterator<T> extends IxBaseIterator<T, T> {
+    static final class FlattenIterator<T> extends IxBaseIterator<T> {
 
         final Iterable<T>[] sources;
 

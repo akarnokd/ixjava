@@ -22,10 +22,9 @@ import java.util.*;
  * A base iterator that manages
  * the state between hasNext() and the next() calls; plus defines
  * the remove() to throw UnsupportedOperationException.
- * @param <T> the source value type
  * @param <R> the result value type
  */
-public abstract class IxBaseIterator<T, R> implements Iterator<R> {
+public abstract class IxBaseIterator<R> implements Iterator<R> {
     
     /** Inidicates a value is available for consumption. */
     protected boolean hasValue;

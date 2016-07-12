@@ -16,21 +16,24 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-/**
- * A base iterator that references an upstream iterator and manages
- * the state between hasNext() and the next() calls; plus defines
- * the remove() to throw UnsupportedOperationException.
- * @param <T> the source value type
- * @param <R> the result value type
- */
-public abstract class IxSourceIterator<T, R> extends IxBaseIterator<R> {
+import rx.functions.Func0;
 
-    /** The upstream's iterator. */
-    protected final Iterator<T> it;
-    
-    public IxSourceIterator(Iterator<T> it) {
-        this.it = it;
+public class DeferTest {
+
+    @Test
+    public void normal() {
+        Ix<Integer> source = Ix.defer(new Func0<Iterable<Integer>>() {
+            int count;
+            @Override
+            public Iterable<Integer> call() {
+                return Ix.range(++count, 2);
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2);
+        IxTestHelper.assertValues(source, 2, 3);
+        IxTestHelper.assertValues(source, 3, 4);
     }
 }

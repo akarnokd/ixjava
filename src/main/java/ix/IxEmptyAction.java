@@ -16,21 +16,19 @@
 
 package ix;
 
-import java.util.Iterator;
+import rx.functions.*;
 
-/**
- * A base iterator that references an upstream iterator and manages
- * the state between hasNext() and the next() calls; plus defines
- * the remove() to throw UnsupportedOperationException.
- * @param <T> the source value type
- * @param <R> the result value type
- */
-public abstract class IxSourceIterator<T, R> extends IxBaseIterator<R> {
+enum IxEmptyAction implements Action1<Object> {
+    INSTANCE;
 
-    /** The upstream's iterator. */
-    protected final Iterator<T> it;
-    
-    public IxSourceIterator(Iterator<T> it) {
-        this.it = it;
+    @SuppressWarnings("unchecked")
+    public static <T> Action1<T> instance1() {
+        return (Action1<T>)INSTANCE;
     }
+
+    @Override
+    public void call(Object t) {
+        // deliberately no op
+    }
+    
 }

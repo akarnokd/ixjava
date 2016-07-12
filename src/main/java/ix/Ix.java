@@ -40,7 +40,6 @@ public abstract class Ix<T> implements Iterable<T> {
         return IxEmpty.instance();
     }
     
-    
     public static <T> Ix<T> from(Iterable<T> source) {
         if (source instanceof Ix) {
             return (Ix<T>)source;
@@ -119,56 +118,47 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public static <T> Ix<T> defer(Func0<? extends Iterable<? extends T>> factory) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxDefer<T>(factory);
     }
 
     public static <T> Ix<T> generate(Action1<Observer<T>> nextSupplier) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxGenerateStateless<T>(nextSupplier);
     }
 
     public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return generate(stateSupplier, nextSupplier, IxEmptyAction.instance1());
     }
 
     public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier, Action1<? super S> stateDisposer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxGenerate<T, S>(stateSupplier, nextSupplier, stateDisposer);
     }
     
     public static <T, R> Ix<R> zip(Iterable<? extends T>[] sources, FuncN<R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxZipArray<T, R>(sources, zipper);
     }
 
     public static <T, R> Ix<R> zip(Iterable<? extends Iterable<? extends T>> sources, FuncN<R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxZipIterable<T, R>(sources, zipper);
     }
 
     public static <T1, T2, R> Ix<R> zip(
             Iterable<T1> it1, Iterable<T2> it2, 
             Func2<? super T1, ? super T2, ? extends R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxZip2<T1, T2, R>(it1, it2, zipper);
     }
 
     public static <T1, T2, T3, R> Ix<R> zip(
             Iterable<T1> it1, Iterable<T2> it2, 
             Iterable<T3> it3,
             Func3<? super T1, ? super T2, ? super T3, ? extends R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxZip3<T1, T2, T3, R>(it1, it2, it3, zipper);
     }
 
     public static <T1, T2, T3, T4, R> Ix<R> zip(
             Iterable<T1> it1, Iterable<T2> it2, 
-            Iterable<T3> it3, Iterable<T3> it4,
+            Iterable<T3> it3, Iterable<T4> it4,
             Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxZip4<T1, T2, T3, T4, R>(it1, it2, it3, it4, zipper);
     }
 
     public static <T> Ix<T> repeat(T value) {
