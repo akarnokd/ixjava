@@ -18,7 +18,7 @@ package ix;
 
 import rx.functions.*;
 
-enum IxEmptyAction implements Action1<Object> {
+enum IxEmptyAction implements Action1<Object>, Action0 {
     INSTANCE;
 
     @SuppressWarnings("unchecked")
@@ -26,8 +26,17 @@ enum IxEmptyAction implements Action1<Object> {
         return (Action1<T>)INSTANCE;
     }
 
+    public static Action0 instance0() {
+        return INSTANCE;
+    }
+
     @Override
     public void call(Object t) {
+        // deliberately no op
+    }
+    
+    @Override
+    public void call() {
         // deliberately no op
     }
     

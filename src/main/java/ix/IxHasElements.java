@@ -18,21 +18,29 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
+final class IxHasElements<T> extends IxSource<T, Boolean> {
 
-final class IxCompose<T, R> extends IxSource<T, R> {
-
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
+    public IxHasElements(Iterable<T> source) {
         super(source);
-        this.transformer = transformer;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
+    public Iterator<Boolean> iterator() {
+        return new HasElementsIterator<T>(source.iterator());
     }
 
+    static final class HasElementsIterator<T> extends IxSourceIterator<T, Boolean> {
+
+        public HasElementsIterator(Iterator<T> it) {
+            super(it);
+        }
+        
+        @Override
+        protected boolean moveNext() {
+            value = it.hasNext();
+            hasValue = true;
+            done = true;
+            return true;
+        }
+    }
 }

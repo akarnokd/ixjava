@@ -201,108 +201,87 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     public final Ix<Boolean> hasElements() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxHasElements<T>(this);
     }
     
     public final Ix<T> ignoreElements() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxIgnoreElements<T>(this);
     }
     
     public final Ix<T> max(Comparator<? super T> comparator) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxMinMax<T>(this, comparator, -1);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public final Ix<T> max() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return max((Comparator)SelfComparator.INSTANCE);
     }
 
     public final Ix<T> min(Comparator<? super T> comparator) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxMinMax<T>(this, comparator, 1);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public final Ix<T> min() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return min((Comparator)SelfComparator.INSTANCE);
     }
     
     public final Ix<Boolean> contains(Object o) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxContains<T>(this, o);
     }
     
     public final Ix<Integer> count() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxCount<T>(this);
     }
 
     public final Ix<Long> countLong() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxCountLong<T>(this);
     }
     
     public final Ix<T> distinct() {
-        // TODO implement
-        throw new UnsupportedOperationException();
-    }
-
-    public final Ix<T> distinct(Pred2<? super T, ? super T> comparer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return distinct(IdentityHelper.instance());
     }
 
     public final <K> Ix<T> distinct(Func1<? super T, K> keySelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxDistinct<T, K>(this, keySelector);
     }
 
     public final Ix<T> distinctUntilChanged() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return distinctUntilChanged(IdentityHelper.instance());
     }
 
     public final Ix<T> distinctUntilChanged(Pred2<? super T, ? super T> comparer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxDistinctUntilChanged<T, T>(this, IdentityHelper.<T>instance(), comparer);
     }
 
     public final <K> Ix<T> distinctUntilChanged(Func1<? super T, K> keySelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxDistinctUntilChanged<T, K>(this, keySelector, EqualityHelper.INSTANCE);
     }
     
     public final Ix<T> doOnNext(Action1<? super T> action) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxDoOn<T>(this, action, IxEmptyAction.instance0());
     }
 
-    public final Ix<T> doOnCompleted(Action1<? super T> action) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public final Ix<T> doOnCompleted(Action0 action) {
+        return new IxDoOn<T>(this, IxEmptyAction.instance1(), action);
     }
     
-    public final Ix<T> startWith(T... value) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    @SuppressWarnings("unchecked")
+    public final Ix<T> startWith(T... values) {
+        return concatArray(fromArray(values), this);
     }
 
-    public final Ix<T> endWith(T... value) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    @SuppressWarnings("unchecked")
+    public final Ix<T> endWith(T... values) {
+        return concatArray(this, fromArray(values));
     }
     
     public final Ix<String> join() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return join(", ");
     }
     
     public final Ix<String> join(CharSequence separator) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxJoin<T>(this, separator);
     }
     
     public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
@@ -515,18 +494,17 @@ public abstract class Ix<T> implements Iterable<T> {
         throw new UnsupportedOperationException();
     }
     
-    public final Ix<T> concatWith(Iterator<? extends T> other) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    @SuppressWarnings("unchecked")
+    public final Ix<T> concatWith(Iterable<? extends T> other) {
+        return concatArray(this, other);
     }
 
-    public final Ix<T> mergeWith(Iterator<? extends T> other) {
+    public final Ix<T> mergeWith(Iterable<? extends T> other) {
         return concatWith(other);
     }
     
-    public final <U, R> Ix<R> zipWith(Iterator<U> other, Func2<? super T, ? super U, ? extends R> zipper) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public final <U, R> Ix<R> zipWith(Iterable<U> other, Func2<? super T, ? super U, ? extends R> zipper) {
+        return zip(this, other, zipper);
     }
     
     public final Ix<T> orderBy() {

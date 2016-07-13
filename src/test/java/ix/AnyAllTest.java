@@ -22,32 +22,86 @@ public class AnyAllTest {
 
     @Test
     public void anyFound() {
+        Ix<Boolean> source = Ix.range(1, 5).any(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return v == 3;
+            }
+        });
         
+        IxTestHelper.assertValues(source, true);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void anyNotFound() {
+        Ix<Boolean> source = Ix.range(1, 5).any(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return v == 0;
+            }
+        });
         
+        IxTestHelper.assertValues(source, false);
+        
+        IxTestHelper.assertNoRemove(source);
     }
     
     @Test
     public void anyEmpty() {
+        Ix<Boolean> source = Ix.<Integer>empty().any(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return v == 3;
+            }
+        });
         
+        IxTestHelper.assertValues(source, false);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void allTrue() {
+        Ix<Boolean> source = Ix.range(1, 5).all(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return v < 6;
+            }
+        });
         
+        IxTestHelper.assertValues(source, true);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void allFalse() {
+        Ix<Boolean> source = Ix.range(1, 5).all(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return false;
+            }
+        });
         
+        IxTestHelper.assertValues(source, false);
+        
+        IxTestHelper.assertNoRemove(source);
     }
     
     @Test
     public void allEmpty() {
+        Ix<Boolean> source = Ix.<Integer>empty().all(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return false;
+            }
+        });
         
+        IxTestHelper.assertValues(source, true);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
 

@@ -16,23 +16,11 @@
 
 package ix;
 
-import java.util.Iterator;
-
-import rx.functions.Func1;
-
-final class IxCompose<T, R> extends IxSource<T, R> {
-
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
+enum EqualityHelper implements Pred2<Object, Object> {
+    INSTANCE;
     
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
-    }
-
-    @SuppressWarnings("unchecked")
     @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
+    public boolean test(Object t, Object u) {
+        return (t == u) || (t != null && t.equals(u));
     }
-
 }

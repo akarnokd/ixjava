@@ -16,23 +16,26 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-import rx.functions.Func1;
+public class IgnoreElementsTest {
 
-final class IxCompose<T, R> extends IxSource<T, R> {
-
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
+    @Test
+    public void range() {
+        Ix<Integer> source = Ix.range(1, 5).ignoreElements();
+        
+        IxTestHelper.assertValues(source);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
+    @Test
+    public void empty() {
+        Ix<Integer> source = Ix.<Integer>empty().ignoreElements();
+        
+        IxTestHelper.assertValues(source);
+        
+        IxTestHelper.assertNoRemove(source);
     }
 
 }

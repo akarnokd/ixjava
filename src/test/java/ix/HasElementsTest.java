@@ -16,23 +16,22 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-import rx.functions.Func1;
+public class HasElementsTest {
 
-final class IxCompose<T, R> extends IxSource<T, R> {
-
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
+    @Test
+    public void empty() {
+        Ix<Boolean> source = Ix.empty().hasElements();
+        
+        IxTestHelper.assertValues(source, false);
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
+    @Test
+    public void nonempty() {
+        Ix<Boolean> source = Ix.just(1).hasElements();
+        
+        IxTestHelper.assertValues(source, true);
     }
 
 }

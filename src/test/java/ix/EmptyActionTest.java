@@ -16,23 +16,16 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-import rx.functions.Func1;
+import static org.junit.Assert.*;
 
-final class IxCompose<T, R> extends IxSource<T, R> {
+public class EmptyActionTest {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
+    @Test
+    public void normal() {
+        assertNotNull(IxEmptyAction.valueOf("INSTANCE"));
+        
+        assertEquals(1, IxEmptyAction.values().length);
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
-    }
-
 }

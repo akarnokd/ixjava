@@ -16,23 +16,24 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-import rx.functions.Func1;
+import static org.junit.Assert.*;
+import static ix.SelfComparator.INSTANCE;
 
-final class IxCompose<T, R> extends IxSource<T, R> {
+public class SelfComparatorTest {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
+    @Test
+    public void normal() {
+        assertEquals(0, INSTANCE.compare(1, 1));
+        assertEquals(0, INSTANCE.compare(1, new Integer(1)));
+
+        assertTrue(INSTANCE.compare(1, 2) < 0);
+        
+        assertTrue(INSTANCE.compare(2, 1) > 0);
+
+        assertNotNull(SelfComparator.valueOf("INSTANCE"));
+        
+        assertEquals(1, SelfComparator.values().length);
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
-    }
-
 }

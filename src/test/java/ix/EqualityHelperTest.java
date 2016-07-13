@@ -16,23 +16,24 @@
 
 package ix;
 
-import java.util.Iterator;
+import org.junit.Test;
 
-import rx.functions.Func1;
+import static org.junit.Assert.*;
+import static ix.EqualityHelper.INSTANCE;
 
-final class IxCompose<T, R> extends IxSource<T, R> {
+public class EqualityHelperTest {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        super(source);
-        this.transformer = transformer;
+    @Test
+    public void normal() {
+        assertTrue(INSTANCE.test(1, 1));
+        assertTrue(INSTANCE.test(1, new Integer(1)));
+
+        assertFalse(INSTANCE.test(null, 1));
+        assertFalse(INSTANCE.test(1, null));
+        assertFalse(INSTANCE.test(1, 2));
+        
+        assertNotNull(EqualityHelper.valueOf("INSTANCE"));
+        
+        assertEquals(1, EqualityHelper.values().length);
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
-    }
-
 }
