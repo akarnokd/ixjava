@@ -16,7 +16,9 @@
 
 package ix;
 
-import org.junit.Test;
+import java.util.*;
+
+import org.junit.*;
 
 public class TakeTest {
 
@@ -60,6 +62,15 @@ public class TakeTest {
         Ix<Integer> source = Ix.<Integer>empty().take(5);
         
         IxTestHelper.assertValues(source);
+    }
+    
+    @Test
+    public void removeComposes() {
+        List<Integer> list = Ix.range(1, 10).toList().first();
+        
+        Ix.from(list).take(5).removeAll();
+        
+        Assert.assertEquals(Arrays.asList(6, 7, 8, 9, 10), list);
     }
 
 }

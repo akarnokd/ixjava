@@ -161,24 +161,22 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxZip4<T1, T2, T3, T4, R>(it1, it2, it3, it4, zipper);
     }
 
-    public static <T> Ix<T> repeat(T value) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public static <T> Ix<T> repeatValue(T value) {
+        return new IxRepeat<T>(value);
     }
 
-    public static <T> Ix<T> repeat(T value, long count) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public static <T> Ix<T> repeatValue(T value, long count) {
+        return new IxRepeatCount<T>(value, count);
     }
 
-    public static <T> Ix<T> repeat(T value, Pred0 stopPredicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public static <T> Ix<T> repeatValue(T value, Pred0 stopPredicate) {
+        return new IxRepeatPredicate<T>(value, stopPredicate);
     }
     
-    public static <T> Ix<T> forloop(T seed, Pred<? super T> condition, Func1<? super T, ? extends T> next) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public static <T, R> Ix<R> forloop(T seed, Pred<? super T> condition, 
+            Func1<? super T, ? extends T> next,
+            Func1<? super T, ? extends R> selector) {
+        return new IxForloop<T, R>(seed, condition, selector, next);
     }
 
     //---------------------------------------------------------------------------------------
@@ -186,24 +184,20 @@ public abstract class Ix<T> implements Iterable<T> {
     //---------------------------------------------------------------------------------------
 
     public final <R> R as(Func1<? super Ix<T>, R> transformer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return transformer.call(this);
     }
 
     public final <R> Ix<R> compose(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxCompose<T, R>(this, transformer);
     }
 
     public final Ix<Boolean> any(Pred<? super T> predicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxAny<T>(this, predicate);
     }
 
     
     public final Ix<Boolean> all(Pred<? super T> predicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxAll<T>(this, predicate);
     }
     
     public final Ix<Boolean> hasElements() {

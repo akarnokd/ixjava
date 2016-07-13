@@ -66,7 +66,7 @@ public enum IxTestHelper {
         }
         
         if (i != values.length) {
-            throw new AssertionError("The source is shorter than " + values.length);
+            throw new AssertionError("The source is shorter than " + values.length + ": " + i);
         }
         
         try {

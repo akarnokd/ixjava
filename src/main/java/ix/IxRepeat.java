@@ -18,47 +18,40 @@ package ix;
 
 import java.util.Iterator;
 
-final class IxTake<T> extends IxSource<T, T> {
+final class IxRepeat<T> extends Ix<T> {
 
-    final int n;
+    final T value;
     
-    public IxTake(Iterable<T> source, int n) {
-        super(source);
-        this.n = n;
+    public IxRepeat(T value) {
+        this.value = value;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new TakeIterator<T>(source.iterator(), n);
+        return new RepeatIterator<T>(value);
     }
-    
-    static final class TakeIterator<T> extends IxSourceIterator<T, T> {
 
-        int n;
-        public TakeIterator(Iterator<T> it, int n) {
-            super(it);
-            this.n = n;
+    static final class RepeatIterator<T> implements Iterator<T> {
+        
+        final T value;
+        
+        public RepeatIterator(T value) {
+            this.value = value;
         }
         
         @Override
-        protected boolean moveNext() {
-            int n = this.n;
-            if (n == 0 || !it.hasNext()) {
-                done = true;
-                return false;
-            }
-            
-            value = it.next();
-            hasValue = true;
-            this.n = n - 1;
-            
+        public boolean hasNext() {
             return true;
         }
         
         @Override
+        public T next() {
+            return value;
+        }
+        
+        @Override
         public void remove() {
-            it.remove();
+            throw new UnsupportedOperationException();
         }
     }
-
 }
