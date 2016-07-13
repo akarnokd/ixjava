@@ -182,6 +182,10 @@ public abstract class Ix<T> implements Iterable<T> {
             Func1<? super T, ? extends R> selector) {
         return new IxForloop<T, R>(seed, condition, selector, next);
     }
+    
+    public static Ix<String> split(String string, String by) {
+        return new IxSplit(string, by);
+    }
 
     //---------------------------------------------------------------------------------------
     // Instance operators
