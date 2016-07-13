@@ -65,4 +65,12 @@ public class Zip2Test {
         IxTestHelper.assertValues(source);
     }
 
+    @Test
+    public void normalWith() {
+        
+        Ix<Integer> source = Ix.range(1, 2).zipWith(Ix.range(10, 2), sum);
+        
+        IxTestHelper.assertValues(source, 11, 13);
+    }
+
 }

@@ -170,9 +170,13 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public static <T> Ix<T> repeatValue(T value, Pred0 stopPredicate) {
-        return new IxRepeatPredicate<T>(value, stopPredicate);
+        return repeatValue(value, Long.MAX_VALUE, stopPredicate);
     }
-    
+
+    public static <T> Ix<T> repeatValue(T value, long count, Pred0 stopPredicate) {
+        return new IxRepeatPredicate<T>(value, count, stopPredicate);
+    }
+
     public static <T, R> Ix<R> forloop(T seed, Pred<? super T> condition, 
             Func1<? super T, ? extends T> next,
             Func1<? super T, ? extends R> selector) {
@@ -395,18 +399,21 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     public final Ix<List<T>> buffer(int size) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxBuffer<T>(this, size);
     }
     
     public final Ix<List<T>> buffer(int size, int skip) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        if (size == skip) {
+            return buffer(size);
+        }
+        if (size < skip) {
+            return new IxBufferSkip<T>(this, size, skip);
+        }
+        return new IxBufferOverlap<T>(this, size, skip);
     }
     
     public final <K> Ix<GroupedIx<K, T>> groupBy(Func1<? super T, ? extends K> keySelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return groupBy(keySelector, IdentityHelper.<T>instance());
     }
 
     public final <K, V> Ix<GroupedIx<K, V>> groupBy(Func1<? super T, ? extends K> keySelector,
@@ -416,23 +423,19 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     public final Ix<T> repeat() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return concat(repeatValue(this));
     }
     
     public final Ix<T> repeat(long times) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return concat(repeatValue(this, times));
     }
     
     public final Ix<T> repeat(Pred0 predicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return concat(repeatValue(this, predicate));
     }
 
     public final Ix<T> repeat(long times, Pred0 predicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return concat(repeatValue(this, times, predicate));
     }
 
     public final Ix<T> publish() {
@@ -659,6 +662,9 @@ public abstract class Ix<T> implements Iterable<T> {
                     System.out.println();;
                     System.out.print(s);
                     len = s.length();
+                } else {
+                    System.out.print(s);
+                    len += s.length();
                 }
             }
             

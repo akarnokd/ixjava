@@ -60,4 +60,17 @@ public class ForeachTest implements Action1<Integer>, Pred<Integer> {
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5), list);
     }
 
+    @Test
+    public void normalWhileAll() {
+        Ix<Integer> source = Ix.range(1, 5);
+        
+        source.foreachWhile(new Pred<Integer>() {
+            @Override
+            public boolean test(Integer v) {
+                return true;
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
+    }
 }

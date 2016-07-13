@@ -22,32 +22,39 @@ final class IxRepeatPredicate<T> extends Ix<T> {
 
     final T value;
     
+    final long count;
+    
     final Pred0 stopPredicate;
     
-    public IxRepeatPredicate(T value, Pred0 stopPredicate) {
+    public IxRepeatPredicate(T value, long count, Pred0 stopPredicate) {
         this.value = value;
         this.stopPredicate = stopPredicate;
+        this.count = count;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new RepeatPredicateIterator<T>(value, stopPredicate);
+        return new RepeatPredicateIterator<T>(value, count, stopPredicate);
     }
 
     static final class RepeatPredicateIterator<T> extends IxBaseIterator<T> {
 
         final T valueToRepeat;
         
+        long count;
+        
         final Pred0 stopPredicate;
         
-        public RepeatPredicateIterator(T value, Pred0 stopPredicate) {
+        public RepeatPredicateIterator(T value, long count, Pred0 stopPredicate) {
             this.valueToRepeat = value;
             this.stopPredicate = stopPredicate;
+            this.count = count;
         }
         
         @Override
         protected boolean moveNext() {
-            if (!stopPredicate.getAsBoolean()) {
+            long c = count--;
+            if (c != 0L && !stopPredicate.getAsBoolean()) {
                 value = valueToRepeat;
                 hasValue = true;
                 return true;

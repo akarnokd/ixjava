@@ -18,6 +18,8 @@ package ix;
 
 import java.util.Iterator;
 
+import rx.functions.*;
+
 /**
  * A base iterator that extends a custom ArrayDeque, references an upstream iterator
  * and manages the state between hasNext() and the next() calls; plus defines
@@ -109,6 +111,18 @@ extends IxSourceIterator<T, R> {
         return null;
     }
     
+    protected final Object peek() {
+        Object[] a = array;
+        if (a != null) {
+            int m = a.length - 1;
+            int ci = consumerIndex;
+            int offset = ci & m;
+            
+            return a[offset];
+        }
+        return null;
+    }
+    
     protected final boolean isEmpty() {
         return consumerIndex == producerIndex;
     }
@@ -117,5 +131,18 @@ extends IxSourceIterator<T, R> {
         array = null;
         consumerIndex = 0;
         producerIndex = 0;
+    }
+    
+    protected final <S> void foreach(Action2<? super U, S> action, S state) {
+        Object[] a = array;
+        if (a != null) {
+            int m = a.length - 1;
+            int pi = producerIndex;
+            for (int ci = consumerIndex; ci != pi; ci++) {
+                int offset = ci & m;
+                Object o = a[offset];
+                action.call(fromObject(o), state);
+            }
+        }
     }
 }
