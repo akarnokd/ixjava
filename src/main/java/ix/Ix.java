@@ -422,8 +422,7 @@ public abstract class Ix<T> implements Iterable<T> {
 
     public final <K, V> Ix<GroupedIx<K, V>> groupBy(Func1<? super T, ? extends K> keySelector,
             Func1<? super T, ? extends V> valueSelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxGroupBy<T, K, V>(this, keySelector, valueSelector);
     }
     
     public final Ix<T> repeat() {
