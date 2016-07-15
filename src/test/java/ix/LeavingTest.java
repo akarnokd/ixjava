@@ -411,4 +411,29 @@ public class LeavingTest {
         
         Assert.assertEquals(Arrays.asList(2, 4, 6, 8, 10), list);
     }
+    
+    @Test
+    public void single() {
+        Assert.assertEquals(1, Ix.just(1).single().intValue());
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void singleEmpty() {
+        Assert.assertEquals(1, Ix.<Integer>empty().single().intValue());
+    }
+
+    @Test
+    public void singleEmptyDefault() {
+        Assert.assertEquals(2, Ix.<Integer>empty().single(2).intValue());
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void singleLonger() {
+        Ix.range(1, 5).single();
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void singleLongerDefault() {
+        Ix.range(1, 5).single(10);
+    }
 }

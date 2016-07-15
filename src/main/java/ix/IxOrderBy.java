@@ -26,15 +26,18 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
     
     final Comparator<? super K> comparator;
     
-    public IxOrderBy(Iterable<T> source, Func1<? super T, K> keySelector, Comparator<? super K> comparator) {
+    final int flag;
+    
+    public IxOrderBy(Iterable<T> source, Func1<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
         super(source);
         this.keySelector = keySelector;
         this.comparator = comparator;
+        this.flag = flag;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new OrderByIterator<T, K>(source.iterator(), keySelector, comparator);
+        return new OrderByIterator<T, K>(source.iterator(), keySelector, comparator, flag);
     }
     
     static final class OrderByIterator<T, K> extends IxSourceIterator<T, T> implements Comparator<T> {
@@ -43,14 +46,17 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
         
         final Comparator<? super K> comparator;
 
+        final int flag;
+        
         List<T> values;
         
         int index;
         
-        public OrderByIterator(Iterator<T> it, Func1<? super T, K> keySelector, Comparator<? super K> comparator) {
+        public OrderByIterator(Iterator<T> it, Func1<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
             super(it);
             this.keySelector = keySelector;
             this.comparator = comparator;
+            this.flag = flag;
         }
 
         @Override
@@ -93,7 +99,7 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
         public int compare(T o1, T o2) {
             K k1 = keySelector.call(o1);
             K k2 = keySelector.call(o2);
-            return comparator.compare(k1, k2);
+            return comparator.compare(k1, k2) * flag;
         }
     }
 

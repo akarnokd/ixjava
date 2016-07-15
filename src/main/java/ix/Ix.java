@@ -25,7 +25,7 @@ import rx.exceptions.Exceptions;
 import rx.functions.*;
 
 /**
- * Base class and entry point for fluent iterables.
+ * Base class and entry point for fluent Iterables.
  * 
  * @param <T> the value type
  * @since 1.0
@@ -516,13 +516,26 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     public final Ix<T> orderBy(Comparator<? super T> comparator) {
-        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator);
+        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator, 1);
     }
     
     public final <K extends Comparable<? super K>> Ix<T> orderBy(Func1<? super T, K> keySelector) {
-        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE);
+        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE, 1);
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public final Ix<T> orderByReverse() {
+        return orderByReverse((Comparator)SelfComparator.INSTANCE);
     }
     
+    public final Ix<T> orderByReverse(Comparator<? super T> comparator) {
+        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator, -1);
+    }
+    
+    public final <K extends Comparable<? super K>> Ix<T> orderByReverse(Func1<? super T, K> keySelector) {
+        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE, -1);
+    }
+
     public final Ix<T> scan(Func2<T, T, T> scanner) {
         return new IxScan<T>(this, scanner);
     }
@@ -545,6 +558,52 @@ public abstract class Ix<T> implements Iterable<T> {
     
     public final <R> Ix<R> lift(Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
         return new IxLift<T, R>(this, lifter);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<Float> averageFloat() {
+        return new IxAverageFloat((Iterable<Number>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Double> averageDouble() {
+        return new IxAverageDouble((Iterable<Number>)this);
+    }
+
+    public final Ix<T> defaultIfEmpty(T value) {
+        return switchIfEmpty(Ix.just(value));
+    }
+    
+    public final Ix<T> switchIfEmpty(Iterable<? extends T> other) {
+        return new IxSwitchIfEmpty<T>(this, other);
+    }
+    
+    public final Ix<T> except(Iterable<? extends T> other) {
+        return new IxExcept<T>(this, other);
+    }
+    
+    public final Ix<T> intersect(Iterable<? extends T> other) {
+        return new IxIntersect<T>(this, other);
+    }
+    
+    public final Ix<T> reverse() {
+        return new IxReverse<T>(this);
+    }
+    
+    public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other) {
+        return sequenceEqual(other, EqualityHelper.INSTANCE);
+    }
+
+    public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other, Pred2<? super T, ? super T> comparer) {
+        return new IxSequenceEqual<T>(this, other, comparer);
+    }
+    
+    public final Ix<Set<T>> toSet() {
+        return new IxToSet<T>(this);
+    }
+    
+    public final Ix<T> union(Iterable<? extends T> other) {
+        return new IxUnion<T>(this, other);
     }
 
     //---------------------------------------------------------------------------------------
@@ -807,6 +866,31 @@ public abstract class Ix<T> implements Iterable<T> {
         }
     }
 
+    
+    public final T single() {
+        Iterator<T> it = iterator();
+        if (it.hasNext()) {
+            T v = it.next();
+            if (it.hasNext()) {
+                throw new IndexOutOfBoundsException("The source has more than one element.");
+            }
+            return v;
+        }
+        throw new NoSuchElementException("The source is empty.");
+    }
+    
+    public final T single(T defaultValue) {
+        Iterator<T> it = iterator();
+        if (it.hasNext()) {
+            T v = it.next();
+            if (it.hasNext()) {
+                throw new IndexOutOfBoundsException("The source has more than one element.");
+            }
+            return v;
+        }
+        return defaultValue;
+    }
+    
     // --------------------------------------------------------------------------------------------
     // Helper methods
     // --------------------------------------------------------------------------------------------

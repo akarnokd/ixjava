@@ -79,4 +79,40 @@ public class OrderByTest {
         IxTestHelper.assertNoRemove(source);
     }
 
+    @Test
+    public void normalReverse() {
+        Ix<Integer> source = Ix.range(1, 5).orderByReverse();
+        
+        IxTestHelper.assertValues(source, 5, 4, 3, 2, 1);
+        
+        IxTestHelper.assertNoRemove(source);
+    }
+    
+    @Test
+    public void normalComparatorReverse() {
+        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderByReverse(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer a, Integer b) {
+                return b.compareTo(a);
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
+        
+        IxTestHelper.assertNoRemove(source);
+    }
+
+    @Test
+    public void normalKeySelectorReverse() {
+        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderByReverse(new Func1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer v) {
+                return 3 - v;
+            }
+        });
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
+        
+        IxTestHelper.assertNoRemove(source);
+    }
 }
