@@ -635,48 +635,57 @@ public abstract class Ix<T> implements Iterable<T> {
     //---------------------------------------------------------------------------------------
     // Instance operators
     //---------------------------------------------------------------------------------------
+    
+    public final Ix<Boolean> all(Pred<? super T> predicate) {
+        return new IxAll<T>(this, predicate);
+    }
+    public final Ix<Boolean> any(Pred<? super T> predicate) {
+        return new IxAny<T>(this, predicate);
+    }
 
     public final <R> R as(Func1<? super Ix<T>, R> transformer) {
         return transformer.call(this);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<Float> averageFloat() {
+        return new IxAverageFloat((Iterable<Number>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Double> averageDouble() {
+        return new IxAverageDouble((Iterable<Number>)this);
+    }
+    
+    public final Ix<List<T>> buffer(int size) {
+        return new IxBuffer<T>(this, size);
+    }
+    
+    public final Ix<List<T>> buffer(int size, int skip) {
+        if (size == skip) {
+            return buffer(size);
+        }
+        if (size < skip) {
+            return new IxBufferSkip<T>(this, size, skip);
+        }
+        return new IxBufferOverlap<T>(this, size, skip);
+    }
+    
+    public final <C> Ix<C> collect(Func0<C> initialFactory, Action2<C, T> collector) {
+        return new IxCollect<T, C>(this, initialFactory, collector);
     }
 
     public final <R> Ix<R> compose(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
         return new IxCompose<T, R>(this, transformer);
     }
-
-    public final Ix<Boolean> any(Pred<? super T> predicate) {
-        return new IxAny<T>(this, predicate);
-    }
-
     
-    public final Ix<Boolean> all(Pred<? super T> predicate) {
-        return new IxAll<T>(this, predicate);
+    public final <R> Ix<R> concatMap(Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+        return new IxFlattenIterable<T, R>(this, mapper);
     }
     
-    public final Ix<Boolean> hasElements() {
-        return new IxHasElements<T>(this);
-    }
-    
-    public final Ix<T> ignoreElements() {
-        return new IxIgnoreElements<T>(this);
-    }
-    
-    public final Ix<T> max(Comparator<? super T> comparator) {
-        return new IxMinMax<T>(this, comparator, -1);
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public final Ix<T> max() {
-        return max((Comparator)SelfComparator.INSTANCE);
-    }
-
-    public final Ix<T> min(Comparator<? super T> comparator) {
-        return new IxMinMax<T>(this, comparator, 1);
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public final Ix<T> min() {
-        return min((Comparator)SelfComparator.INSTANCE);
+    @SuppressWarnings("unchecked")
+    public final Ix<T> concatWith(Iterable<? extends T> other) {
+        return concatArray(this, other);
     }
     
     public final Ix<Boolean> contains(Object o) {
@@ -689,6 +698,10 @@ public abstract class Ix<T> implements Iterable<T> {
 
     public final Ix<Long> countLong() {
         return new IxCountLong<T>(this);
+    }
+
+    public final Ix<T> defaultIfEmpty(T value) {
+        return switchIfEmpty(Ix.just(value));
     }
     
     public final Ix<T> distinct() {
@@ -718,147 +731,22 @@ public abstract class Ix<T> implements Iterable<T> {
     public final Ix<T> doOnCompleted(Action0 action) {
         return new IxDoOn<T>(this, IxEmptyAction.instance1(), action);
     }
-    
-    @SuppressWarnings("unchecked")
-    public final Ix<T> startWith(T... values) {
-        return concatArray(fromArray(values), this);
-    }
 
     @SuppressWarnings("unchecked")
     public final Ix<T> endWith(T... values) {
         return concatArray(this, fromArray(values));
     }
     
-    public final Ix<String> join() {
-        return join(", ");
-    }
-    
-    public final Ix<String> join(CharSequence separator) {
-        return new IxJoin<T>(this, separator);
-    }
-    
-    public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
-        return new IxMap<T, R>(this, mapper);
+    public final Ix<T> except(Iterable<? extends T> other) {
+        return new IxExcept<T>(this, other);
     }
     
     public final Ix<T> filter(Pred<T> predicate) {
         return new IxFilter<T>(this, predicate);
     }
     
-    public final <C> Ix<C> collect(Func0<C> initialFactory, Action2<C, T> collector) {
-        return new IxCollect<T, C>(this, initialFactory, collector);
-    }
-    
-    public final <C> Ix<C> reduce(Func0<C> initialFactory, Func2<C, T, C> reducer) {
-        return new IxReduce<T, C>(this, initialFactory, reducer);
-    }
-    
-    public final Ix<T> hide() {
-        return new IxWrapper<T>(this);
-    }
-    
-    public final Ix<List<T>> toList() {
-        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector());
-    }
-    
-    public final Ix<Object[]> toArray() {
-        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector())
-                .map(ToListHelper.<T>toArray());
-    }
-    
-    public final Ix<T> reduce(Func2<T, T, T> reducer) {
-        return new IxAggregate<T>(this, reducer);
-    }
-    
-    @SuppressWarnings("unchecked")
-    public final Ix<Integer> maxInt() {
-        return new IxMaxInt((Ix<Integer>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Integer> minInt() {
-        return new IxMinInt((Ix<Integer>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Integer> sumInt() {
-        return new IxSumInt((Ix<Integer>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Long> maxLong() {
-        return new IxMaxLong((Ix<Long>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Long> minLong() {
-        return new IxMinLong((Ix<Long>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Long> sumLong() {
-        return new IxSumLong((Ix<Long>)this);
-    }
-    
-    @SuppressWarnings("unchecked")
-    public final Ix<Long> toLong() {
-        return ((Ix<Number>)this).map(NumberToLongHelper.INSTANCE);
-    }
-
-    public final Ix<T> skip(int n) {
-        if (n == 0) {
-            return this;
-        }
-        return new IxSkip<T>(this, n);
-    }
-
-    public final Ix<T> take(int n) {
-        return new IxTake<T>(this, n);
-    }
-
-    public final Ix<T> skipLast(int n) {
-        if (n == 0) {
-            return this;
-        }
-        return new IxSkipLast<T>(this, n);
-    }
-    
-    public final Ix<T> takeLast(int n) {
-        return new IxTakeLast<T>(this, n);
-    }
-    
     public final <R> Ix<R> flatMap(Func1<? super T, ? extends Iterable<? extends R>> mapper) {
         return new IxFlattenIterable<T, R>(this, mapper);
-    }
-    
-    public final <R> Ix<R> concatMap(Func1<? super T, ? extends Iterable<? extends R>> mapper) {
-        return new IxFlattenIterable<T, R>(this, mapper);
-    }
-
-    public final Ix<T> skipWhile(Pred<? super T> predicate) {
-        return new IxSkipWhile<T>(this, predicate);
-    }
-    
-    public final Ix<T> takeWhile(Pred<? super T> predicate) {
-        return new IxTakeWhile<T>(this, predicate);
-    }
-    
-    public final Ix<T> takeUntil(Pred<? super T> stopPredicate) {
-        return new IxTakeUntil<T>(this, stopPredicate);
-    }
-    
-    public final Ix<List<T>> buffer(int size) {
-        return new IxBuffer<T>(this, size);
-    }
-    
-    public final Ix<List<T>> buffer(int size, int skip) {
-        if (size == skip) {
-            return buffer(size);
-        }
-        if (size < skip) {
-            return new IxBufferSkip<T>(this, size, skip);
-        }
-        return new IxBufferOverlap<T>(this, size, skip);
     }
     
     public final <K> Ix<GroupedIx<K, T>> groupBy(Func1<? super T, ? extends K> keySelector) {
@@ -870,89 +758,78 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxGroupBy<T, K, V>(this, keySelector, valueSelector);
     }
     
-    public final Ix<T> repeat() {
-        return concat(repeatValue(this));
+    public final Ix<Boolean> hasElements() {
+        return new IxHasElements<T>(this);
     }
     
-    public final Ix<T> repeat(long times) {
-        return concat(repeatValue(this, times));
+    public final Ix<T> hide() {
+        return new IxWrapper<T>(this);
     }
     
-    public final Ix<T> repeat(Pred0 predicate) {
-        return concat(repeatValue(this, predicate));
-    }
-
-    public final Ix<T> repeat(long times, Pred0 predicate) {
-        return concat(repeatValue(this, times, predicate));
-    }
-
-    public final Ix<T> publish() {
-        return new IxPublish<T>(this);
-    }
-
-    public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxPublishSelector<T, R>(this, transform);
-    }
-
-    public final Ix<T> replay() {
-        return new IxReplay<T>(this);
-    }
-
-    public final Ix<T> replay(int size) {
-        return new IxReplaySize<T>(this, size);
-    }
-
-    public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxReplaySelector<T, R>(this, transform);
-    }
-
-    public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxReplaySizeSelector<T, R>(this, size, transform);
+    public final Ix<T> intersect(Iterable<? extends T> other) {
+        return new IxIntersect<T>(this, other);
     }
     
-    public final <K> Ix<Map<K, T>> toMap(Func1<? super T, ? extends K> keySelector) {
-        Func1<T, T> f = IdentityHelper.instance();
-        return this.toMap(keySelector, f);
+    public final Ix<T> ignoreElements() {
+        return new IxIgnoreElements<T>(this);
+    }
+    
+    public final Ix<String> join() {
+        return join(", ");
+    }
+    
+    public final Ix<String> join(CharSequence separator) {
+        return new IxJoin<T>(this, separator);
+    }
+    
+    public final <R> Ix<R> lift(Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
+        return new IxLift<T, R>(this, lifter);
+    }
+    
+    public final <R> Ix<R> map(Func1<? super T, ? extends R> mapper) {
+        return new IxMap<T, R>(this, mapper);
+    }
+    
+    public final Ix<T> max(Comparator<? super T> comparator) {
+        return new IxMinMax<T>(this, comparator, -1);
     }
 
-    public final <K, V> Ix<Map<K, V>> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        return new IxToMap<T, K, V>(this, keySelector, valueSelector);
-    }
-
-    public final <K> Ix<Map<K, Collection<T>>> toMultimap(Func1<? super T, ? extends K> keySelector) {
-        Func1<T, T> f = IdentityHelper.instance();
-        return this.toMultimap(keySelector, f);
-    }
-
-    public final <K, V> Ix<Map<K, Collection<V>>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        return new IxToMultimap<T, K, V>(this, keySelector, valueSelector);
-    }
-
-    public final Ix<Ix<T>> window(int size) {
-        return new IxWindow<T>(this, size);
-    }
-
-    public final Ix<Ix<T>> window(int size, int skip) {
-        if (size == skip) {
-            return window(size);
-        }
-        if (size < skip) {
-            return new IxWindowSkip<T>(this, size, skip);
-        }
-        return new IxWindowOverlap<T>(this, size, skip);
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public final Ix<T> max() {
+        return max((Comparator)SelfComparator.INSTANCE);
     }
     
     @SuppressWarnings("unchecked")
-    public final Ix<T> concatWith(Iterable<? extends T> other) {
-        return concatArray(this, other);
+    public final Ix<Integer> maxInt() {
+        return new IxMaxInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> maxLong() {
+        return new IxMaxLong((Ix<Long>)this);
     }
 
     public final Ix<T> mergeWith(Iterable<? extends T> other) {
         return concatWith(other);
     }
-    
-    public final <U, R> Ix<R> zipWith(Iterable<U> other, Func2<? super T, ? super U, ? extends R> zipper) {
-        return zip(this, other, zipper);
+
+    public final Ix<T> min(Comparator<? super T> comparator) {
+        return new IxMinMax<T>(this, comparator, 1);
+    }
+
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public final Ix<T> min() {
+        return min((Comparator)SelfComparator.INSTANCE);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Integer> minInt() {
+        return new IxMinInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> minLong() {
+        return new IxMinLong((Ix<Long>)this);
     }
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -981,58 +858,72 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE, -1);
     }
 
+    public final Ix<T> publish() {
+        return new IxPublish<T>(this);
+    }
+
+    public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxPublishSelector<T, R>(this, transform);
+    }
+    
+    public final Ix<T> reduce(Func2<T, T, T> reducer) {
+        return new IxAggregate<T>(this, reducer);
+    }
+    
+    public final <C> Ix<C> reduce(Func0<C> initialFactory, Func2<C, T, C> reducer) {
+        return new IxReduce<T, C>(this, initialFactory, reducer);
+    }
+    
+    public final Ix<T> remove(Pred<? super T> predicate) {
+        return new IxRemove<T>(this, predicate);
+    }
+    
+    public final Ix<T> repeat() {
+        return concat(repeatValue(this));
+    }
+    
+    public final Ix<T> repeat(long times) {
+        return concat(repeatValue(this, times));
+    }
+    
+    public final Ix<T> repeat(Pred0 predicate) {
+        return concat(repeatValue(this, predicate));
+    }
+
+    public final Ix<T> repeat(long times, Pred0 predicate) {
+        return concat(repeatValue(this, times, predicate));
+    }
+
+    public final Ix<T> replay() {
+        return new IxReplay<T>(this);
+    }
+
+    public final Ix<T> replay(int size) {
+        return new IxReplaySize<T>(this, size);
+    }
+
+    public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxReplaySelector<T, R>(this, transform);
+    }
+
+    public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxReplaySizeSelector<T, R>(this, size, transform);
+    }
+
+    public final Ix<T> retain(Pred<? super T> predicate) {
+        return new IxRetain<T>(this, predicate);
+    }
+    
+    public final Ix<T> reverse() {
+        return new IxReverse<T>(this);
+    }
+
     public final Ix<T> scan(Func2<T, T, T> scanner) {
         return new IxScan<T>(this, scanner);
     }
 
     public final <R> Ix<R> scan(Func0<R> initialFactory, Func2<R, T, R> scanner) {
         return new IxScanSeed<T, R>(this, initialFactory, scanner);
-    }
-    
-    public final Ix<T> remove(Pred<? super T> predicate) {
-        return new IxRemove<T>(this, predicate);
-    }
-
-    public final Ix<T> retain(Pred<? super T> predicate) {
-        return new IxRetain<T>(this, predicate);
-    }
-
-    public final <R> Ix<R> transform(IxTransform<T, R> transformer) {
-        return new IxTransformer<T, R>(this, transformer);
-    }
-    
-    public final <R> Ix<R> lift(Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
-        return new IxLift<T, R>(this, lifter);
-    }
-    
-    @SuppressWarnings("unchecked")
-    public final Ix<Float> averageFloat() {
-        return new IxAverageFloat((Iterable<Number>)this);
-    }
-
-    @SuppressWarnings("unchecked")
-    public final Ix<Double> averageDouble() {
-        return new IxAverageDouble((Iterable<Number>)this);
-    }
-
-    public final Ix<T> defaultIfEmpty(T value) {
-        return switchIfEmpty(Ix.just(value));
-    }
-    
-    public final Ix<T> switchIfEmpty(Iterable<? extends T> other) {
-        return new IxSwitchIfEmpty<T>(this, other);
-    }
-    
-    public final Ix<T> except(Iterable<? extends T> other) {
-        return new IxExcept<T>(this, other);
-    }
-    
-    public final Ix<T> intersect(Iterable<? extends T> other) {
-        return new IxIntersect<T>(this, other);
-    }
-    
-    public final Ix<T> reverse() {
-        return new IxReverse<T>(this);
     }
     
     public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other) {
@@ -1042,19 +933,134 @@ public abstract class Ix<T> implements Iterable<T> {
     public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other, Pred2<? super T, ? super T> comparer) {
         return new IxSequenceEqual<T>(this, other, comparer);
     }
+
+    public final Ix<T> skip(int n) {
+        if (n == 0) {
+            return this;
+        }
+        return new IxSkip<T>(this, n);
+    }
+
+    public final Ix<T> skipLast(int n) {
+        if (n == 0) {
+            return this;
+        }
+        return new IxSkipLast<T>(this, n);
+    }
+
+    public final Ix<T> skipWhile(Pred<? super T> predicate) {
+        return new IxSkipWhile<T>(this, predicate);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<T> startWith(T... values) {
+        return concatArray(fromArray(values), this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Integer> sumInt() {
+        return new IxSumInt((Ix<Integer>)this);
+    }
+
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> sumLong() {
+        return new IxSumLong((Ix<Long>)this);
+    }
+    
+    public final Ix<T> switchIfEmpty(Iterable<? extends T> other) {
+        return new IxSwitchIfEmpty<T>(this, other);
+    }
+
+    public final Ix<T> take(int n) {
+        return new IxTake<T>(this, n);
+    }
+    
+    public final Ix<T> takeLast(int n) {
+        return new IxTakeLast<T>(this, n);
+    }
+    
+    public final Ix<T> takeUntil(Pred<? super T> stopPredicate) {
+        return new IxTakeUntil<T>(this, stopPredicate);
+    }
+    
+    public final Ix<T> takeWhile(Pred<? super T> predicate) {
+        return new IxTakeWhile<T>(this, predicate);
+    }
+    
+    public final Ix<Object[]> toArray() {
+        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector())
+                .map(ToListHelper.<T>toArray());
+    }
+    
+    public final Ix<List<T>> toList() {
+        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector());
+    }
+    
+    @SuppressWarnings("unchecked")
+    public final Ix<Long> toLong() {
+        return ((Ix<Number>)this).map(NumberToLongHelper.INSTANCE);
+    }
+    
+    public final <K> Ix<Map<K, T>> toMap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.toMap(keySelector, f);
+    }
+
+    public final <K, V> Ix<Map<K, V>> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return new IxToMap<T, K, V>(this, keySelector, valueSelector);
+    }
+
+    public final <K> Ix<Map<K, Collection<T>>> toMultimap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.toMultimap(keySelector, f);
+    }
+
+    public final <K, V> Ix<Map<K, Collection<V>>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return new IxToMultimap<T, K, V>(this, keySelector, valueSelector);
+    }
     
     public final Ix<Set<T>> toSet() {
         return new IxToSet<T>(this);
+    }
+
+    public final <R> Ix<R> transform(IxTransform<T, R> transformer) {
+        return new IxTransformer<T, R>(this, transformer);
     }
     
     public final Ix<T> union(Iterable<? extends T> other) {
         return new IxUnion<T>(this, other);
     }
 
+    public final Ix<Ix<T>> window(int size) {
+        return new IxWindow<T>(this, size);
+    }
+
+    public final Ix<Ix<T>> window(int size, int skip) {
+        if (size == skip) {
+            return window(size);
+        }
+        if (size < skip) {
+            return new IxWindowSkip<T>(this, size, skip);
+        }
+        return new IxWindowOverlap<T>(this, size, skip);
+    }
+    
+    public final <U, R> Ix<R> zipWith(Iterable<U> other, Func2<? super T, ? super U, ? extends R> zipper) {
+        return zip(this, other, zipper);
+    }
+
     //---------------------------------------------------------------------------------------
     // Leaving the Iterable world
     //---------------------------------------------------------------------------------------
 
+    /**
+     * Returns the first element of this sequence.
+     * @return the first element
+     * @throws NoSuchElementException if this sequence is empty
+     * @since 1.0
+     * @see #first(Object)
+     * @see #last(Object)
+     */
     @SuppressWarnings("unchecked")
     public final T first() {
         if (this instanceof Callable) {
@@ -1063,6 +1069,15 @@ public abstract class Ix<T> implements Iterable<T> {
         return iterator().next();
     }
 
+    /**
+     * Returns the first element of this sequence or the defaultValue
+     * if this sequence is empty.
+     * @param defaultValue the value to return if this sequence is empty
+     * @return the first element or the default value
+     * @since 1.0
+     * @see #first()
+     * @see #last()
+     */
     @SuppressWarnings("unchecked")
     public final T first(T defaultValue) {
         if (this instanceof Callable) {
@@ -1074,7 +1089,60 @@ public abstract class Ix<T> implements Iterable<T> {
         }
         return defaultValue;
     }
+    
+    /**
+     * Consumes the entire sequence and calls the given action with each value.
+     * @param action the action to call
+     * @throws NullPointerException if action is null
+     * @since 1.0
+     * @see #foreachWhile(Pred)
+     */
+    public final void foreach(Action1<? super T> action) {
+        for (T t : this) {
+            action.call(t);
+        }
+    }
 
+    /**
+     * Consumes the entire sequence and calls the given predicate with each value;
+     * which can stop the iteration by returning false.
+     * @param predicate the predicate to call with the current element and should
+     * return true to continue the loop or false to quit the loop.
+     * @throws NullPointerException if action is null
+     * @since 1.0
+     * @see #foreach(Pred)
+     */
+    public final void foreachWhile(Pred<? super T> predicate) {
+        for (T t : this) {
+            if (!predicate.test(t)) {
+                break;
+            }
+        }
+    }
+
+    /**
+     * Consumes the entire sequence and adds each element into the given collection
+     * that is also returned.
+     * @param <U> the collection of type accepting a (super)type of this element type
+     * @param collection the collection to collect into
+     * @return the collection itself
+     * @throws NullPointerException if collection is null
+     * @since 1.0
+     */
+    public final <U extends Collection<? super T>> U into(U collection) {
+        for (T v : this) {
+            collection.add(v);
+        }
+        return collection;
+    }
+
+    /**
+     * Returns the last element of this sequence.
+     * @return the last element of this sequence
+     * @throws NoSuchElementException if the sequence is empty
+     * @since 1.0
+     * @see #last(Object)
+     */
     @SuppressWarnings("unchecked")
     public final T last() {
         if (this instanceof Callable) {
@@ -1093,6 +1161,15 @@ public abstract class Ix<T> implements Iterable<T> {
         }
     }
     
+    /**
+     * Returns the last element of this sequence or the defaultValue if
+     * this sequence is empty.
+     * @param defaultValue the value to return if this sequence is empty
+     * @return the last element or the default value
+     * @since 1.0
+     * @see #last()
+     * @see #first()
+     */
     @SuppressWarnings("unchecked")
     public final T last(T defaultValue) {
         if (this instanceof Callable) {
@@ -1110,40 +1187,23 @@ public abstract class Ix<T> implements Iterable<T> {
             }
         }
     }
-    
-    public final void removeAll() {
-        Iterator<T> it = iterator();
-        while (it.hasNext()) {
-            it.next();
-            it.remove();
-        }
-    }
-    
-    public final void foreach(Action1<? super T> action) {
-        for (T t : this) {
-            action.call(t);
-        }
-    }
-    
-    public final void foreachWhile(Pred<? super T> action) {
-        for (T t : this) {
-            if (!action.test(t)) {
-                break;
-            }
-        }
-    }
 
-    public final <U extends Collection<? super T>> U into(U collection) {
-        for (T v : this) {
-            collection.add(v);
-        }
-        return collection;
-    }
-
+    /**
+     * Prints the elements of this sequence to the console, separated
+     * by a comma+space and with a line break after roughly 80 characters.
+     * @since 1.0
+     */
     public final void print() {
         print(", ", 80);
     }
 
+    /**
+     * Prints the elements of this sequence to the console, separated
+     * by the given separator and with a line break after roughly the
+     * given charsPerLine amount.
+     * @param separator the characters to separate the elements
+     * @param charsPerLine indicates how long a line should be
+     */
     public final void print(CharSequence separator, int charsPerLine) {
         boolean first = true;
         int len = 0;
@@ -1172,118 +1232,35 @@ public abstract class Ix<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * Prints each element of this sequence into a new line on the console.
+     * @since 1.0
+     */
     public final void println() {
         for (T v : this) {
             System.out.println(v);
         }
     }
 
+    /**
+     * Prints each element of this sequence into a new line on the console, prefixed
+     * by the given character sequence.
+     * @param prefix the prefix before each line
+     */
     public final void println(CharSequence prefix) {
         for (T v : this) {
             System.out.print(prefix);
             System.out.println(v);
         }
-    }
-
+    }    
     /**
-     * Iterates over this instance, dropping all values it produces.
+     * Removes all elements by repeatedly calling this sequence's Iterator.remove().
      */
-    public final void run() {
+    public final void removeAll() {
         Iterator<T> it = iterator();
         while (it.hasNext()) {
             it.next();
-        }
-    }
-
-    public final void subscribe() {
-        run();
-    }
-
-    public final void subscribe(Action1<? super T> consumer) {
-        for (T v : this) {
-            consumer.call(v);
-        }
-    }
-
-    public final void subscribe(Action1<? super T> consumer, Action1<Throwable> onError) {
-        try {
-            for (T v : this) {
-                consumer.call(v);
-            }
-        } catch (Throwable ex) {
-            Exceptions.throwIfFatal(ex);
-            onError.call(ex);
-        }
-    }
-
-    public final void subscribe(Action1<? super T> consumer, Action1<Throwable> onError, Action0 onCompleted) {
-        try {
-            for (T v : this) {
-                consumer.call(v);
-            }
-        } catch (Throwable ex) {
-            Exceptions.throwIfFatal(ex);
-            onError.call(ex);
-            return;
-        }
-        onCompleted.call();
-    }
-
-    public final void subscribe(Observer<? super T> observer) {
-        try {
-            for (T v : this) {
-                observer.onNext(v);
-            }
-        } catch (Throwable ex) {
-            Exceptions.throwIfFatal(ex);
-            observer.onError(ex);
-            return;
-        }
-        observer.onCompleted();
-    }
-    
-    public final void subscribe(Subscriber<? super T> subscriber) {
-        try {
-            for (T v : this) {
-                if (subscriber.isUnsubscribed()) {
-                    return;
-                }
-                subscriber.onNext(v);
-            }
-        } catch (Throwable ex) {
-            Exceptions.throwIfFatal(ex);
-            if (subscriber.isUnsubscribed()) {
-                return;
-            }
-            subscriber.onError(ex);
-            return;
-        }
-        if (subscriber.isUnsubscribed()) {
-            return;
-        }
-        subscriber.onCompleted();
-    }
-
-    /**
-     * Consumes this Iterable and removes all elements for
-     * which the predicate returns false; in other words,
-     * retain those elements of a mutable source that match
-     * the predicate.
-     * @param predicate the predicate called with the current
-     * element and should return true for elements to keep, false
-     * for elements to remove.
-     * @throws UnsupportedOperationException if the this Iterable
-     * doesn't allow removing elements.
-     * @see #removeAll(Pred)
-     * @since 1.0
-     */
-    public final void retainAll(Pred<? super T> predicate) {
-        Iterator<T> it = iterator();
-        while (it.hasNext()) {
-            T v = it.next();
-            if (!predicate.test(v)) {
-                it.remove();
-            }
+            it.remove();
         }
     }
 
@@ -1310,8 +1287,50 @@ public abstract class Ix<T> implements Iterable<T> {
             }
         }
     }
+    /**
+     * Consumes this Iterable and removes all elements for
+     * which the predicate returns false; in other words,
+     * retain those elements of a mutable source that match
+     * the predicate.
+     * @param predicate the predicate called with the current
+     * element and should return true for elements to keep, false
+     * for elements to remove.
+     * @throws UnsupportedOperationException if the this Iterable
+     * doesn't allow removing elements.
+     * @see #removeAll(Pred)
+     * @since 1.0
+     */
+    public final void retainAll(Pred<? super T> predicate) {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            T v = it.next();
+            if (!predicate.test(v)) {
+                it.remove();
+            }
+        }
+    }
 
-    
+    /**
+     * Iterates over this instance, dropping all values it produces.
+     * @see #subscribe()
+     */
+    public final void run() {
+        Iterator<T> it = iterator();
+        while (it.hasNext()) {
+            it.next();
+        }
+    }
+
+    /**
+     * Returns the single element of this sequence or throws a NoSuchElementException
+     * if this sequence is empty or IndexOutOfBoundsException if this sequence has more
+     * than on element
+     * @return the single element of the sequence
+     * @throws IndexOutOfBoundsException if the sequence has more than one element
+     * @throws NoSuchElementException if the sequence is empty
+     * @since 1.0
+     * @see #single(Object)
+     */
     public final T single() {
         Iterator<T> it = iterator();
         if (it.hasNext()) {
@@ -1324,6 +1343,17 @@ public abstract class Ix<T> implements Iterable<T> {
         throw new NoSuchElementException("The source is empty.");
     }
     
+
+    /**
+     * Returns the single element of this sequence, the defaltValue
+     * if this sequence is empty or IndexOutOfBoundsException if this sequence has more
+     * than on element
+     * @param defaultValue the value to return if this sequence is empty
+     * @return the single element of the sequence
+     * @throws IndexOutOfBoundsException if the sequence has more than one element
+     * @since 1.0
+     * @see #single(Object)
+     */
     public final T single(T defaultValue) {
         Iterator<T> it = iterator();
         if (it.hasNext()) {
@@ -1334,6 +1364,119 @@ public abstract class Ix<T> implements Iterable<T> {
             return v;
         }
         return defaultValue;
+    }
+
+    /**
+     * Iterates over this instance, dropping all values it produces.
+     * @see #run()
+     */
+    public final void subscribe() {
+        run();
+    }
+
+    /**
+     * Iterates over this sequence and calls the given onNext action with
+     * each element.
+     * @param onNext the consumer to call with each element
+     * @throws NullPointerException if consumer is null
+     * @since 1.0
+     */
+    public final void subscribe(Action1<? super T> onNext) {
+        for (T v : this) {
+            onNext.call(v);
+        }
+    }
+
+    /**
+     * Iterates over this sequence and calls the given onNext action with
+     * each element and calls the onError with any exception thrown by the iteration
+     * or the onNext action.
+     * @param onNext the consumer to call with each element
+     * @param onError the consumer to call with the exception thrown 
+     * @throws NullPointerException if onError is null
+     * @since 1.0
+     */
+    public final void subscribe(Action1<? super T> onNext, Action1<Throwable> onError) {
+        try {
+            for (T v : this) {
+                onNext.call(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            onError.call(ex);
+        }
+    }
+
+    /**
+     * Iterates over this sequence and calls the given onNext action with
+     * each element and calls the onError with any exception thrown by the iteration
+     * or the onNext action; otherwise calls the onCompleted action when the sequence completes
+     * without exception.
+     * @param onNext the consumer to call with each element
+     * @param onError the consumer to call with the exception thrown
+     * @param onCompleted the action called after the sequence has been consumed 
+     * @throws NullPointerException if onError or onCompleted is null
+     * @since 1.0
+     */
+    public final void subscribe(Action1<? super T> onNext, Action1<Throwable> onError, Action0 onCompleted) {
+        try {
+            for (T v : this) {
+                onNext.call(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            onError.call(ex);
+            return;
+        }
+        onCompleted.call();
+    }
+
+    /**
+     * Consumes this sequence and calls the appropriate onXXX method on the given Observer instance.
+     * @param observer the observer to forward values, error or completion to.
+     * @throws NullPointerException if observer is null
+     * @since 1.0
+     */
+    public final void subscribe(Observer<? super T> observer) {
+        try {
+            for (T v : this) {
+                observer.onNext(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            observer.onError(ex);
+            return;
+        }
+        observer.onCompleted();
+    }
+    
+    /**
+     * Consumes this sequence and calls the appropriate onXXX method on the given Subscriber instance
+     * as long as it has not unsubscribed.
+     * @param subscriber the subscriber to forward values, error or completion to.
+     * @throws NullPointerException if subscriber is null
+     * @since 1.0
+     */
+    public final void subscribe(Subscriber<? super T> subscriber) {
+        try {
+            for (T v : this) {
+                if (subscriber.isUnsubscribed()) {
+                    return;
+                }
+                subscriber.onNext(v);
+            }
+        } catch (Throwable ex) {
+            Exceptions.throwIfFatal(ex);
+            if (subscriber.isUnsubscribed()) {
+                return;
+            }
+            subscriber.onError(ex);
+            return;
+        }
+        if (subscriber.isUnsubscribed()) {
+            return;
+        }
+        subscriber.onCompleted();
     }
     
     // --------------------------------------------------------------------------------------------
