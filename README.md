@@ -18,7 +18,7 @@ and interactive dataflows.**
 
 ```
 dependencies {
-    compile "com.github.akarnokd:ixjava:1.0.0"
+    compile "com.github.akarnokd:ixjava:1.0.0-RC1"
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ```
 <dependencies>
-		<dependency org="com.github.akarnokd" name="ixjava" rev="1.0.0" />
+		<dependency org="com.github.akarnokd" name="ixjava" rev="1.0.0-RC1" />
 </dependencies>
 ```
 
