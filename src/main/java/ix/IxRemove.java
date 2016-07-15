@@ -18,7 +18,7 @@ package ix;
 
 import java.util.Iterator;
 
-public class IxRemove<T> extends IxSource<T, T> {
+final class IxRemove<T> extends IxSource<T, T> {
 
     final Pred<? super T> predicate;
     

@@ -18,7 +18,7 @@ package ix;
 
 import java.util.Iterator;
 
-public class IxRetain<T> extends IxSource<T, T> {
+final class IxRetain<T> extends IxSource<T, T> {
 
     final Pred<? super T> predicate;
     

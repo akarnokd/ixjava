@@ -73,9 +73,38 @@ public class IxTest {
         Ix.nonNegative(1L, "n");
         
         try {
+            Ix.nonNegative(-99L, "n");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("n >= 0 required but it was -99", ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void nonNegativeInt() {
+        Ix.nonNegative(0, "n");
+        Ix.nonNegative(1, "n");
+        
+        try {
             Ix.nonNegative(-99, "n");
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals("n >= 0 required but it was -99", ex.getMessage());
+        }
+    }
+
+    @Test
+    public void positiveInt() {
+        Ix.nonNegative(1, "n");
+        
+        try {
+            Ix.positive(0, "n");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("n > 0 required but it was 0", ex.getMessage());
+        }
+
+        try {
+            Ix.positive(-99, "n");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("n > 0 required but it was -99", ex.getMessage());
         }
     }
 
