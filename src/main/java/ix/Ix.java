@@ -490,12 +490,17 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public final Ix<Ix<T>> window(int size) {
-        return window(size, size);
+        return new IxWindow<T>(this, size);
     }
 
     public final Ix<Ix<T>> window(int size, int skip) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        if (size == skip) {
+            return window(size);
+        }
+        if (size < skip) {
+            return new IxWindowSkip<T>(this, size, skip);
+        }
+        return new IxWindowOverlap<T>(this, size, skip);
     }
     
     @SuppressWarnings("unchecked")
