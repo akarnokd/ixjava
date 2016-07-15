@@ -477,8 +477,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public final <K, V> Ix<Map<K, V>> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxToMap<T, K, V>(this, keySelector, valueSelector);
     }
 
     public final <K> Ix<Map<K, Collection<T>>> toMultimap(Func1<? super T, ? extends K> keySelector) {
@@ -487,8 +486,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public final <K, V> Ix<Map<K, Collection<V>>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxToMultimap<T, K, V>(this, keySelector, valueSelector);
     }
 
     public final Ix<Ix<T>> window(int size) {
@@ -513,44 +511,41 @@ public abstract class Ix<T> implements Iterable<T> {
         return zip(this, other, zipper);
     }
     
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Ix<T> orderBy() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return orderBy((Comparator)SelfComparator.INSTANCE);
     }
     
     public final Ix<T> orderBy(Comparator<? super T> comparator) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator);
     }
     
     public final <K extends Comparable<? super K>> Ix<T> orderBy(Func1<? super T, K> keySelector) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE);
     }
     
     public final Ix<T> scan(Func2<T, T, T> scanner) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxScan<T>(this, scanner);
     }
 
     public final <R> Ix<R> scan(Func0<R> initialFactory, Func2<R, T, R> scanner) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxScanSeed<T, R>(this, initialFactory, scanner);
     }
     
     public final Ix<T> remove(Pred<? super T> predicate) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxRemove<T>(this, predicate);
+    }
+
+    public final Ix<T> retain(Pred<? super T> predicate) {
+        return new IxRetain<T>(this, predicate);
     }
 
     public final <R> Ix<R> transform(IxTransform<T, R> transformer) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxTransformer<T, R>(this, transformer);
     }
     
     public final <R> Ix<R> lift(Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxLift<T, R>(this, lifter);
     }
 
     //---------------------------------------------------------------------------------------
