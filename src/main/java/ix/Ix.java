@@ -440,7 +440,8 @@ public abstract class Ix<T> implements Iterable<T> {
 
     /**
      * Repeats the given value at most count times.
-     * <p>A count of zero will yield an empty sequence, a count of one
+     * <p>
+     * A count of zero will yield an empty sequence, a count of one
      * will yield a sequence with only one element and so forth.
      * <p>
      * The result's iterator() doesn't support remove().
@@ -457,7 +458,8 @@ public abstract class Ix<T> implements Iterable<T> {
 
     /**
      * Repeats the given value until the given predicate returns true.
-     * <p>A count of zero will yield an empty sequence, a count of one
+     * <p>
+     * A count of zero will yield an empty sequence, a count of one
      * will yield a sequence with only one element and so forth.
      * <p>
      * The result's iterator() doesn't support remove().
@@ -475,7 +477,8 @@ public abstract class Ix<T> implements Iterable<T> {
 
     /**
      * Repeats the given value at most count times or until the given predicate returns true.
-     * <p>A count of zero will yield an empty sequence, a count of one
+     * <p>
+     * A count of zero will yield an empty sequence, a count of one
      * will yield a sequence with only one element and so forth.
      * <p>
      * The result's iterator() doesn't support remove().
@@ -797,11 +800,14 @@ public abstract class Ix<T> implements Iterable<T> {
     /**
      * Emits elements of this sequence followed by the elements of the other sequence.
      * <p>
+     * Note that mergeWith and concatWith operations are the same in the Iterable world.
+     * <p>
      * The result's iterator() forwards the call remove() to the current Iterator.
      * @param other the other sequence to emits elements of
      * @return the new Ix instance
      * @throws NullPointerException if other is null
      * @since 1.0
+     * @see #mergeWith(Iterable)
      */
     public final Ix<T> concatWith(Iterable<? extends T> other) {
         return concat(this, other);
@@ -1165,171 +1171,598 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxMap<T, R>(this, mapper);
     }
     
+    /**
+     * Emits the first maximum element according to the given comparator.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param comparator the comparator called with the latest maximum element and
+     * the current element; if it returns a positive value, the current element
+     * becomes the maximum element.
+     * @return the new Ix instance
+     * @throws NullPointerException if comparator is null
+     * @since 1.0
+     * @see #min(Comparator)
+     */
     public final Ix<T> max(Comparator<? super T> comparator) {
         return new IxMinMax<T>(this, comparator, -1);
     }
 
+    /**
+     * Emits the first maximum element according to their natural order.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is 
+     * not self-comparable (i.e., doesn't implement the Comparable interface).
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #min()
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public final Ix<T> max() {
         return max((Comparator)SelfComparator.INSTANCE);
     }
     
+    /**
+     * Returns the first maximum integer value.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * an Integer object.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public final Ix<Integer> maxInt() {
         return new IxMaxInt((Ix<Integer>)this);
     }
 
+    /**
+     * Returns the first maximum long value.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * a Long object.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public final Ix<Long> maxLong() {
         return new IxMaxLong((Ix<Long>)this);
     }
 
+    /**
+     * Emits elements of this sequence followed by the elements of the other sequence.
+     * <p>
+     * Note that mergeWith and concatWith operations are the same in the Iterable world.
+     * <p>
+     * The result's iterator() forwards the call remove() to the current Iterator.
+     * @param other the other sequence to emits elements of
+     * @return the new Ix instance
+     * @throws NullPointerException if other is null
+     * @since 1.0
+     * @see #concatWith(Iterable)
+     */
     public final Ix<T> mergeWith(Iterable<? extends T> other) {
         return concatWith(other);
     }
 
+    /**
+     * Emits the first minimum element according to the given comparator.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param comparator the comparator called with the latest minimum element and
+     * the current element; if it returns a negative value, the current element
+     * becomes the minimum element.
+     * @return the new Ix instance
+     * @throws NullPointerException if comparator is null
+     * @since 1.0
+     * @see #max(Comparator)
+     */
     public final Ix<T> min(Comparator<? super T> comparator) {
         return new IxMinMax<T>(this, comparator, 1);
     }
 
+    /**
+     * Emits the first minimum element according to their natural order.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the element is 
+     * not self-comparable (i.e., doesn't implement the Comparable interface).
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #min()
+     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public final Ix<T> min() {
         return min((Comparator)SelfComparator.INSTANCE);
     }
 
+    /**
+     * Returns the first minimum integer value.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * an Integer object.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public final Ix<Integer> minInt() {
         return new IxMinInt((Ix<Integer>)this);
     }
 
+    /**
+     * Returns the first minimum long value.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * a Long object.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public final Ix<Long> minLong() {
         return new IxMinLong((Ix<Long>)this);
     }
     
+    /**
+     * Orders elements according to their natural order.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * a self-comparable object (i.e., doesn't implement the Comparable interface).
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #orderByReverse()
+     * @see #orderBy(Comparator)
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Ix<T> orderBy() {
         return orderBy((Comparator)SelfComparator.INSTANCE);
     }
     
+    /**
+     * Orders elements according to the comparator.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param comparator the comparator comparing two elements; if it returns a negative value,
+     * the first element will be before the second; if it returns a positive value,
+     * the first element will be after the second.
+     * @return the new Ix instance
+     * @throws NullPointerException if comparator is null
+     * @since 1.0
+     * @see #orderBy()
+     * @see #orderByReverse(Comparator)
+     */
     public final Ix<T> orderBy(Comparator<? super T> comparator) {
-        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator, 1);
+        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), nullCheck(comparator, "comparator is null"), 1);
     }
     
+    /**
+     * Orders elements according to the natural order of the extracted keys from these elements.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param keySelector the function receiving each element and returns a self-comparable key for them.
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     * @see #orderByReverse(Func1)
+     */
     public final <K extends Comparable<? super K>> Ix<T> orderBy(Func1<? super T, K> keySelector) {
-        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE, 1);
+        return new IxOrderBy<T, K>(this, nullCheck(keySelector, "keySelector is null"), SelfComparator.INSTANCE, 1);
     }
 
+    /**
+     * Orders elements according to their reverse natural order.
+     * <p>
+     * The sequence may throw a ClassCastException if any of the elements is not
+     * a self-comparable object (i.e., doesn't implement the Comparable interface).
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #orderBy()
+     * @see #orderByReverse(Comparator)
+     */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public final Ix<T> orderByReverse() {
         return orderByReverse((Comparator)SelfComparator.INSTANCE);
     }
     
+    /**
+     * Orders elements according to the reversed comparator.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param comparator the comparator comparing two elements; if it returns a negative value,
+     * the first element will be after the second; if it returns a positive value,
+     * the first element will be before the second.
+     * @return the new Ix instance
+     * @throws NullPointerException if comparator is null
+     * @since 1.0
+     * @see #orderByReverse()
+     * @see #orderBy(Comparator)
+     */
     public final Ix<T> orderByReverse(Comparator<? super T> comparator) {
-        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), comparator, -1);
+        return new IxOrderBy<T, T>(this, IdentityHelper.<T>instance(), nullCheck(comparator, "comparator is null"), -1);
     }
     
+    /**
+     * Orders elements according to the reverse natural order of the extracted keys from these elements.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param keySelector the function receiving each element and returns a self-comparable key for them.
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     * @see #orderByReverse(Func1)
+     */
     public final <K extends Comparable<? super K>> Ix<T> orderByReverse(Func1<? super T, K> keySelector) {
-        return new IxOrderBy<T, K>(this, keySelector, SelfComparator.INSTANCE, -1);
+        return new IxOrderBy<T, K>(this, nullCheck(keySelector, "keySelector is null"), SelfComparator.INSTANCE, -1);
     }
 
+    /**
+     * Shares an underlying Iterator that is consumed only once and each created iterator() that calls
+     * next() will receive the elements; other iterator() instances may receive different or no elements
+     * at all.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new iterator sequence
+     * @since 1.0
+     */
     public final Ix<T> publish() {
         return new IxPublish<T>(this);
     }
 
+    /**
+     * Shares an Iterator, exposed as an Ix sequence, for the duration of the transform function called
+     * for each iterator() invocation and emits elements of the resulting iterable sequence of the function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <R> the result value type
+     * @param transform the function that receives an Ix instance sharing a single underlying Iterator to this
+     * sequence and returns another Iterable to be the result sequence
+     * @return the new Iterable sequence
+     * @throws NullPointerException if transform is null
+     * @since 1.0
+     */
     public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxPublishSelector<T, R>(this, transform);
+        return new IxPublishSelector<T, R>(this, nullCheck(transform, "transfrom is null"));
     }
     
+    /**
+     * Reduces the elements of this sequence into a single value via a reducer function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param reducer the function that receives the previous reduced element (or the first)  and the current element
+     * and returns a new reduced element
+     * @return the new Ix instance
+     * @throws NullPointerException if reducer is null
+     * @since 1.0
+     * @see #reduce(Func0, Func2)
+     */
     public final Ix<T> reduce(Func2<T, T, T> reducer) {
-        return new IxAggregate<T>(this, reducer);
+        return new IxAggregate<T>(this, nullCheck(reducer, "reducer is null"));
     }
     
+    /**
+     * Given a per-iterator() initial value, reduces the elements of this sequence into a single
+     * value via a reducer function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <C> the reduced value type
+     * @param initialFactory a function called for each iterator() invocation and returns the first
+     * reduced value
+     * @param reducer the function called with the previous (or initial) reduced value and the current element
+     * and returns a new reduced value
+     * @return the new Ix instance
+     * @throws NullPointerException if initialFactory or reducer is null
+     * @since 1.0
+     * @see #reduce(Func2)
+     */
     public final <C> Ix<C> reduce(Func0<C> initialFactory, Func2<C, T, C> reducer) {
         return new IxReduce<T, C>(this, initialFactory, reducer);
     }
     
+    /**
+     * Removes those elements via Iterator.remove() from this sequence that match the
+     * given predicate.
+     * <p>
+     * The result's iterator() forwards the calls to remove() to this' Iterator.
+     * @param predicate the function called with the current element and returns true
+     * if that particular element should be removed.
+     * @return the new Ix instance
+     * @throws NullPointerException if predicate is null
+     * @since 1.0
+     * @see #retain(Pred)
+     */
     public final Ix<T> remove(Pred<? super T> predicate) {
-        return new IxRemove<T>(this, predicate);
+        return new IxRemove<T>(this, nullCheck(predicate, "predicate is null"));
     }
     
+    /**
+     * Repeats this sequence indefinitely.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     public final Ix<T> repeat() {
         return concat(repeatValue(this));
     }
     
+    /**
+     * Repeats this sequence at most the given number of times.
+     * <p>A count of zero will yield an empty sequence, a count of one
+     * will yield a sequence with only one element and so forth.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param times the number of times to emit the value, non-negative
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if count is negative
+     * @since 1.0
+     */
     public final Ix<T> repeat(long times) {
         return concat(repeatValue(this, times));
     }
     
-    public final Ix<T> repeat(Pred0 predicate) {
-        return concat(repeatValue(this, predicate));
+    /**
+     * Repeats this sequence if the given predicate returns true after the sequence
+     * completes in a round.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param stopPredicate the predicate called before any emission; returning
+     * false keeps repeating the value, returning true terminates the sequence
+     * @return the new Ix instance
+     * @throws NullPointerException if stopPredicate is null
+     * @since 1.0
+     */
+    public final Ix<T> repeat(Pred0 stopPredicate) {
+        return concat(repeatValue(this, stopPredicate));
     }
 
-    public final Ix<T> repeat(long times, Pred0 predicate) {
-        return concat(repeatValue(this, times, predicate));
+    /**
+     * Repeats this sequence if the given predicate returns true after the sequence
+     * completes in a round or at most the given number of times.
+     * <p>
+     * A count of zero will yield an empty sequence, a count of one
+     * will yield a sequence with only one element and so forth.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param times the number of times to emit the value, non-negative
+     * @param stopPredicate the predicate called before any emission; returning
+     * false keeps repeating the value, returning true terminates the sequence
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if count is negative
+     * @throws NullPointerException if stopPredicate is null
+     * @since 1.0
+     */
+    public final Ix<T> repeat(long times, Pred0 stopPredicate) {
+        return concat(repeatValue(this, times, stopPredicate));
     }
 
+    /**
+     * Caches and replays all elements of this sequence to consumers of this' iterator().
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     public final Ix<T> replay() {
         return new IxReplay<T>(this);
     }
 
+    /**
+     * Caches and replays the last {@code size} elements of this sequence to consumers of this' iterator().
+     * <p>
+     * Consumption by any of the iterator() may move the source sequence forward and subsequent iterator()
+     * consumers may get a different set of values
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param size the maximum number of elements to keep replaying to new iterator() consumers, positive
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if size is non-positive
+     * @since 1.0
+     */
     public final Ix<T> replay(int size) {
-        return new IxReplaySize<T>(this, size);
+        return new IxReplaySize<T>(this, positive(size, "size"));
     }
 
+    /**
+     * Caches and replays the elements of this sequence for the duration of the given transform function
+     * without consuming this sequence multiple times.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <R> the result value type
+     * @param transform the function receiving a view into the cache and returns an Iterable sequence whose
+     * elements will be emitted by this Ix.
+     * @return the new Ix instance
+     * @throws NullPointerException
+     * @since 1.0
+     */
     public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxReplaySelector<T, R>(this, transform);
+        return new IxReplaySelector<T, R>(this, nullCheck(transform, "transformer is null"));
     }
 
+    /**
+     * Caches and replays the the last {@code size} elements of this sequence for the duration of the given transform function
+     * without consuming this sequence multiple times.
+     * <p>
+     * Consumption by any of the inner Ix' iterator() may move the shared sequence forward and subsequent iterator()
+     * consumers may get a different set of values
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <R> the result value type
+     * @param size the maximum number of elements to keep replaying to new inner Ix iterator() consumers, positive
+     * @param transform the function receiving a view into the cache and returns an Iterable sequence whose
+     * elements will be emitted by this Ix.
+     * @return the new Ix instance
+     * @throws NullPointerException
+     * @since 1.0
+     */
     public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
-        return new IxReplaySizeSelector<T, R>(this, size, transform);
+        return new IxReplaySizeSelector<T, R>(this, positive(size, "size"), nullCheck(transform, "transform is null"));
     }
 
+    /**
+     * Removes those elements via Iterator.remove() from this sequence that don't match the
+     * given predicate.
+     * <p>
+     * The result's iterator() forwards the calls to remove() to this' Iterator.
+     * @param predicate the function called with the current element and returns false
+     * if that particular element should be removed.
+     * @return the new Ix instance
+     * @throws NullPointerException if predicate is null
+     * @since 1.0
+     * @see #remove(Pred)
+     */
     public final Ix<T> retain(Pred<? super T> predicate) {
-        return new IxRetain<T>(this, predicate);
+        return new IxRetain<T>(this, nullCheck(predicate, "predicate is null"));
     }
     
+    /**
+     * Plays this sequence in reverse.
+     * <p>
+     * The reversal requires consuming the entire sequence and doesn't work with
+     * infinite sequences.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
     public final Ix<T> reverse() {
         return new IxReverse<T>(this);
     }
 
+    /**
+     * Performs a running accumulation, that is, returns intermediate elements returned by the
+     * scanner function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param scanner the function that receives the previous (or first) accumulated element and the current
+     * element and returns a value to be emitted and to become the accumulated element
+     * @return the new Ix instance
+     * @throws NullPointerException if scanner is null
+     * @since 1.0
+     */
     public final Ix<T> scan(Func2<T, T, T> scanner) {
-        return new IxScan<T>(this, scanner);
+        return new IxScan<T>(this, nullCheck(scanner, "scanner is null"));
     }
 
+    /**
+     * Performs a running accumulation, that is, returns intermediate elements returned by the
+     * scanner function, starting with a per-iterator initial value.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <R> the accumulated value type
+     * @param initialFactory function called for each iterator() and returns the initial accumulator value
+     * @param scanner the function that receives the previous (or first) accumulated element and the current
+     * element and returns a value to be emitted and to become the accumulated element
+     * @return the new Ix instance
+     * @throws NullPointerException if initialFactory or scanner is null
+     * @since 1.0
+     */
     public final <R> Ix<R> scan(Func0<R> initialFactory, Func2<R, T, R> scanner) {
-        return new IxScanSeed<T, R>(this, initialFactory, scanner);
+        return new IxScanSeed<T, R>(this, nullCheck(initialFactory, "initialFactory is null"), nullCheck(scanner, "scanner is null"));
     }
     
+    /**
+     * Determines if two sequences have the same elements in the same order and are the same length based
+     * on null-safe object equality.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param other the other sequence to compare with
+     * @return the new Ix instance
+     * @throws NullPointerException if other is null
+     * @since 1.0
+     */
     public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other) {
-        return sequenceEqual(other, EqualityHelper.INSTANCE);
+        return sequenceEqual(nullCheck(other, "other is null"), EqualityHelper.INSTANCE);
     }
 
+    /**
+     * Determines if two sequences have the same elements in the same order and are the same length based
+     * on the given comparer's boolean value.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param other the other sequence to compare with
+     * @param comparer the predicate receiving elements from this and the other sequence and returns true if those
+     * elements are equal
+     * @return the new Ix instance
+     * @throws NullPointerException if other is null
+     * @since 1.0
+     */
     public final Ix<Boolean> sequenceEqual(Iterable<? extends T> other, Pred2<? super T, ? super T> comparer) {
-        return new IxSequenceEqual<T>(this, other, comparer);
+        return new IxSequenceEqual<T>(this, nullCheck(other, "other is null"), nullCheck(comparer, "comparer is null"));
     }
 
+    /**
+     * Skips the first n elements from this sequence.
+     * <p>
+     * The result's iterator() forwards the calls to remove() to this' Iterator.
+     * @param n the elements to skip, non-positive values won't skip any elements
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #take(int)
+     */
     public final Ix<T> skip(int n) {
-        if (n == 0) {
+        if (n <= 0) {
             return this;
         }
         return new IxSkip<T>(this, n);
     }
 
+    /**
+     * Skips the last n elements from this sequence.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param n the elements to skip, non-positive values won't skip any elements
+     * @return the new Ix instance
+     * @since 1.0
+     * @see #takeLast(int)
+     */
     public final Ix<T> skipLast(int n) {
-        if (n == 0) {
+        if (n <= 0) {
             return this;
         }
         return new IxSkipLast<T>(this, n);
     }
 
+    /**
+     * Skips the first elements while the given predicate returns true; once it returns false
+     * all subsequent elements are emitted.
+     * <p>
+     * The result's iterator() forwards the calls to remove() to this' Iterator.
+     * @param predicate the predicate called with the current element and returns true
+     * to skip that element
+     * @return the new Ix instance
+     * @throws NullPointerException if predicate is null
+     * @since 1.0
+     * @see #takeWhile(Pred)
+     */
     public final Ix<T> skipWhile(Pred<? super T> predicate) {
-        return new IxSkipWhile<T>(this, predicate);
+        return new IxSkipWhile<T>(this, nullCheck(predicate, "predicate is null"));
     }
     
-    @SuppressWarnings("unchecked")
+    /**
+     * Emits elements of the given array followed by the elements of this sequence.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param values the array of values to emit first
+     * @return the new Ix instance
+     * @throws NullPointerException if values is null
+     * @since 1.0
+     */
     public final Ix<T> startWith(T... values) {
-        return concatArray(fromArray(values), this);
+        return concat(fromArray(values), this);
     }
 
     @SuppressWarnings("unchecked")
