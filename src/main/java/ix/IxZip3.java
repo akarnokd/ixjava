@@ -68,17 +68,23 @@ final class IxZip3<T1, T2, T3, R> extends Ix<R> {
                 return false;
             }
 
+            T1 t1 = source1.next();
+
             if (!source2.hasNext()) {
                 done = true;
                 return false;
             }
+
+            T2 t2 = source2.next();
 
             if (!source3.hasNext()) {
                 done = true;
                 return false;
             }
 
-            value = zipper.call(source1.next(), source2.next(), source3.next());
+            T3 t3 = source3.next();
+            
+            value = zipper.call(t1, t2, t3);
             hasValue = true;
             return true;
         }

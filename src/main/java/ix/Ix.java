@@ -442,33 +442,27 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     public final Ix<T> publish() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxPublish<T>(this);
     }
 
-    public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public final <R> Ix<R> publish(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxPublishSelector<T, R>(this, transform);
     }
 
     public final Ix<T> replay() {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxReplay<T>(this);
     }
 
     public final Ix<T> replay(int size) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+        return new IxReplaySize<T>(this, size);
     }
 
-    public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public final <R> Ix<R> replay(Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxReplaySelector<T, R>(this, transform);
     }
 
-    public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterator<? extends R>> transform) {
-        // TODO implement
-        throw new UnsupportedOperationException();
+    public final <R> Ix<R> replay(int size, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transform) {
+        return new IxReplaySizeSelector<T, R>(this, size, transform);
     }
     
     public final <K> Ix<Map<K, T>> toMap(Func1<? super T, ? extends K> keySelector) {
