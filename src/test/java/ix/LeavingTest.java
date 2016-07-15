@@ -417,6 +417,11 @@ public class LeavingTest {
         Assert.assertEquals(1, Ix.just(1).single().intValue());
     }
 
+    @Test
+    public void singleDefault() {
+        Assert.assertEquals(1, Ix.just(1).single(2).intValue());
+    }
+
     @Test(expected = NoSuchElementException.class)
     public void singleEmpty() {
         Assert.assertEquals(1, Ix.<Integer>empty().single().intValue());

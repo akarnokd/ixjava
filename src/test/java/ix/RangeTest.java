@@ -51,4 +51,14 @@ public class RangeTest {
         
         Assert.assertTrue(source.getClass().toString(), source instanceof IxScalarCallable);
     }
+    
+    @Test
+    public void negativeRange() {
+        try {
+            Ix.range(1, -99);
+            Assert.fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("count >= 0 required but it was -99", ex.getMessage());
+        }
+    }
 }

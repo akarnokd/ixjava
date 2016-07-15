@@ -66,5 +66,17 @@ public class IxTest {
             Assert.assertEquals("Failure", ex.getMessage());
         }
     }
+    
+    @Test
+    public void nonNegativeLong() {
+        Ix.nonNegative(0L, "n");
+        Ix.nonNegative(1L, "n");
+        
+        try {
+            Ix.nonNegative(-99, "n");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals("n >= 0 required but it was -99", ex.getMessage());
+        }
+    }
 
 }

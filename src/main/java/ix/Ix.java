@@ -26,41 +26,41 @@ import rx.functions.*;
 
 /**
  * Base class and entry point for fluent Iterables.
- * 
+ * <p>
+ * All operators tolerate {@code null} elements.
+ * <p>
+ * The Iterables have to be run in a single-threaded manner and none of
+ * the participating operators expect or support concurrency.
  * @param <T> the value type
  * @since 1.0
  */
 public abstract class Ix<T> implements Iterable<T> {
 
-    public static <T> Ix<T> just(T value) {
-        return new IxJust<T>(value);
-    }
-    
-    public static <T> Ix<T> empty() {
-        return IxEmpty.instance();
-    }
-    
-    public static <T> Ix<T> from(Iterable<T> source) {
-        if (source instanceof Ix) {
-            return (Ix<T>)source;
-        }
-        return new IxWrapper<T>(nullCheck(source, "source"));
-    }
-    
-    public static Ix<Integer> range(int start, int count) {
-        if (count == 0) {
-            return empty();
-        }
-        if (count == 1) {
-            return just(start);
-        }
-        return new IxRange(start, count);
-    }
-    
+    /**
+     * Emits all characters from the given CharSequence as integer values.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param cs the source character sequence, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if cs is null
+     * @since 1.0
+     */
     public static Ix<Integer> characters(CharSequence cs) {
         return new IxCharacters(cs, 0, cs.length());
     }
     
+    /**
+     * Emits a range of characters from the given CharSequence as integer values.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param cs the source character sequence, not null
+     * @param start the start character index, inclusive, non-negative
+     * @param end the end character index, exclusive, non-negative
+     * @return the new Ix instance
+     * @throws NullPointerException if cs is null
+     * @throws IndexOutOfBoundsException if start is out of range [0, cs.length]
+     * @since 1.0
+     */
     public static Ix<Integer> characters(CharSequence cs, int start, int end) {
         int len = cs.length();
         if (start < 0 || end < 0 || start > len || end > len) {
@@ -68,25 +68,101 @@ public abstract class Ix<T> implements Iterable<T> {
         }
         return new IxCharacters(cs, start, end);
     }
-    
-    public static <T> Ix<T> fromArray(T... values) {
-        int n = values.length;
-        if (n == 0) {
-            return empty();
-        }
-        if (n == 1) {
-            return just(values[0]);
-        }
-        return new IxFromArray<T>(0, values.length, values);
+
+    /**
+     * Concatenates the elements of Iterable sources, provided as an Iterable itself, sequentially.
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the common base type
+     * @param sources the Iterable sequence of source Iterables
+     * @return the new Ix instance
+     * @throws NullPointerException if sources is null
+     * @since 1.0
+     * @see #merge(Iterable)
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
+        return new IxFlattenIterable<Iterable<? extends T>, T>(
+                (Iterable)nullCheck(sources, "sources is null"), 
+                IdentityHelper.<Iterable<? extends T>>instance());
     }
 
-    public static <T> Ix<T> fromArrayRange(int start, int end, T... values) {
-        if (start < 0 || end < 0 || start > values.length || end > values.length) {
-            throw new IndexOutOfBoundsException("start=" + start + ", end=" + end + ", length=" + values.length);
-        }
-        return new IxFromArray<T>(start, end, values);
+    /**
+     * Concatenates the elements of two Iterable sources sequentially
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the value type
+     * @param source1 the first source, not null
+     * @param source2 the second source, not null
+     * @return the new Iterable source
+     * @throws NullPointerException if any of the sources is null
+     * @since 1.0
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> concat(Iterable<? extends T> source1, Iterable<? extends T> source2) {
+        return concatArray(nullCheck(source1, "source1 is null"), nullCheck(source2, "source2 is null"));
     }
 
+    /**
+     * Concatenates the elements of three Iterable sources sequentially
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the value type
+     * @param source1 the first source, not null
+     * @param source2 the second source, not null
+     * @param source3 the third source, not null
+     * @return the new Iterable source
+     * @throws NullPointerException if any of the sources is null
+     * @since 1.0
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> concat(Iterable<? extends T> source1, Iterable<? extends T> source2,
+            Iterable<? extends T> source3) {
+        return concatArray(nullCheck(source1, "source1 is null"), 
+                nullCheck(source2, "source2 is null"), nullCheck(source3, "source3 is null"));
+    }
+
+    /**
+     * Concatenates the elements of three Iterable sources sequentially
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the value type
+     * @param source1 the first source, not null
+     * @param source2 the second source, not null
+     * @param source3 the third source, not null
+     * @param source4 the fourth source, not null
+     * @return the new Iterable source
+     * @throws NullPointerException if any of the sources is null
+     * @since 1.0
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Ix<T> concat(Iterable<? extends T> source1, Iterable<? extends T> source2,
+            Iterable<? extends T> source3, Iterable<? extends T> source4) {
+        return concatArray(nullCheck(source1, "source1 is null"), nullCheck(source2, "source2 is null"), 
+                nullCheck(source3, "source3 is null"), nullCheck(source4, "source4 is null"));
+    }
+
+    /**
+     * Concatenates the elements of Iterable sources, provided as an array, sequentially.
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the common base type
+     * @param sources the array of source Iterables
+     * @return the new Ix instance
+     * @throws NullPointerException if sources is null
+     * @since 1.0
+     * @see #mergeArray(Iterable...)
+     */
     @SuppressWarnings("unchecked")
     public static <T> Ix<T> concatArray(Iterable<? extends T>... sources) {
         int n = sources.length;
@@ -99,92 +175,461 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxFlattenArrayIterable<T>((Iterable<T>[])sources);
     }
 
-    public static <T> Ix<T> mergeArray(Iterable<? extends T>... sources) {
-        return concatArray(sources); // concat and merge are the same in the Iterable world
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
-        return new IxFlattenIterable<Iterable<? extends T>, T>(
-                (Iterable)sources, 
-                IdentityHelper.<Iterable<? extends T>>instance());
-    }
-
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <T> Ix<T> merge(Iterable<? extends Iterable<? extends T>> sources) {
-        return new IxFlattenIterable<Iterable<? extends T>, T>(
-                (Iterable)sources, 
-                IdentityHelper.<Iterable<? extends T>>instance());
-    }
-
+    /**
+     * Defers the generation of the actual Iterable till the iterator() is called on
+     * the resulting Ix.
+     * <p>
+     * The result's iterator() forwards the remove() calls to the generated Iterable's Iterator.
+     * @param <T> the value type
+     * @param factory the function that returns an Iterable when the resulting Ix.iterator() is called
+     * @return the new Ix source
+     * @throws NullPointerException if factory is null
+     * @since 1.0
+     */
     public static <T> Ix<T> defer(Func0<? extends Iterable<? extends T>> factory) {
-        return new IxDefer<T>(factory);
+        return new IxDefer<T>(nullCheck(factory, "factory is null"));
+    }
+    
+    /**
+     * No elements are emitted.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T> Ix<T> empty() {
+        return IxEmpty.instance();
+    }
+    
+    /**
+     * Wraps the given Interable source into an Ix instance (if
+     * not already an Ix subclass).
+     * <p>
+     * The result's iterator() forwards the remove() calls to the source's
+     * iterator().
+     * @param <T> the value type
+     * @param source the Iterable to wrap, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if source is null
+     * @since 1.0
+     */
+    public static <T> Ix<T> from(Iterable<T> source) {
+        if (source instanceof Ix) {
+            return (Ix<T>)source;
+        }
+        return new IxWrapper<T>(nullCheck(source, "source"));
+    }
+    
+    /**
+     * Emits all the elements of the given array. 
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param values the array of values, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if values is null
+     * @since 1.0
+     */
+    public static <T> Ix<T> fromArray(T... values) {
+        int n = values.length;
+        if (n == 0) {
+            return empty();
+        }
+        if (n == 1) {
+            return just(values[0]);
+        }
+        return new IxFromArray<T>(0, values.length, values);
     }
 
+    /**
+     * Emits a range of elements from the given array.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param start the staring index, inclusive, non-negative
+     * @param end the end index, exclusive, non-negative
+     * @param values the array of values
+     * @return the new Ix instance
+     * @throws NullPointerException if values is null
+     * @throws IndexOutOfBoundsException if either start or end are not in [0, values.length]
+     * @since 1.0
+     */
+    public static <T> Ix<T> fromArrayRange(int start, int end, T... values) {
+        if (start < 0 || end < 0 || start > values.length || end > values.length) {
+            throw new IndexOutOfBoundsException("start=" + start + ", end=" + end + ", length=" + values.length);
+        }
+        return new IxFromArray<T>(start, end, values);
+    }
+
+    /**
+     * Generates a sequence of values via a generic indexed for-loop style construct;
+     * the index starts with the given seed, checked via a condition (to terminate),
+     * generated from the index via the selector and then a new index is generated via next.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the index value type
+     * @param <R> the result value type
+     * @param seed the initial value of the index
+     * @param condition the receives the current index (before selector is called) and if it
+     * returns false, the sequence terminates
+     * @param next the function that receives the current index and returns the next index
+     * @param selector the function that receives the current index and returns the value
+     * to be emitted.
+     * @return the new Ix instance
+     * @throws NullPointerException if condition, next or selector is null
+     * @since 1.0
+     */
+    public static <T, R> Ix<R> forloop(T seed, Pred<? super T> condition, 
+            Func1<? super T, ? extends T> next,
+            Func1<? super T, ? extends R> selector) {
+        return new IxForloop<T, R>(seed, nullCheck(condition, "condition is null"),
+                nullCheck(selector, "selector is null"), nullCheck(next, "next is null"));
+    }
+
+    /**
+     * Calls the given action to generate a value or terminate whenever the next() 
+     * is called on the resulting Ix.iterator().
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * <p>
+     * The action may call {@code onNext} at most once to signal the next value per action invocation.
+     * The {@code onCompleted} should be called to indicate no further values will be generated (may be
+     * called with an onNext in the same action invocation). Calling {@code onError} will immediately
+     * throw the given exception (as is if it's a RuntimeException or Error; or wrapped into a RuntimeException). 
+     * @param <T> the value type
+     * @param nextSupplier the action called with an Observer API to receive value, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if nextSupplier is null
+     * @since 1.0
+     */
     public static <T> Ix<T> generate(Action1<Observer<T>> nextSupplier) {
-        return new IxGenerateStateless<T>(nextSupplier);
+        return new IxGenerateStateless<T>(nullCheck(nextSupplier, "nextSupplier is null"));
     }
 
+    /**
+     * Calls the given function (with per-iterator state) to generate a value or terminate 
+     * whenever the next() is called on the resulting Ix.iterator().
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * <p>
+     * The action may call {@code onNext} at most once to signal the next value per action invocation.
+     * The {@code onCompleted} should be called to indicate no further values will be generated (may be
+     * called with an onNext in the same action invocation). Calling {@code onError} will immediately
+     * throw the given exception (as is if it's a RuntimeException or Error; or wrapped into a RuntimeException). 
+     * @param <T> the value type
+     * @param <S> the state type supplied to and returned by the nextSupplier function
+     * @param stateSupplier the function that returns a state for each invocation of iterator()
+     * @param nextSupplier the action called with an Observer API to receive value, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if stateSupplier or nextSupplier is null
+     * @since 1.0
+     */
     public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier) {
         return generate(stateSupplier, nextSupplier, IxEmptyAction.instance1());
     }
 
+    /**
+     * Calls the given function (with per-iterator state) to generate a value or terminate 
+     * whenever the next() is called on the resulting Ix.iterator().
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * <p>
+     * The action may call {@code onNext} at most once to signal the next value per action invocation.
+     * The {@code onCompleted} should be called to indicate no further values will be generated (may be
+     * called with an onNext in the same action invocation). Calling {@code onError} will immediately
+     * throw the given exception (as is if it's a RuntimeException or Error; or wrapped into a RuntimeException).
+     * <p>
+     * Note that since there is no direct way to cancel an Iterator, the stateDisposer is only invoked
+     * when the nextSupplier calls a terminal method. 
+     * @param <T> the value type
+     * @param <S> the state type supplied to and returned by the nextSupplier function
+     * @param stateSupplier the function that returns a state for each invocation of iterator()
+     * @param nextSupplier the action called with an Observer API to receive value, not null
+     * @param stateDisposer the action called when the nextSupplier signals an {@code onError} or {@code onCompleted}.
+     * @return the new Ix instance
+     * @throws NullPointerException if stateSupplier, nextSupplier or stateDisposer is null
+     * @since 1.0
+     */
     public static <T, S> Ix<T> generate(Func0<S> stateSupplier, Func2<S, Observer<T>, S> nextSupplier, Action1<? super S> stateDisposer) {
-        return new IxGenerate<T, S>(stateSupplier, nextSupplier, stateDisposer);
+        return new IxGenerate<T, S>(nullCheck(stateSupplier, "stateSupplier is null"), 
+                nullCheck(nextSupplier, "nextSupplier is null"), nullCheck(stateDisposer, "stateDisposer is null"));
+    }
+
+    /**
+     * Emits a single constant value.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param value the constant value to emit
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T> Ix<T> just(T value) {
+        return new IxJust<T>(value);
+    }
+
+    /**
+     * Concatenates the elements of Iterable sources, provided as an Iterable itself, sequentially.
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the common base type
+     * @param sources the Iterable sequence of source Iterables
+     * @return the new Ix instance
+     * @throws NullPointerException if sources is null
+     * @since 1.0
+     * @see #concat(Iterable)
+     */
+    public static <T> Ix<T> merge(Iterable<? extends Iterable<? extends T>> sources) {
+        return concat(sources);
     }
     
-    public static <T, R> Ix<R> zip(Iterable<? extends T>[] sources, FuncN<R> zipper) {
-        return new IxZipArray<T, R>(sources, zipper);
+    /**
+     * Concatenates the elements of Iterable sources, provided as an array, sequentially.
+     * <p>
+     * The result's iterator() forwards the remove() calls to the current iterator.
+     * <p>
+     * Note that merge and concat operations are the same in the Iterable world.
+     * @param <T> the common base type
+     * @param sources the array of source Iterables
+     * @return the new Ix instance
+     * @throws NullPointerException if sources is null
+     * @since 1.0
+     * @see #concatArray(Iterable...)
+     */
+    public static <T> Ix<T> mergeArray(Iterable<? extends T>... sources) {
+        return concatArray(sources); // concat and merge are the same in the Iterable world
+    }
+    
+    /**
+     * Emits a range of incrementing integer values, starting from {@code start} and
+     * up to {@code count} times.
+     * @param start the starting value
+     * @param count the number of integers to emit, non-negative
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if count is negative
+     * @since 1.0
+     */
+    public static Ix<Integer> range(int start, int count) {
+        if (count == 0) {
+            return empty();
+        }
+        if (count == 1) {
+            return just(start);
+        }
+        if (count < 0) {
+            throw new IllegalArgumentException("count >= 0 required but it was " + count);
+        }
+        return new IxRange(start, count);
     }
 
-    public static <T, R> Ix<R> zip(Iterable<? extends Iterable<? extends T>> sources, FuncN<R> zipper) {
-        return new IxZipIterable<T, R>(sources, zipper);
-    }
-
-    public static <T1, T2, R> Ix<R> zip(
-            Iterable<T1> it1, Iterable<T2> it2, 
-            Func2<? super T1, ? super T2, ? extends R> zipper) {
-        return new IxZip2<T1, T2, R>(it1, it2, zipper);
-    }
-
-    public static <T1, T2, T3, R> Ix<R> zip(
-            Iterable<T1> it1, Iterable<T2> it2, 
-            Iterable<T3> it3,
-            Func3<? super T1, ? super T2, ? super T3, ? extends R> zipper) {
-        return new IxZip3<T1, T2, T3, R>(it1, it2, it3, zipper);
-    }
-
-    public static <T1, T2, T3, T4, R> Ix<R> zip(
-            Iterable<T1> it1, Iterable<T2> it2, 
-            Iterable<T3> it3, Iterable<T4> it4,
-            Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
-        return new IxZip4<T1, T2, T3, T4, R>(it1, it2, it3, it4, zipper);
-    }
-
+    /**
+     * Repeats the given value indefinitely.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param value the value to emit whenever next() is called
+     * @return the new Ix instance
+     * @since 1.0
+     */
     public static <T> Ix<T> repeatValue(T value) {
         return new IxRepeat<T>(value);
     }
 
+    /**
+     * Repeats the given value at most count times.
+     * <p>A count of zero will yield an empty sequence, a count of one
+     * will yield a sequence with only one element and so forth.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param value the value to emit
+     * @param count the number of times to emit the value, non-negative
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if count is negative
+     * @since 1.0
+     */
     public static <T> Ix<T> repeatValue(T value, long count) {
-        return new IxRepeatCount<T>(value, count);
+        return new IxRepeatCount<T>(value, nonNegative(count, "count"));
     }
 
+    /**
+     * Repeats the given value until the given predicate returns true.
+     * <p>A count of zero will yield an empty sequence, a count of one
+     * will yield a sequence with only one element and so forth.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param value the value to emit
+     * @param stopPredicate the predicate called before any emission; returning
+     * false keeps repeating the value, returning true terminates the sequence
+     * @return the new Ix instance
+     * @throws NullPointerException if stopPredicate is null
+     * @since 1.0
+     */
     public static <T> Ix<T> repeatValue(T value, Pred0 stopPredicate) {
         return repeatValue(value, Long.MAX_VALUE, stopPredicate);
     }
 
+    /**
+     * Repeats the given value at most count times or until the given predicate returns true.
+     * <p>A count of zero will yield an empty sequence, a count of one
+     * will yield a sequence with only one element and so forth.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param value the value to emit
+     * @param count the number of times to emit the value, non-negative
+     * @param stopPredicate the predicate called before any emission; returning
+     * false keeps repeating the value, returning true terminates the sequence
+     * @return the new Ix instance
+     * @throws IllegalArgumentException if count is negative
+     * @throws NullPointerException if stopPredicate is null
+     * @since 1.0
+     */
     public static <T> Ix<T> repeatValue(T value, long count, Pred0 stopPredicate) {
-        return new IxRepeatPredicate<T>(value, count, stopPredicate);
-    }
-
-    public static <T, R> Ix<R> forloop(T seed, Pred<? super T> condition, 
-            Func1<? super T, ? extends T> next,
-            Func1<? super T, ? extends R> selector) {
-        return new IxForloop<T, R>(seed, condition, selector, next);
+        return new IxRepeatPredicate<T>(value, nonNegative(count, "count"), nullCheck(stopPredicate, "stopPredicate is null"));
     }
     
+    /**
+     * Emits a sequence of substring of a string split by the given separator.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param string the string to split, not null
+     * @param by the separator to split along, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if string or by is null
+     * @since 1.0
+     */
     public static Ix<String> split(String string, String by) {
-        return new IxSplit(string, by);
+        return new IxSplit(nullCheck(string, "string is null"), nullCheck(by, "by is null"));
+    }
+    
+    /**
+     * Combines the next element from each source Iterable via a zipper function.
+     * <p>
+     * If one of the source Iterables is sorter the sequence terminates eagerly.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * 
+     * @param <T> the common element type of the sources
+     * @param <R> the result value type
+     * @param sources the array of Iterable sources, not null
+     * @param zipper the function that takes an array of values and returns a value
+     * to be emitted, one from each source, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if sources or zipper is null
+     * @since 1.0
+     */
+    public static <T, R> Ix<R> zip(Iterable<? extends T>[] sources, FuncN<R> zipper) {
+        return new IxZipArray<T, R>(nullCheck(sources, "sources is null"), nullCheck(zipper, "zipper is null"));
+    }
+
+    /**
+     * Combines the next element from each source Iterable, provided as an Iterable itself, 
+     * via a zipper function.
+     * <p>
+     * If one of the source Iterables is sorter the sequence terminates eagerly.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * 
+     * @param <T> the common element type of the sources
+     * @param <R> the result value type
+     * @param sources the Iterable of Iterable sources, not null
+     * @param zipper the function that takes an array of values and returns a value
+     * to be emitted, one from each source, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if sources or zipper is null
+     * @since 1.0
+     */
+    public static <T, R> Ix<R> zip(Iterable<? extends Iterable<? extends T>> sources, FuncN<R> zipper) {
+        return new IxZipIterable<T, R>(nullCheck(sources, "sources is null"), nullCheck(zipper, "zipper is null"));
+    }
+
+    /**
+     * Combines the next element from each source Iterable, provided as an Iterable itself, 
+     * via a zipper function.
+     * <p>
+     * If one of the source Iterables is sorter the sequence terminates eagerly.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * 
+     * @param <T1> the first source's element type
+     * @param <T2> the second source's element type
+     * @param <R> the result value type
+     * @param source1 the first source Iterable
+     * @param source2 the second source Iterable
+     * @param zipper the function that takesone from each source, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if any of the sources or zipper is null
+     * @since 1.0
+     */
+    public static <T1, T2, R> Ix<R> zip(
+            Iterable<T1> source1, Iterable<T2> source2, 
+            Func2<? super T1, ? super T2, ? extends R> zipper) {
+        return new IxZip2<T1, T2, R>(nullCheck(source1, "source1 is null"), 
+                nullCheck(source2, "source2 is null"), nullCheck(zipper, "zipper is null"));
+    }
+
+    /**
+     * Combines the next element from each source Iterable, provided as an Iterable itself, 
+     * via a zipper function.
+     * <p>
+     * If one of the source Iterables is sorter the sequence terminates eagerly.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * 
+     * @param <T1> the first source's element type
+     * @param <T2> the second source's element type
+     * @param <T3> the third source's element type
+     * @param <R> the result value type
+     * @param source1 the first source Iterable
+     * @param source2 the second source Iterable
+     * @param source3 the third source Iterable
+     * @param zipper the function that takesone from each source, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if any of the sources or zipper is null
+     * @since 1.0
+     */
+    public static <T1, T2, T3, R> Ix<R> zip(
+            Iterable<T1> source1, Iterable<T2> source2, 
+            Iterable<T3> source3,
+            Func3<? super T1, ? super T2, ? super T3, ? extends R> zipper) {
+        return new IxZip3<T1, T2, T3, R>(nullCheck(source1, "source1 is null"), nullCheck(source2, "source2 is null"), 
+                nullCheck(source3, "source3 is null"), nullCheck(zipper, "zipper is null"));
+    }
+
+    /**
+     * Combines the next element from each source Iterable, provided as an Iterable itself, 
+     * via a zipper function.
+     * <p>
+     * If one of the source Iterables is sorter the sequence terminates eagerly.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * 
+     * @param <T1> the first source's element type
+     * @param <T2> the second source's element type
+     * @param <T3> the third source's element type
+     * @param <T4> the fourth source's element type
+     * @param <R> the result value type
+     * @param source1 the first source Iterable
+     * @param source2 the second source Iterable
+     * @param source3 the third source Iterable
+     * @param source4 the fourth source Iterable
+     * @param zipper the function that takesone from each source, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if any of the sources or zipper is null
+     * @since 1.0
+     */
+    public static <T1, T2, T3, T4, R> Ix<R> zip(
+            Iterable<T1> source1, Iterable<T2> source2, 
+            Iterable<T3> source3, Iterable<T4> source4,
+            Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
+        return new IxZip4<T1, T2, T3, T4, R>(nullCheck(source1, "source1 is null"), 
+                nullCheck(source2, "source2 is null"), nullCheck(source3, "source3 is null"), 
+                nullCheck(source4, "source4 is null"), nullCheck(zipper, "zipper is null"));
     }
 
     //---------------------------------------------------------------------------------------
@@ -929,5 +1374,19 @@ public abstract class Ix<T> implements Iterable<T> {
             }
             throw new RuntimeException(ex);
         }
+    }
+    
+    /**
+     * Checks if the given value is non-negative and returns it; throws
+     * an IllegalArgumentException otherwise
+     * @param n the number to check
+     * @param name the name of the parameter
+     * @return n
+     */
+    protected static long nonNegative(long n, String name) {
+        if (n < 0L) {
+            throw new IllegalArgumentException(name + " >= 0 required but it was " + n);
+        }
+        return n;
     }
 }

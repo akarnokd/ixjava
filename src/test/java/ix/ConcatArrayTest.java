@@ -168,4 +168,25 @@ public class ConcatArrayTest {
 
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
+    
+    @Test
+    public void concat2() {
+        Ix<Integer> source = Ix.concat(Ix.just(1), Ix.just(2));
+        
+        IxTestHelper.assertValues(source, 1, 2);
+    }
+
+    @Test
+    public void concat3() {
+        Ix<Integer> source = Ix.concat(Ix.just(1), Ix.just(2), Ix.just(3));
+        
+        IxTestHelper.assertValues(source, 1, 2, 3);
+    }
+
+    @Test
+    public void concat4() {
+        Ix<Integer> source = Ix.concat(Ix.just(1), Ix.just(2), Ix.just(3), Ix.just(4));
+        
+        IxTestHelper.assertValues(source, 1, 2, 3, 4);
+    }
 }
