@@ -97,6 +97,6 @@ public enum IxTestHelper {
     }
     
     public static List<Integer> range(int start, int count) {
-        return Ix.range(start, count).toList().first();
+        return Ix.range(start, count).collectToList().first();
     }
 }

@@ -230,7 +230,7 @@ public class GroupByTest {
             }
         });
         
-        List<GroupedIx<Integer, Integer>> list = source.toList().first();
+        List<GroupedIx<Integer, Integer>> list = source.collectToList().first();
 
         IxTestHelper.assertValues(Ix.concat(list), 1, 2, 3, 4, 5);
     }
@@ -249,7 +249,7 @@ public class GroupByTest {
             }
         });
         
-        List<GroupedIx<Integer, Integer>> list = source.toList().first();
+        List<GroupedIx<Integer, Integer>> list = source.collectToList().first();
 
         IxTestHelper.assertValues(Ix.concat(list), null, null, null, null, null);
     }
@@ -268,7 +268,7 @@ public class GroupByTest {
             }
         });
         
-        List<GroupedIx<Integer, Integer>> list = source.toList().first();
+        List<GroupedIx<Integer, Integer>> list = source.collectToList().first();
 
         Assert.assertEquals("GroupedIterable[key=1, queue=5]", list.get(0).toString());
 

@@ -26,7 +26,7 @@ public class WindowTest {
     public void normal() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
@@ -38,7 +38,7 @@ public class WindowTest {
     public void normalSizeSkipSame() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 2);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
@@ -50,7 +50,7 @@ public class WindowTest {
     public void normalOne() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
@@ -64,7 +64,7 @@ public class WindowTest {
     public void normalAll() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(5);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
@@ -74,7 +74,7 @@ public class WindowTest {
     public void normalMore() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(10);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
@@ -108,7 +108,7 @@ public class WindowTest {
     public void normalSkip() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 3);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(2, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
@@ -119,7 +119,7 @@ public class WindowTest {
     public void normalSkip2() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1, 2);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
@@ -131,7 +131,7 @@ public class WindowTest {
     public void normalSkip3() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1, 6);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
@@ -141,7 +141,7 @@ public class WindowTest {
     public void normalAllSkip() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(5, 10);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
@@ -151,7 +151,7 @@ public class WindowTest {
     public void normalMoreSkip() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(10, 15);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
@@ -161,7 +161,7 @@ public class WindowTest {
     public void justSkip() {
         Ix<Ix<Integer>> source = Ix.just(1).window(2, 3);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
 
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
@@ -171,7 +171,7 @@ public class WindowTest {
     public void emptySkip() {
         Ix<Ix<Integer>> source = Ix.<Integer>empty().window(2, 3);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
 
         Assert.assertEquals(0, list.size());
     }
@@ -211,7 +211,7 @@ public class WindowTest {
     public void normalOverlap() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 1);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
@@ -225,7 +225,7 @@ public class WindowTest {
     public void normalOverlap2() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3, 1);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3);
@@ -239,7 +239,7 @@ public class WindowTest {
     public void normalOverlap3() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3, 2);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3);
@@ -251,7 +251,7 @@ public class WindowTest {
     public void nullExact() {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);
@@ -277,7 +277,7 @@ public class WindowTest {
     public void nullSkip() {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2, 3);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(2, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);
@@ -288,7 +288,7 @@ public class WindowTest {
     public void nullOverlap() {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2, 1);
 
-        List<Ix<Integer>> list = source.toList().first();
+        List<Ix<Integer>> list = source.collectToList().first();
         
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);

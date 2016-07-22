@@ -66,7 +66,7 @@ public class TakeTest {
     
     @Test
     public void removeComposes() {
-        List<Integer> list = Ix.range(1, 10).toList().first();
+        List<Integer> list = Ix.range(1, 10).collectToList().first();
         
         Ix.from(list).take(5).removeAll();
         

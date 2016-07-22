@@ -25,7 +25,7 @@ public class ToSetTest {
     @SuppressWarnings("unchecked")
     @Test
     public void normal() {
-        Ix<Set<Integer>> source = Ix.range(1, 5).toSet();
+        Ix<Set<Integer>> source = Ix.range(1, 5).collectToSet();
         
         IxTestHelper.assertValues(source, new HashSet<Integer>(Arrays.asList(1, 2, 3, 4, 5)));
         
@@ -35,7 +35,7 @@ public class ToSetTest {
     @SuppressWarnings("unchecked")
     @Test
     public void empty() {
-        Ix<Set<Integer>> source = Ix.<Integer>empty().toSet();
+        Ix<Set<Integer>> source = Ix.<Integer>empty().collectToSet();
         
         IxTestHelper.assertValues(source, new HashSet<Integer>());
         
@@ -45,7 +45,7 @@ public class ToSetTest {
     @SuppressWarnings("unchecked")
     @Test
     public void duplicates() {
-        Ix<Set<Integer>> source = Ix.fromArray(1, 2, 2, 3, 2, 4, 5, 1, 5).toSet();
+        Ix<Set<Integer>> source = Ix.fromArray(1, 2, 2, 3, 2, 4, 5, 1, 5).collectToSet();
         
         IxTestHelper.assertValues(source, new HashSet<Integer>(Arrays.asList(1, 2, 3, 4, 5)));
         

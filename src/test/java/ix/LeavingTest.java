@@ -386,7 +386,7 @@ public class LeavingTest {
     
     @Test
     public void retainAll() {
-        List<Integer> list = Ix.range(1, 10).toList().first();
+        List<Integer> list = Ix.range(1, 10).collectToList().first();
         
         Ix.from(list).retainAll(new Pred<Integer>() {
             @Override
@@ -400,7 +400,7 @@ public class LeavingTest {
     
     @Test
     public void removeAll() {
-        List<Integer> list = Ix.range(1, 10).toList().first();
+        List<Integer> list = Ix.range(1, 10).collectToList().first();
         
         Ix.from(list).removeAll(new Pred<Integer>() {
             @Override

@@ -27,7 +27,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void normal() {
-        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).toMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;
@@ -45,7 +45,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void normalValueSelector() {
-        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).toMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;
@@ -67,7 +67,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void empty() {
-        Ix<Map<Integer, Integer>> source = Ix.<Integer>empty().toMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.<Integer>empty().collectToMap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;
@@ -82,7 +82,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void multimap() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).toMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;
@@ -100,7 +100,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void multimapValueSelector() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).toMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;
@@ -122,7 +122,7 @@ public class ToMapTest {
     @SuppressWarnings("unchecked")
     @Test
     public void multimapEmpty() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.<Integer>empty().toMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.<Integer>empty().collectToMultimap(new Func1<Integer, Integer>() {
             @Override
             public Integer call(Integer v) {
                 return v % 3;

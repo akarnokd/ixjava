@@ -60,7 +60,7 @@ public class FilterTest {
 
     @Test
     public void removeComposes() {
-        List<Integer> list = Ix.range(1, 10).toList().first();
+        List<Integer> list = Ix.range(1, 10).collectToList().first();
         
         Ix.from(list).filter(new Pred<Integer>() {
             @Override

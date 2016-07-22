@@ -744,6 +744,21 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     /**
+     * Cast the elements to the specified class.
+     * <p>
+     * Note that this is a forced cast on this Ix instance and if
+     * not compatible, a ClassCastException might be thrown downstream.
+     * @param <R> the target type
+     * @param clazz the type token to capture the target type
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public final <R> Ix<R> cast(Class<R> clazz) {
+        return (Ix)this;
+    }
+    
+    /**
      * Collect the elements into a collection via collector action and emit that collection
      * as a single item.
      * <p>
@@ -757,6 +772,116 @@ public abstract class Ix<T> implements Iterable<T> {
      */
     public final <C> Ix<C> collect(Func0<C> initialFactory, Action2<C, T> collector) {
         return new IxCollect<T, C>(this, nullCheck(initialFactory, "initalFactory is null"), nullCheck(collector, "collector"));
+    }
+    
+    /**
+     * Collects the elements of this sequence into an Object array.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Ix<Object[]> collectToArray() {
+        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector())
+                .map(ToListHelper.<T>toArray());
+    }
+    
+    /**
+     * Collects the elements of this sequence into a List.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Ix<List<T>> collectToList() {
+        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector());
+    }
+    
+    /**
+     * Collects the elements of this sequence into a Map where the key is
+     * determined from each element via the keySelector function; duplicates are
+     * overwritten.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     */
+    public final <K> Ix<Map<K, T>> collectToMap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.collectToMap(keySelector, f);
+    }
+
+    /**
+     * Collects the elements of this sequence into a Map where the key is
+     * determined from each element via the keySelector function and
+     * the value is derived from the same element via the valueSelector function; duplicates are
+     * overwritten.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @param valueSelector the function that receives the current element and returns
+     * a value for it to be used as the Map value
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector or valueSelector is null
+     * @since 1.0
+     */
+    public final <K, V> Ix<Map<K, V>> collectToMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return new IxToMap<T, K, V>(this, nullCheck(keySelector, "keySelector is null"), nullCheck(valueSelector, "valueSelector is null"));
+    }
+
+    /**
+     * Collects the elements of this sequence into a multi-Map where the key is
+     * determined from each element via the keySelector function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     */
+    public final <K> Ix<Map<K, Collection<T>>> collectToMultimap(Func1<? super T, ? extends K> keySelector) {
+        Func1<T, T> f = IdentityHelper.instance();
+        return this.collectToMultimap(keySelector, f);
+    }
+
+    /**
+     * Collects the elements of this sequence into a multi-Map where the key is
+     * determined from each element via the keySelector function and
+     * the value is derived from the same element via the valueSelector function.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @param valueSelector the function that receives the current element and returns
+     * a value for it to be used as the Map value
+     * @return the new Ix instance
+     * @throws NullPointerException if keySelector or valueSelector is null
+     * @since 1.0
+     */
+    public final <K, V> Ix<Map<K, Collection<V>>> collectToMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return new IxToMultimap<T, K, V>(this, keySelector, valueSelector);
+    }
+    
+    /**
+     * Collects the elements of this sequence into a Set.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Ix<Set<T>> collectToSet() {
+        return new IxToSet<T>(this);
     }
 
     /**
@@ -1872,28 +1997,6 @@ public abstract class Ix<T> implements Iterable<T> {
         return new IxTakeWhile<T>(this, nullCheck(predicate, "predicate is null"));
     }
     
-    /**
-     * Collects the elements of this sequence into an Object array.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @return the new Ix instance
-     * @since 1.0
-     */
-    public final Ix<Object[]> toArray() {
-        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector())
-                .map(ToListHelper.<T>toArray());
-    }
-    
-    /**
-     * Collects the elements of this sequence into a List.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @return the new Ix instance
-     * @since 1.0
-     */
-    public final Ix<List<T>> toList() {
-        return collect(ToListHelper.<T>initialFactory(), ToListHelper.<T>collector());
-    }
     
     /**
      * Maps this sequence of numbers into a sequence of longs.
@@ -1908,93 +2011,6 @@ public abstract class Ix<T> implements Iterable<T> {
     @SuppressWarnings("unchecked")
     public final Ix<Long> toLong() {
         return ((Ix<Number>)this).map(NumberToLongHelper.INSTANCE);
-    }
-    
-    /**
-     * Collects the elements of this sequence into a Map where the key is
-     * determined from each element via the keySelector function; duplicates are
-     * overwritten.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @param <K> the key type
-     * @param keySelector the function that receives the current element and returns
-     * a key for it to be used as the Map key.
-     * @return the new Ix instance
-     * @throws NullPointerException if keySelector is null
-     * @since 1.0
-     */
-    public final <K> Ix<Map<K, T>> toMap(Func1<? super T, ? extends K> keySelector) {
-        Func1<T, T> f = IdentityHelper.instance();
-        return this.toMap(keySelector, f);
-    }
-
-    /**
-     * Collects the elements of this sequence into a Map where the key is
-     * determined from each element via the keySelector function and
-     * the value is derived from the same element via the valueSelector function; duplicates are
-     * overwritten.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @param <K> the key type
-     * @param <V> the value type
-     * @param keySelector the function that receives the current element and returns
-     * a key for it to be used as the Map key.
-     * @param valueSelector the function that receives the current element and returns
-     * a value for it to be used as the Map value
-     * @return the new Ix instance
-     * @throws NullPointerException if keySelector or valueSelector is null
-     * @since 1.0
-     */
-    public final <K, V> Ix<Map<K, V>> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        return new IxToMap<T, K, V>(this, nullCheck(keySelector, "keySelector is null"), nullCheck(valueSelector, "valueSelector is null"));
-    }
-
-    /**
-     * Collects the elements of this sequence into a multi-Map where the key is
-     * determined from each element via the keySelector function.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @param <K> the key type
-     * @param keySelector the function that receives the current element and returns
-     * a key for it to be used as the Map key.
-     * @return the new Ix instance
-     * @throws NullPointerException if keySelector is null
-     * @since 1.0
-     */
-    public final <K> Ix<Map<K, Collection<T>>> toMultimap(Func1<? super T, ? extends K> keySelector) {
-        Func1<T, T> f = IdentityHelper.instance();
-        return this.toMultimap(keySelector, f);
-    }
-
-    /**
-     * Collects the elements of this sequence into a multi-Map where the key is
-     * determined from each element via the keySelector function and
-     * the value is derived from the same element via the valueSelector function.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @param <K> the key type
-     * @param <V> the value type
-     * @param keySelector the function that receives the current element and returns
-     * a key for it to be used as the Map key.
-     * @param valueSelector the function that receives the current element and returns
-     * a value for it to be used as the Map value
-     * @return the new Ix instance
-     * @throws NullPointerException if keySelector or valueSelector is null
-     * @since 1.0
-     */
-    public final <K, V> Ix<Map<K, Collection<V>>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
-        return new IxToMultimap<T, K, V>(this, keySelector, valueSelector);
-    }
-    
-    /**
-     * Collects the elements of this sequence into a Set.
-     * <p>
-     * The result's iterator() doesn't support remove().
-     * @return the new Ix instance
-     * @since 1.0
-     */
-    public final Ix<Set<T>> toSet() {
-        return new IxToSet<T>(this);
     }
 
     /**
@@ -2512,6 +2528,121 @@ public abstract class Ix<T> implements Iterable<T> {
         subscriber.onCompleted();
     }
     
+    /**
+     * Collects the elements of this sequence into an Object array.
+     * <p>
+     * @return the new Object array instance
+     * @since 1.0
+     */
+    public final Object[] toArray() {
+        return toList().toArray();
+    }
+
+    /**
+     * Collects the elements of this sequence into a generic array provided.
+     * <p>
+     * @param <U> the output array type
+     * @param array the target array to fill in or use as a template if not long enough
+     * @return the new generic array instance
+     * @since 1.0
+     */
+    public final <U> U[] toArray(U[] array) {
+        return toList().toArray(array);
+    }
+
+    /**
+     * Collects the elements of this sequence into a List.
+     * <p>
+     * @return the List instance
+     * @since 1.0
+     */
+    public final List<T> toList() {
+        List<T> list = new ArrayList<T>();
+        return into(list);
+    }
+
+
+    /**
+     * Collects the elements of this sequence into a Map where the key is
+     * determined from each element via the keySelector function; duplicates are
+     * overwritten.
+     * <p>
+     * @param <K> the key type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @return the new Map instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     */
+    public final <K> Map<K, T> toMap(Func1<? super T, ? extends K> keySelector) {
+        return collectToMap(keySelector).first();
+    }
+
+    /**
+     * Collects the elements of this sequence into a Map where the key is
+     * determined from each element via the keySelector function and
+     * the value is derived from the same element via the valueSelector function; duplicates are
+     * overwritten.
+     * <p>
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @param valueSelector the function that receives the current element and returns
+     * a value for it to be used as the Map value
+     * @return the new Map instance
+     * @throws NullPointerException if keySelector or valueSelector is null
+     * @since 1.0
+     */
+    public final <K, V> Map<K, V> toMap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return collectToMap(keySelector, valueSelector).first();
+    }
+
+    /**
+     * Collects the elements of this sequence into a multi-Map where the key is
+     * determined from each element via the keySelector function.
+     * <p>
+     * @param <K> the key type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @return the new Map instance
+     * @throws NullPointerException if keySelector is null
+     * @since 1.0
+     */
+    public final <K> Map<K, Collection<T>> toMultimap(Func1<? super T, ? extends K> keySelector) {
+        return collectToMultimap(keySelector).first();
+    }
+
+    /**
+     * Collects the elements of this sequence into a multi-Map where the key is
+     * determined from each element via the keySelector function and
+     * the value is derived from the same element via the valueSelector function.
+     * <p>
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param keySelector the function that receives the current element and returns
+     * a key for it to be used as the Map key.
+     * @param valueSelector the function that receives the current element and returns
+     * a value for it to be used as the Map value
+     * @return the new Map instance
+     * @throws NullPointerException if keySelector or valueSelector is null
+     * @since 1.0
+     */
+    public final <K, V> Map<K, Collection<V>> toMultimap(Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        return collectToMultimap(keySelector, valueSelector).first();
+    }
+    
+    /**
+     * Collects the elements of this sequence into a Set.
+     * <p>
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Set<T> toSet() {
+        Set<T> list = new HashSet<T>();
+        return into(list);
+    }
+
     // --------------------------------------------------------------------------------------------
     // Helper methods
     // --------------------------------------------------------------------------------------------
