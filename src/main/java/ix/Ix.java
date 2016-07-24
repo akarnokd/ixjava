@@ -2269,7 +2269,7 @@ public abstract class Ix<T> implements Iterable<T> {
                 System.out.print(separator);
                 len += separator.length();
                 if (len > charsPerLine) {
-                    System.out.println();;
+                    System.out.println();
                     System.out.print(s);
                     len = s.length();
                 } else {
@@ -2394,9 +2394,9 @@ public abstract class Ix<T> implements Iterable<T> {
     
 
     /**
-     * Returns the single element of this sequence, the defaltValue
+     * Returns the single element of this sequence, defalutValue
      * if this sequence is empty or IndexOutOfBoundsException if this sequence has more
-     * than on element
+     * than one element
      * @param defaultValue the value to return if this sequence is empty
      * @return the single element of the sequence
      * @throws IndexOutOfBoundsException if the sequence has more than one element
