@@ -203,7 +203,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
     
     /**
-     * Wraps the given Interable source into an Ix instance (if
+     * Wraps the given Iterable source into an Ix instance (if
      * not already an Ix subclass).
      * <p>
      * The result's iterator() forwards the remove() calls to the source's
