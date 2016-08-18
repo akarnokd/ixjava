@@ -18,7 +18,7 @@ and interactive dataflows.**
 
 ```groovy
 dependencies {
-    compile 'com.github.akarnokd:ixjava:1.0.0-RC1'
+    compile 'com.github.akarnokd:ixjava:1.0.0-RC2'
 }
 ```
 
@@ -26,7 +26,7 @@ dependencies {
 
 ```xml
 <dependencies>
-    <dependency org="com.github.akarnokd" name="ixjava" rev="1.0.0-RC1" />
+    <dependency org="com.github.akarnokd" name="ixjava" rev="1.0.0-RC2" />
 </dependencies>
 ```
 
