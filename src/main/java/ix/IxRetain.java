@@ -20,9 +20,9 @@ import java.util.Iterator;
 
 final class IxRetain<T> extends IxSource<T, T> {
 
-    final Pred<? super T> predicate;
-    
-    public IxRetain(Iterable<T> source, Pred<? super T> predicate) {
+    final IxPredicate<? super T> predicate;
+
+    IxRetain(Iterable<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }
@@ -33,24 +33,24 @@ final class IxRetain<T> extends IxSource<T, T> {
     }
 
     static final class RetainIterator<T> extends IxSourceIterator<T, T> {
-        final Pred<? super T> predicate;
+        final IxPredicate<? super T> predicate;
 
-        public RetainIterator(Iterator<T> it, Pred<? super T> predicate) {
+        RetainIterator(Iterator<T> it, IxPredicate<? super T> predicate) {
             super(it);
             this.predicate = predicate;
         }
 
         @Override
         protected boolean moveNext() {
-            
+
             for (;;) {
                 if (!it.hasNext()) {
                     done = true;
                     return false;
                 }
-                
+
                 T v = it.next();
-                
+
                 if (predicate.test(v)) {
                     value = v;
                     hasValue = true;
@@ -60,7 +60,7 @@ final class IxRetain<T> extends IxSource<T, T> {
                 }
             }
         }
-        
+
         @Override
         public void remove() {
             it.remove();

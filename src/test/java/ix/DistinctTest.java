@@ -18,33 +18,31 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.Func1;
-
 public class DistinctTest {
 
     @Test
     public void normal() {
         Ix<Integer> source = Ix.fromArray(1, 2, 2, 1, 3, 4, 2).distinct();
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4);
     }
-    
+
     @Test
     public void empty() {
         Ix<Integer> source = Ix.<Integer>empty().distinct();
-        
+
         IxTestHelper.assertValues(source);
     }
-    
+
     @Test
     public void normalSelector() {
-        Ix<Integer> source = Ix.fromArray(1, 2, 2, 1, 3, 4, 2).distinct(new Func1<Integer, Object>() {
+        Ix<Integer> source = Ix.fromArray(1, 2, 2, 1, 3, 4, 2).distinct(new IxFunction<Integer, Object>() {
             @Override
-            public Object call(Integer v) {
+            public Object apply(Integer v) {
                 return v & 1;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2);
     }
 }

@@ -20,83 +20,80 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import rx.Observer;
-import rx.functions.Action1;
-
 public class GenerateStatelessTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             int count;
             @Override
-            public void call(Observer<Integer> t) {
+            public void accept(IxEmitter<Integer> t) {
                 t.onNext(++count);
                 if (count == 10) {
-                    t.onCompleted();
+                    t.onComplete();
                 }
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
-    
+
     @Test
     public void empty() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             @Override
-            public void call(Observer<Integer> t) {
-                t.onCompleted();
+            public void accept(IxEmitter<Integer> t) {
+                t.onComplete();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
-    
+
     @Test(expected = IllegalStateException.class)
     public void never() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             @Override
-            public void call(Observer<Integer> t) {
+            public void accept(IxEmitter<Integer> t) {
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void runtimeError() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             @Override
-            public void call(Observer<Integer> t) {
-                t.onError(new IllegalArgumentException());
+            public void accept(IxEmitter<Integer> t) {
+                throw new IllegalArgumentException();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = InternalError.class)
     public void error() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             @Override
-            public void call(Observer<Integer> t) {
-                t.onError(new InternalError());
+            public void accept(IxEmitter<Integer> t) {
+                throw new InternalError();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = RuntimeException.class)
     public void exceptionError() {
-        Ix<Integer> source = Ix.generate(new Action1<Observer<Integer>>() {
+        Ix<Integer> source = Ix.generate(new IxConsumer<IxEmitter<Integer>>() {
             @Override
-            public void call(Observer<Integer> t) {
-                t.onError(new IOException());
+            public void accept(IxEmitter<Integer> t) {
+                throw new RuntimeException(new IOException());
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 

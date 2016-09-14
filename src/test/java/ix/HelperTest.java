@@ -26,14 +26,14 @@ public class HelperTest {
 
         Assert.assertNotNull(ToListHelper.valueOf("INSTANCE"));
     }
-    
+
     @Test
     public void identityHelper() {
         Assert.assertEquals(1, IdentityHelper.values().length);
 
         Assert.assertNotNull(IdentityHelper.valueOf("INSTANCE"));
     }
-    
+
     @Test
     public void numberToLongHelper() {
         Assert.assertEquals(1, NumberToLongHelper.values().length);

@@ -20,46 +20,46 @@ import java.util.Iterator;
 
 final class IxAny<T> extends IxSource<T, Boolean> {
 
-    final Pred<? super T> predicate;
-    
-    public IxAny(Iterable<T> source, Pred<? super T> predicate) {
+    final IxPredicate<? super T> predicate;
+
+    IxAny(Iterable<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }
-    
+
     @Override
     public Iterator<Boolean> iterator() {
         return new AnyIterator<T>(source.iterator(), predicate);
     }
-    
+
     static final class AnyIterator<T> extends IxSourceIterator<T, Boolean> {
 
-        final Pred<? super T> predicate;
+        final IxPredicate<? super T> predicate;
 
-        public AnyIterator(Iterator<T> it, Pred<? super T> predicate) {
+        AnyIterator(Iterator<T> it, IxPredicate<? super T> predicate) {
             super(it);
             this.predicate = predicate;
         }
-        
+
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            Pred<? super T> pred = predicate;
-            
+            IxPredicate<? super T> p = predicate;
+
             while (it.hasNext()) {
-                if (pred.test(it.next())) {
+                if (p.test(it.next())) {
                     hasValue = true;
                     value = true;
                     done = true;
                     return true;
                 }
             }
-            
+
             hasValue = true;
             value = false;
             done = true;
             return true;
         }
-        
+
     }
 }

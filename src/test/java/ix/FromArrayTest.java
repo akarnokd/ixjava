@@ -23,30 +23,30 @@ public class FromArrayTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void range() {
         Ix<Integer> source = Ix.fromArrayRange(1, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         IxTestHelper.assertValues(source, 2, 3, 4, 5, 6, 7, 8);
     }
-    
+
     @Test
     public void empty() {
         Ix<Integer> source = Ix.fromArray();
-        
+
         Assert.assertSame(source.getClass().toString(), source, Ix.empty());
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.fromArray(1);
-        
+
         Assert.assertTrue(source.getClass().toString(), source instanceof IxScalarCallable);
     }
 
@@ -58,28 +58,28 @@ public class FromArrayTest {
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=-1, end=1, length=10", ex.getMessage());
         }
-        
+
         try {
             Ix.fromArrayRange(1, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             Assert.fail("Failed to throw IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=1, end=-1, length=10", ex.getMessage());
         }
-        
+
         try {
             Ix.fromArrayRange(12, -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             Assert.fail("Failed to throw IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=12, end=-1, length=10", ex.getMessage());
         }
-        
+
         try {
             Ix.fromArrayRange(1, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             Assert.fail("Failed to throw IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException ex) {
             Assert.assertEquals("start=1, end=12, length=10", ex.getMessage());
         }
-        
+
         try {
             Ix.fromArrayRange(12, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             Assert.fail("Failed to throw IndexOutOfBoundsException");
@@ -87,5 +87,5 @@ public class FromArrayTest {
             Assert.assertEquals("start=12, end=12, length=10", ex.getMessage());
         }
 
-    } 
+    }
 }

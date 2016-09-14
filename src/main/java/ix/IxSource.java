@@ -17,16 +17,16 @@
 package ix;
 
 /**
- * Abstract base class for Ix operators that take a source Iterable. 
+ * Abstract base class for Ix operators that take a source Iterable.
  * @param <T> the source value type
  * @param <R> the result value type
  */
 abstract class IxSource<T, R> extends Ix<R> {
 
     protected final Iterable<T> source;
-    
-    public IxSource(Iterable<T> source) {
+
+    IxSource(Iterable<T> source) {
         this.source = source;
     }
-    
+
 }

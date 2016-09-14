@@ -23,33 +23,33 @@ final class IxExcept<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    public IxExcept(Iterable<T> source, Iterable<? extends T> other) {
+    IxExcept(Iterable<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new ExceptIterator<T>(source.iterator(), other.iterator());
     }
-    
+
     static final class ExceptIterator<T> extends IxSourceIterator<T, T> {
         final Iterator<? extends T> other;
-        
+
         final LinkedHashMap<T, Boolean> set;
-        
+
         Iterator<Map.Entry<T, Boolean>> setIterator;
-        
+
         boolean once;
-        
+
         boolean second;
 
-        public ExceptIterator(Iterator<T> it, Iterator<? extends T> other) {
+        ExceptIterator(Iterator<T> it, Iterator<? extends T> other) {
             super(it);
             this.other = other;
             this.set = new LinkedHashMap<T, Boolean>();
         }
-        
+
         @Override
         protected boolean moveNext() {
             LinkedHashMap<T, Boolean> secondSet = set;
@@ -59,13 +59,13 @@ final class IxExcept<T> extends IxSource<T, T> {
                     secondSet.put(other.next(), true);
                 }
             }
-            
+
             for (;;) {
                 if (second) {
                     Iterator<Entry<T, Boolean>> sIt = setIterator;
                     while (sIt.hasNext()) {
                         Entry<T, Boolean> e = sIt.next();
-                        
+
                         if (e.getValue()) {
                             value = e.getKey();
                             hasValue = true;
@@ -78,7 +78,7 @@ final class IxExcept<T> extends IxSource<T, T> {
                     Iterator<T> fIt = it;
                     while (fIt.hasNext()) {
                         T v = fIt.next();
-                        
+
                         Boolean b = secondSet.get(v);
                         if (b == null) {
                             value = v;
@@ -92,7 +92,7 @@ final class IxExcept<T> extends IxSource<T, T> {
                     second = true;
                     setIterator = secondSet.entrySet().iterator();
                 }
-            }            
+            }
         }
     }
 }

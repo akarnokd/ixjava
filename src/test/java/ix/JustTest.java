@@ -23,9 +23,9 @@ public class JustTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.just(1);
-        
+
         IxTestHelper.assertValues(source, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

@@ -21,21 +21,21 @@ import java.util.Iterator;
 final class IxReplaySize<T> extends IxSource<T, T> {
 
     final int maxSize;
-    
+
     Iterator<T> it;
-    
+
     Node<T> head;
-    
+
     Node<T> tail;
 
     int size;
-    
-    public IxReplaySize(Iterable<T> source, int maxSize) {
+
+    IxReplaySize(Iterable<T> source, int maxSize) {
         super(source);
         this.maxSize = maxSize;
         this.head = this.tail = new Node<T>(null);
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         if (it == null) {
@@ -43,16 +43,16 @@ final class IxReplaySize<T> extends IxSource<T, T> {
         }
         return new ReplaySizeIterator<T>(this, head);
     }
-    
+
     boolean moveNext() {
         if (!it.hasNext()) {
             return false;
         }
-        
+
         Node<T> n = new Node<T>(it.next());
         tail.next = n;
         tail = n;
-        
+
         int s = size;
         if (s != maxSize) {
             size = s + 1;
@@ -61,23 +61,23 @@ final class IxReplaySize<T> extends IxSource<T, T> {
         }
         return true;
     }
-    
+
     static final class Node<T> {
         final T value;
-        
+
         Node<T> next;
-        
-        public Node(T value) {
+
+        Node(T value) {
             this.value = value;
         }
     }
-    
+
     static final class ReplaySizeIterator<T> extends IxBaseIterator<T> {
         final IxReplaySize<T> parent;
 
         Node<T> node;
-        
-        public ReplaySizeIterator(IxReplaySize<T> parent, Node<T> node) {
+
+        ReplaySizeIterator(IxReplaySize<T> parent, Node<T> node) {
             this.parent = parent;
             this.node = node;
         }
@@ -85,7 +85,7 @@ final class IxReplaySize<T> extends IxSource<T, T> {
         @Override
         protected boolean moveNext() {
             Node<T> n = node;
-            
+
             if (n.next == null) {
                 if (!parent.moveNext()) {
                     done = true;
@@ -93,11 +93,11 @@ final class IxReplaySize<T> extends IxSource<T, T> {
                 }
             }
             n = n.next;
-            
+
             value = n.value;
             hasValue = true;
             node = n;
-            
+
             return true;
         }
     }

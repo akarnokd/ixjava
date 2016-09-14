@@ -18,13 +18,11 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.FuncN;
-
 public class ZipArrayTest {
 
-    FuncN<Integer> zipper = new FuncN<Integer>() {
+    IxFunction<Object[], Integer> zipper = new IxFunction<Object[], Integer>() {
         @Override
-        public Integer call(Object... a) {
+        public Integer apply(Object[] a) {
             return (Integer)a[0] + (Integer)a[1];
         }
     };
@@ -32,44 +30,44 @@ public class ZipArrayTest {
     @SuppressWarnings("unchecked")
     @Test
     public void normal() {
-        
-        Ix<Integer> source = Ix.zip(new Iterable[] { 
-                Ix.range(1, 2), Ix.range(10, 2) }, 
+
+        Ix<Integer> source = Ix.zip(new Iterable[] {
+                Ix.range(1, 2), Ix.range(10, 2) },
                 zipper);
-        
+
         IxTestHelper.assertValues(source, 11, 13);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void firstShorter() {
-        
-        Ix<Integer> source = Ix.zip(new Iterable[] { 
-                Ix.range(1, 1), Ix.range(10, 2) }, 
+
+        Ix<Integer> source = Ix.zip(new Iterable[] {
+                Ix.range(1, 1), Ix.range(10, 2) },
                 zipper);
-        
+
         IxTestHelper.assertValues(source, 11);
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void secondShorter() {
-        
-        Ix<Integer> source = Ix.zip(new Iterable[] { 
-                Ix.range(1, 3), Ix.range(10, 2) }, 
+
+        Ix<Integer> source = Ix.zip(new Iterable[] {
+                Ix.range(1, 3), Ix.range(10, 2) },
                 zipper);
-        
+
         IxTestHelper.assertValues(source, 11, 13);
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void bothEmpty() {
-        
-        Ix<Integer> source = Ix.zip(new Iterable[] { 
-                Ix.empty(), Ix.empty() }, 
+
+        Ix<Integer> source = Ix.zip(new Iterable[] {
+                Ix.empty(), Ix.empty() },
                 zipper);
-        
+
         IxTestHelper.assertValues(source);
     }
 

@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxTakeLast<T> extends IxSource<T, T> {
 
     final int n;
-    
-    public IxTakeLast(Iterable<T> source, int n) {
+
+    IxTakeLast(Iterable<T> source, int n) {
         super(source);
         this.n = n;
     }
@@ -31,16 +31,16 @@ final class IxTakeLast<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new TakeLastIterator<T>(source.iterator(), n);
     }
-    
+
     static final class TakeLastIterator<T> extends IxSourceQueuedIterator<T, T, T> {
 
         int n;
-        
-        public TakeLastIterator(Iterator<T> it, int n) {
+
+        TakeLastIterator(Iterator<T> it, int n) {
             super(it);
             this.n = n;
         }
-        
+
         @Override
         protected boolean moveNext() {
 
@@ -57,7 +57,7 @@ final class IxTakeLast<T> extends IxSource<T, T> {
                 }
                 this.n = n;
             }
-            
+
             Object o = poll();
             if (o != null) {
                 value = fromObject(o);

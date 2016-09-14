@@ -17,12 +17,13 @@
 package ix;
 
 /**
- * A supplier of a single boolean value.
+ * A function callback with no inputs and one output value.
+ * @param <R> the output value type
  */
-public interface Pred0 {
+public interface IxSupplier<R> {
     /**
-     * Returns a boolean value.
-     * @return a boolean value
+     * Calls the function which returns a value.
+     * @return the output value
      */
-    boolean getAsBoolean();
+    R get();
 }

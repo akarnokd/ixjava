@@ -16,17 +16,18 @@
 
 package ix;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ToListTest {
 
     @Test
     public void normal() {
         Ix<Integer> source = Ix.just(1);
-        
+
         assertEquals(1, source.iterator().next().intValue());
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 }

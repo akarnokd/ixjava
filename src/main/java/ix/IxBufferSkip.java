@@ -21,15 +21,15 @@ import java.util.*;
 final class IxBufferSkip<T> extends IxSource<T, List<T>> {
 
     final int size;
-    
+
     final int skip;
-    
-    public IxBufferSkip(Iterable<T> source, int size, int skip) {
+
+    IxBufferSkip(Iterable<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;
     }
-    
+
     @Override
     public Iterator<List<T>> iterator() {
         return new BufferSkipIterator<T>(source.iterator(), size, skip);
@@ -37,12 +37,12 @@ final class IxBufferSkip<T> extends IxSource<T, List<T>> {
 
     static final class BufferSkipIterator<T> extends IxSourceIterator<T, List<T>> {
         final int size;
-        
+
         final int skip;
-        
+
         boolean once;
 
-        public BufferSkipIterator(Iterator<T> it, int size, int skip) {
+        BufferSkipIterator(Iterator<T> it, int size, int skip) {
             super(it);
             this.size = size;
             this.skip = skip;
@@ -51,28 +51,28 @@ final class IxBufferSkip<T> extends IxSource<T, List<T>> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
+
             int s = size;
-            
+
             if (once) {
                 int k = skip - s;
                 while (k != 0 && it.hasNext()) {
                     it.next();
                     k--;
                 }
-                
+
             } else {
                 once = true;
             }
 
             List<T> list = new ArrayList<T>();
-            
+
             while (s != 0 && it.hasNext()) {
                 list.add(it.next());
                 s--;
             }
-            
-            
+
+
             if (list.isEmpty()) {
                 done = true;
                 return false;
@@ -84,7 +84,7 @@ final class IxBufferSkip<T> extends IxSource<T, List<T>> {
             }
             return true;
         }
-        
-        
+
+
     }
 }

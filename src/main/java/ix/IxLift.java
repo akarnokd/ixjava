@@ -18,20 +18,18 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxLift<T, R> extends IxSource<T, R> {
 
-    final Func1<? super Iterator<T>, ? extends Iterator<R>> lifter;
-    
-    public IxLift(Iterable<T> source, Func1<? super Iterator<T>, ? extends Iterator<R>> lifter) {
+    final IxFunction<? super Iterator<T>, ? extends Iterator<R>> lifter;
+
+    IxLift(Iterable<T> source, IxFunction<? super Iterator<T>, ? extends Iterator<R>> lifter) {
         super(source);
         this.lifter = lifter;
     }
 
     @Override
     public Iterator<R> iterator() {
-        return lifter.call(source.iterator());
+        return lifter.apply(source.iterator());
     }
 
 }

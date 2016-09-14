@@ -21,31 +21,31 @@ import java.util.*;
 final class IxCharacters extends Ix<Integer> {
 
     final CharSequence source;
-    
+
     final int start;
-    
+
     final int end;
-    
-    public IxCharacters(CharSequence source, int start, int end) {
+
+    IxCharacters(CharSequence source, int start, int end) {
         this.source = source;
         this.start = start;
         this.end = end;
     }
-    
+
     @Override
     public Iterator<Integer> iterator() {
         return new CharactersIterator(source, start, end);
     }
-    
+
     static final class CharactersIterator implements Iterator<Integer> {
 
         final CharSequence source;
 
         final int end;
-        
+
         int index;
-        
-        public CharactersIterator(CharSequence source, int start, int end) {
+
+        CharactersIterator(CharSequence source, int start, int end) {
             this.source = source;
             this.index = start;
             this.end = end;
@@ -65,7 +65,7 @@ final class IxCharacters extends Ix<Integer> {
             }
             throw new NoSuchElementException();
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

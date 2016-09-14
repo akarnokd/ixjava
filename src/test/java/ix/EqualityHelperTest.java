@@ -16,10 +16,10 @@
 
 package ix;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 import static ix.EqualityHelper.INSTANCE;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class EqualityHelperTest {
 
@@ -31,9 +31,9 @@ public class EqualityHelperTest {
         assertFalse(INSTANCE.test(null, 1));
         assertFalse(INSTANCE.test(1, null));
         assertFalse(INSTANCE.test(1, 2));
-        
+
         assertNotNull(EqualityHelper.valueOf("INSTANCE"));
-        
+
         assertEquals(1, EqualityHelper.values().length);
     }
 }

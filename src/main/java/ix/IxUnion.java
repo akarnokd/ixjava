@@ -22,30 +22,30 @@ final class IxUnion<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    public IxUnion(Iterable<T> source, Iterable<? extends T> other) {
+    IxUnion(Iterable<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new UnionIterator<T>(source.iterator(), other.iterator());
     }
 
     static final class UnionIterator<T> extends IxSourceIterator<T, T> {
-        
+
         final Iterator<? extends T> other;
 
         final Set<T> set;
-        
+
         boolean second;
-        
-        public UnionIterator(Iterator<T> it, Iterator<? extends T> other) {
+
+        UnionIterator(Iterator<T> it, Iterator<? extends T> other) {
             super(it);
             this.other = other;
             this.set = new HashSet<T>();
         }
-        
+
         @Override
         protected boolean moveNext() {
             Set<T> set = this.set;
@@ -60,11 +60,11 @@ final class IxUnion<T> extends IxSource<T, T> {
                             return true;
                         }
                     }
-                    
+
                     done = true;
                     return false;
                 }
-                
+
                 Iterator<T> it = this.it;
                 while (it.hasNext()) {
                     T v = it.next();
@@ -74,7 +74,7 @@ final class IxUnion<T> extends IxSource<T, T> {
                         return true;
                     }
                 }
-                
+
                 second = true;
             }
         }

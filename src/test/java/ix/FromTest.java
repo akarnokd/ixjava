@@ -25,18 +25,18 @@ public class FromTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.from(Arrays.asList(1, 2, 3, 4, 5));
-        
+
         Assert.assertTrue(source.getClass().toString(), source instanceof IxWrapper);
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
 
     @Test
     public void noRewrapping() {
         Ix<Integer> source = Ix.from(Ix.range(1, 5));
-        
+
         Assert.assertFalse(source.getClass().toString(), source instanceof IxWrapper);
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
 

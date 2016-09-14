@@ -25,33 +25,33 @@ public class RangeTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10);
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test(expected = UnsupportedOperationException.class)
     public void cantRemove() {
         Iterator<Integer> it = Ix.range(1, 10).iterator();
         it.next();
         it.remove();
     }
-    
+
     @Test
     public void empty() {
         Ix<Integer> source = Ix.range(1, 0);
-        
+
         Assert.assertSame(Ix.empty(), source);
     }
-    
+
     @Test
     public void just() {
         Ix<Integer> source = Ix.range(1, 1);
-        
+
         Assert.assertTrue(source.getClass().toString(), source instanceof IxScalarCallable);
     }
-    
+
     @Test
     public void negativeRange() {
         try {

@@ -18,45 +18,43 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxForloop<T, R> extends Ix<R> {
 
     final T seed;
-    
-    final Pred<? super T> condition;
-    
-    final Func1<? super T, ? extends R> selector;
-    
-    final Func1<? super T, ? extends T> next;
 
-    public IxForloop(T seed, Pred<? super T> condition, Func1<? super T, ? extends R> selector,
-            Func1<? super T, ? extends T> next) {
+    final IxPredicate<? super T> condition;
+
+    final IxFunction<? super T, ? extends R> selector;
+
+    final IxFunction<? super T, ? extends T> next;
+
+    IxForloop(T seed, IxPredicate<? super T> condition, IxFunction<? super T, ? extends R> selector,
+            IxFunction<? super T, ? extends T> next) {
         this.seed = seed;
         this.condition = condition;
         this.selector = selector;
         this.next = next;
     }
-    
+
     @Override
     public Iterator<R> iterator() {
         return new ForloopIterator<T, R>(seed, condition, selector, next);
     }
-    
+
     static final class ForloopIterator<T, R> extends IxBaseIterator<R> {
-        
+
         T index;
 
-        final Pred<? super T> condition;
-        
-        final Func1<? super T, ? extends R> selector;
-        
-        final Func1<? super T, ? extends T> next;
+        final IxPredicate<? super T> condition;
+
+        final IxFunction<? super T, ? extends R> selector;
+
+        final IxFunction<? super T, ? extends T> next;
 
         boolean exceptFirst;
-        
-        public ForloopIterator(T index, Pred<? super T> condition, Func1<? super T, ? extends R> selector,
-                Func1<? super T, ? extends T> next) {
+
+        ForloopIterator(T index, IxPredicate<? super T> condition, IxFunction<? super T, ? extends R> selector,
+                IxFunction<? super T, ? extends T> next) {
             this.index = index;
             this.condition = condition;
             this.selector = selector;
@@ -66,22 +64,22 @@ final class IxForloop<T, R> extends Ix<R> {
         @Override
         protected boolean moveNext() {
             T i = index;
-            
+
             if (exceptFirst) {
-                i = next.call(i);
+                i = next.apply(i);
                 index = i;
             } else {
                 exceptFirst = true;
             }
-            
+
             if (!condition.test(i)) {
                 done = true;
                 return false;
             }
-            
-            value = selector.call(i);
+
+            value = selector.apply(i);
             hasValue = true;
-            
+
             return true;
         }
     }

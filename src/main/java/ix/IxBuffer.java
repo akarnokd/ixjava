@@ -21,12 +21,12 @@ import java.util.*;
 final class IxBuffer<T> extends IxSource<T, List<T>> {
 
     final int size;
-    
-    public IxBuffer(Iterable<T> source, int size) {
+
+    IxBuffer(Iterable<T> source, int size) {
         super(source);
         this.size = size;
     }
-    
+
     @Override
     public Iterator<List<T>> iterator() {
         return new BufferIterator<T>(source.iterator(), size);
@@ -35,7 +35,7 @@ final class IxBuffer<T> extends IxSource<T, List<T>> {
     static final class BufferIterator<T> extends IxSourceIterator<T, List<T>> {
         final int size;
 
-        public BufferIterator(Iterator<T> it, int size) {
+        BufferIterator(Iterator<T> it, int size) {
             super(it);
             this.size = size;
         }
@@ -43,16 +43,16 @@ final class IxBuffer<T> extends IxSource<T, List<T>> {
         @Override
         protected boolean moveNext() {
             int s = size;
-            
+
             Iterator<T> it = this.it;
-            
+
             List<T> list = new ArrayList<T>();
-            
+
             while (s != 0 && it.hasNext()) {
                 list.add(it.next());
                 s--;
             }
-            
+
             if (list.isEmpty()) {
                 done = true;
                 return false;
@@ -64,7 +64,7 @@ final class IxBuffer<T> extends IxSource<T, List<T>> {
             }
             return true;
         }
-        
-        
+
+
     }
 }

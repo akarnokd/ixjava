@@ -18,38 +18,35 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.Observer;
-import rx.functions.*;
-
 final class IxGenerate<T, S> extends Ix<T> {
 
-    final Func0<S> stateFactory;
-    
-    final Func2<S, Observer<T>, S> generator;
-    
-    final Action1<? super S> stateDisposer;
-    
-    public IxGenerate(Func0<S> stateFactory, Func2<S, Observer<T>, S> generator, Action1<? super S> stateDisposer) {
+    final IxSupplier<S> stateFactory;
+
+    final IxFunction2<S, IxEmitter<T>, S> generator;
+
+    final IxConsumer<? super S> stateDisposer;
+
+    IxGenerate(IxSupplier<S> stateFactory, IxFunction2<S, IxEmitter<T>, S> generator, IxConsumer<? super S> stateDisposer) {
         this.stateFactory = stateFactory;
         this.generator = generator;
         this.stateDisposer = stateDisposer;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
-        return new GenerateIterator<T, S>(stateFactory.call(), generator, stateDisposer);
+        return new GenerateIterator<T, S>(stateFactory.get(), generator, stateDisposer);
     }
-    
-    static final class GenerateIterator<T, S> extends IxBaseIterator<T>
-    implements Observer<T> {
 
-        final Func2<S, Observer<T>, S> generator;
-        
-        final Action1<? super S> stateDisposer;
+    static final class GenerateIterator<T, S> extends IxBaseIterator<T>
+    implements IxEmitter<T> {
+
+        final IxFunction2<S, IxEmitter<T>, S> generator;
+
+        final IxConsumer<? super S> stateDisposer;
 
         S state;
-        
-        public GenerateIterator(S state, Func2<S, Observer<T>, S> generator, Action1<? super S> stateDisposer) {
+
+        GenerateIterator(S state, IxFunction2<S, IxEmitter<T>, S> generator, IxConsumer<? super S> stateDisposer) {
             this.state = state;
             this.generator = generator;
             this.stateDisposer = stateDisposer;
@@ -57,42 +54,29 @@ final class IxGenerate<T, S> extends Ix<T> {
 
         @Override
         protected boolean moveNext() {
-            
-            state = generator.call(state, this);
-            
+
+            state = generator.apply(state, this);
+
             boolean hv = hasValue;
             boolean d = done;
             if (!hv && !d) {
-                stateDisposer.call(state);
+                stateDisposer.accept(state);
                 throw new IllegalStateException("The generator didn't call any of the onXXX methods!");
             }
             if (d) {
-                stateDisposer.call(state);
+                stateDisposer.accept(state);
             }
             return hv;
         }
-        
+
         @Override
         public void onNext(T t) {
             value = t;
             hasValue = true;
         }
-        
+
         @Override
-        public void onError(Throwable e) {
-            stateDisposer.call(state);
-            
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException)e;
-            }
-            if (e instanceof Error) {
-                throw (Error)e;
-            }
-            throw new RuntimeException(e);
-        }
-        
-        @Override
-        public void onCompleted() {
+        public void onComplete() {
             done = true;
         }
     }

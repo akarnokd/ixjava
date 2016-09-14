@@ -20,9 +20,9 @@ import java.util.Iterator;
 
 final class IxSkipWhile<T> extends IxSource<T, T> {
 
-    final Pred<? super T> predicate;
-    
-    public IxSkipWhile(Iterable<T> source, Pred<? super T> predicate) {
+    final IxPredicate<? super T> predicate;
+
+    IxSkipWhile(Iterable<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }
@@ -31,21 +31,21 @@ final class IxSkipWhile<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new SkipWhileIterator<T>(source.iterator(), predicate);
     }
-    
+
     static final class SkipWhileIterator<T> extends IxSourceIterator<T, T> {
 
-        final Pred<? super T> predicate;
+        final IxPredicate<? super T> predicate;
 
-        boolean passthrough;
-        
-        public SkipWhileIterator(Iterator<T> it, Pred<? super T> predicate) {
+        boolean passThrough;
+
+        SkipWhileIterator(Iterator<T> it, IxPredicate<? super T> predicate) {
             super(it);
             this.predicate = predicate;
         }
 
         @Override
         protected boolean moveNext() {
-            if (passthrough) {
+            if (passThrough) {
                 if (it.hasNext()) {
                     hasValue = true;
                     value = it.next();
@@ -54,21 +54,21 @@ final class IxSkipWhile<T> extends IxSource<T, T> {
                 done = true;
                 return false;
             }
-            
+
             while (it.hasNext()) {
                 T v = it.next();
                 if (!predicate.test(v)) {
-                    passthrough = true;
+                    passThrough = true;
                     hasValue = true;
                     value = v;
                     return true;
                 }
             }
-            
+
             done = true;
             return false;
         }
-        
+
         @Override
         public void remove() {
             it.remove();

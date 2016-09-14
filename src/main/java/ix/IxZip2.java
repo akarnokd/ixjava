@@ -18,17 +18,15 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func2;
-
 final class IxZip2<T1, T2, R> extends Ix<R> {
 
     final Iterable<T1> source1;
 
     final Iterable<T2> source2;
 
-    final Func2<? super T1, ? super T2, ? extends R> zipper;
-    
-    public IxZip2(Iterable<T1> source1, Iterable<T2> source2, Func2<? super T1, ? super T2, ? extends R> zipper) {
+    final IxFunction2<? super T1, ? super T2, ? extends R> zipper;
+
+    IxZip2(Iterable<T1> source1, Iterable<T2> source2, IxFunction2<? super T1, ? super T2, ? extends R> zipper) {
         this.source1 = source1;
         this.source2 = source2;
         this.zipper = zipper;
@@ -38,21 +36,21 @@ final class IxZip2<T1, T2, R> extends Ix<R> {
     public Iterator<R> iterator() {
         return new Zip2Iterator<T1, T2, R>(source1.iterator(), source2.iterator(), zipper);
     }
-    
+
     static final class Zip2Iterator<T1, T2, R> extends IxBaseIterator<R> {
 
         final Iterator<T1> source1;
 
         final Iterator<T2> source2;
 
-        final Func2<? super T1, ? super T2, ? extends R> zipper;
-        
-        public Zip2Iterator(Iterator<T1> source1, Iterator<T2> source2, Func2<? super T1, ? super T2, ? extends R> zipper) {
+        final IxFunction2<? super T1, ? super T2, ? extends R> zipper;
+
+        Zip2Iterator(Iterator<T1> source1, Iterator<T2> source2, IxFunction2<? super T1, ? super T2, ? extends R> zipper) {
             this.source1 = source1;
             this.source2 = source2;
             this.zipper = zipper;
         }
-        
+
         @Override
         protected boolean moveNext() {
             if (!source1.hasNext()) {
@@ -61,18 +59,18 @@ final class IxZip2<T1, T2, R> extends Ix<R> {
             }
 
             T1 t1 = source1.next();
-            
+
             if (!source2.hasNext()) {
                 done = true;
                 return false;
             }
-            
+
             T2 t2 = source2.next();
 
-            value = zipper.call(t1, t2);
+            value = zipper.apply(t1, t2);
             hasValue = true;
             return true;
         }
-        
+
     }
 }

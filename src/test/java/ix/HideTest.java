@@ -25,7 +25,7 @@ public class HideTest {
         Ix<Integer> source = Ix.just(1);
 
         Assert.assertTrue(source instanceof IxScalarCallable);
-        
+
         Assert.assertFalse((source.hide()) instanceof IxScalarCallable);
     }
 }

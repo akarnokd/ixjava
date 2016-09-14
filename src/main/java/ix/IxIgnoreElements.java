@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxIgnoreElements<T> extends IxSource<T, T> {
 
-    public IxIgnoreElements(Iterable<T> source) {
+    IxIgnoreElements(Iterable<T> source) {
         super(source);
     }
 
@@ -31,21 +31,21 @@ final class IxIgnoreElements<T> extends IxSource<T, T> {
 
     static final class IgnoreElementsIterator<T> extends IxSourceIterator<T, T> {
 
-        public IgnoreElementsIterator(Iterator<T> it) {
+        IgnoreElementsIterator(Iterator<T> it) {
             super(it);
         }
 
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
+
             while (it.hasNext()) {
                 it.next();
             }
-            
+
             done = true;
             return false;
         }
-        
+
     }
 }

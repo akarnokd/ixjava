@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxMinInt extends IxSource<Integer, Integer> {
 
-    public IxMinInt(Iterable<Integer> source) {
+    IxMinInt(Iterable<Integer> source) {
         super(source);
     }
 
@@ -31,7 +31,7 @@ final class IxMinInt extends IxSource<Integer, Integer> {
 
     static final class MinIntIterator extends IxSourceIterator<Integer, Integer> {
 
-        public MinIntIterator(Iterator<Integer> it) {
+        MinIntIterator(Iterator<Integer> it) {
             super(it);
         }
 
@@ -47,12 +47,12 @@ final class IxMinInt extends IxSource<Integer, Integer> {
             while (it.hasNext()) {
                 sum = Math.min(sum, it.next());
             }
-            
+
             value = sum;
             hasValue = true;
             done = true;
             return true;
         }
-        
+
     }
 }

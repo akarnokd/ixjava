@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxPublish<T> extends IxSource<T, T> {
 
     Iterator<T> current;
-    
-    public IxPublish(Iterable<T> source) {
+
+    IxPublish(Iterable<T> source) {
         super(source);
     }
 

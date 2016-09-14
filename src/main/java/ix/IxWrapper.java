@@ -20,10 +20,10 @@ import java.util.Iterator;
 
 final class IxWrapper<T> extends IxSource<T, T> {
 
-    public IxWrapper(Iterable<T> source) {
+    IxWrapper(Iterable<T> source) {
         super(source);
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return source.iterator();

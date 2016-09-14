@@ -23,63 +23,63 @@ public class ExceptTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 5).except(Ix.range(3, 5));
-        
+
         IxTestHelper.assertValues(source, 1, 2, 6, 7);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void firstEmpty() {
         Ix<Integer> source = Ix.<Integer>empty().except(Ix.range(3, 5));
-        
+
         IxTestHelper.assertValues(source, 3, 4, 5, 6, 7);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void secondEmpty() {
         Ix<Integer> source = Ix.range(1, 5).except(Ix.<Integer>empty());
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void firstInSecond() {
         Ix<Integer> source = Ix.range(1, 5).except(Ix.range(1, 3));
-        
+
         IxTestHelper.assertValues(source, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void firstInFirst() {
         Ix<Integer> source = Ix.range(1, 3).except(Ix.range(1, 5));
-        
+
         IxTestHelper.assertValues(source, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void distinct() {
         Ix<Integer> source = Ix.range(1, 5).except(Ix.range(6, 5));
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void overlapWithDuplicates() {
         Ix<Integer> source = Ix.fromArray(1, 2, 2, 3, 4, 5).except(Ix.range(1, 3));
-        
+
         IxTestHelper.assertValues(source, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

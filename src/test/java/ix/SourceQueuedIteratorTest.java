@@ -18,12 +18,10 @@ package ix;
 
 import org.junit.*;
 
-import rx.functions.Action2;
-
 public class SourceQueuedIteratorTest {
 
     IxSourceQueuedIterator<Integer, Integer, Integer> it;
-    
+
     @Before
     public void before() {
         it = new IxSourceQueuedIterator<Integer, Integer, Integer>(Ix.<Integer>empty().iterator()) {
@@ -34,64 +32,64 @@ public class SourceQueuedIteratorTest {
             }
         };
     }
-    
+
     @Test
     public void normal() {
         Assert.assertTrue(it.isEmpty());
         Assert.assertEquals(null, it.peek());
 
         it.offer(1);
-    
+
         Assert.assertFalse(it.isEmpty());
-        
+
         Assert.assertEquals(1, it.peek());
         Assert.assertEquals(1, it.poll());
         Assert.assertTrue(it.isEmpty());
         Assert.assertEquals(null, it.peek());
-        
+
         Assert.assertNull(it.poll());
         Assert.assertTrue(it.isEmpty());
     }
-    
+
     @Test(expected = NullPointerException.class)
     public void nullOffer() {
         it.offer(null);
     }
-    
+
     @Test
     public void clear() {
         Assert.assertTrue(it.isEmpty());
 
         it.offer(1);
-    
+
         Assert.assertFalse(it.isEmpty());
-        
+
         it.clear();
-        
+
         Assert.assertNull(it.poll());
         Assert.assertTrue(it.isEmpty());
     }
-    
+
     @Test
     public void nullWraps() {
         Assert.assertSame(IxSourceQueuedIterator.NULL,  it.toObject(null));
     }
-    
+
     @Test
     public void nullUnwraps() {
         Assert.assertNull(it.fromObject(IxSourceQueuedIterator.NULL));
     }
-    
+
     @Test
     public void foreach() {
         final int[] count = { 0 };
-        it.<Object>foreach(new Action2<Integer, Object>() {
+        it.<Object>foreach(new IxConsumer2<Integer, Object>() {
             @Override
-            public void call(Integer a, Object b) {
+            public void accept(Integer a, Object b) {
                 count[0]++;
             }
         }, null);
-        
+
         Assert.assertEquals(0, count[0]);
     }
 }

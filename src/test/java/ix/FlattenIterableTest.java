@@ -18,81 +18,79 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.Func1;
-
 public class FlattenIterableTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.range(1, 5).flatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.range(1, 5).flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.range(v, 2);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalViaConcatMap() {
-        Ix<Integer> source = Ix.range(1, 5).concatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.range(1, 5).concatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.range(v, 2);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6);
     }
 
     @Test
     public void just() {
-        Ix<Integer> source = Ix.just(1).flatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.just(1).flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.range(v, 2);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2);
     }
 
     @Test
     public void empty() {
-        Ix<Integer> source = Ix.<Integer>empty().flatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.<Integer>empty().flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.range(v, 2);
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void rangeJust() {
-        Ix<Integer> source = Ix.range(1, 2).flatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.range(1, 2).flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.just(v);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2);
     }
-    
+
     @Test
     public void rangeEmpty() {
-        Ix<Integer> source = Ix.range(1, 2).flatMap(new Func1<Integer, Iterable<Integer>>() {
+        Ix<Integer> source = Ix.range(1, 2).flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.empty();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 }

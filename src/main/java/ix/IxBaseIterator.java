@@ -25,13 +25,13 @@ import java.util.*;
  * @param <R> the result value type
  */
 public abstract class IxBaseIterator<R> implements Iterator<R> {
-    
-    /** Inidicates a value is available for consumption. */
+
+    /** Indicates a value is available for consumption. */
     protected boolean hasValue;
-    
+
     /** Indicates there are no more data available. */
     protected boolean done;
-    
+
     /** The current value if hasValue is true. */
     protected R value;
 
@@ -40,7 +40,7 @@ public abstract class IxBaseIterator<R> implements Iterator<R> {
      * @return what the hasNext should return
      */
     protected abstract boolean moveNext();
-    
+
     @Override
     public final boolean hasNext() {
         boolean b = hasValue;
@@ -51,7 +51,7 @@ public abstract class IxBaseIterator<R> implements Iterator<R> {
         }
         return b;
     }
-    
+
     @Override
     public final R next() {
         if (!hasValue && !hasNext()) {
@@ -62,7 +62,7 @@ public abstract class IxBaseIterator<R> implements Iterator<R> {
         value = null;
         return v;
     }
-    
+
     @Override
     public void remove() {
         throw new UnsupportedOperationException();

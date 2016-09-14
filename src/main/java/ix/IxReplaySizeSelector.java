@@ -18,16 +18,14 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxReplaySizeSelector<T, R> extends IxSource<T, R> {
 
     final int maxSize;
-    
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector;
-    
-    public IxReplaySizeSelector(Iterable<T> source, int maxSize, 
-            Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
+
+    final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
+
+    IxReplaySizeSelector(Iterable<T> source, int maxSize,
+            IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.maxSize = maxSize;
         this.selector = selector;
@@ -36,7 +34,7 @@ final class IxReplaySizeSelector<T, R> extends IxSource<T, R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        
-        return (Iterator<R>)selector.call(new IxReplaySize<T>(source, maxSize)).iterator();
+
+        return (Iterator<R>)selector.apply(new IxReplaySize<T>(source, maxSize)).iterator();
     }
 }

@@ -25,42 +25,42 @@ public class MinTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10).minInt();
-        
+
         assertEquals(1, source.first().intValue());
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.just(1).minInt();
-        
+
         assertEquals(1, source.first().intValue());
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.empty().minInt();
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void normalLong() {
         Ix<Long> source = Ix.range(1, 10).toLong().minLong();
-        
+
         assertEquals(1, source.first().longValue());
     }
 
     @Test
     public void justLong() {
         Ix<Long> source = Ix.just(1L).minLong();
-        
+
         assertEquals(1L, source.first().longValue());
     }
 
     @Test
     public void emptyLong() {
         Ix<Long> source = Ix.empty().minLong();
-        
+
         IxTestHelper.assertValues(source);
     }
 

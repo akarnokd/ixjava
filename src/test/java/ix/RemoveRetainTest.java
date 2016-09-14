@@ -25,14 +25,14 @@ public class RemoveRetainTest {
     @Test
     public void removeNormal() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).remove(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 2, 4, 6, 8, 10);
         IxTestHelper.assertValues(list, 2, 4, 6, 8, 10);
     }
@@ -40,29 +40,29 @@ public class RemoveRetainTest {
     @Test
     public void removeAll() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).remove(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return true;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }
-    
+
     @Test
     public void removeNone() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).remove(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return false;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         IxTestHelper.assertValues(list, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
@@ -70,14 +70,14 @@ public class RemoveRetainTest {
     @Test
     public void removeEmpty() {
         List<Integer> list = IxTestHelper.range(1, 0);
-        
-        Ix<Integer> source = Ix.from(list).remove(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return true;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }
@@ -85,14 +85,14 @@ public class RemoveRetainTest {
     @Test
     public void retainNormal() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).retain(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 3, 5, 7, 9);
         IxTestHelper.assertValues(list, 1, 3, 5, 7, 9);
     }
@@ -100,29 +100,29 @@ public class RemoveRetainTest {
     @Test
     public void retainAll() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).retain(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return true;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         IxTestHelper.assertValues(list, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
-    
+
     @Test
     public void retainNone() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).retain(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return false;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }
@@ -130,54 +130,54 @@ public class RemoveRetainTest {
     @Test
     public void retainEmpty() {
         List<Integer> list = IxTestHelper.range(1, 0);
-        
-        Ix<Integer> source = Ix.from(list).retain(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return false;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }
-    
+
     @Test
     public void removeAllDouble() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).remove(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
-        }).remove(new Pred<Integer>() {
+        }).remove(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) == 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }
-    
+
     @Test
     public void retainNoneDouble() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        
-        Ix<Integer> source = Ix.from(list).retain(new Pred<Integer>() {
+
+        Ix<Integer> source = Ix.from(list).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
-        }).retain(new Pred<Integer>() {
+        }).retain(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) == 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
         IxTestHelper.assertValues(list);
     }

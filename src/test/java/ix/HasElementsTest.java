@@ -23,14 +23,14 @@ public class HasElementsTest {
     @Test
     public void empty() {
         Ix<Boolean> source = Ix.empty().hasElements();
-        
+
         IxTestHelper.assertValues(source, false);
     }
 
     @Test
     public void nonempty() {
         Ix<Boolean> source = Ix.just(1).hasElements();
-        
+
         IxTestHelper.assertValues(source, true);
     }
 

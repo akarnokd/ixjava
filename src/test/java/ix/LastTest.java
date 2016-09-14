@@ -16,7 +16,7 @@
 
 package ix;
 
-import java.util.*;
+import java.util.NoSuchElementException;
 
 import org.junit.*;
 
@@ -25,42 +25,42 @@ public class LastTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10);
-        
+
         Assert.assertEquals(10, source.last().intValue());
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.just(1);
-        
+
         Assert.assertEquals(1, source.last().intValue());
     }
 
     @Test(expected = NoSuchElementException.class)
     public void empty() {
         Ix<Integer> source = Ix.empty();
-        
+
         Assert.assertEquals(1, source.last().intValue());
     }
 
     @Test
     public void emptyDefault() {
         Ix<Integer> source = Ix.empty();
-        
+
         Assert.assertEquals(100, source.last(100).intValue());
     }
 
     @Test
     public void justDefault() {
         Ix<Integer> source = Ix.just(1);
-        
+
         Assert.assertEquals(1, source.last(100).intValue());
     }
 
     @Test
     public void rangeDefault() {
         Ix<Integer> source = Ix.range(1, 10);
-        
+
         Assert.assertEquals(10, source.last(100).intValue());
     }
 

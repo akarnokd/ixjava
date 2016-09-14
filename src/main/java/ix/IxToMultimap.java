@@ -18,15 +18,13 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.Func1;
-
 final class IxToMultimap<T, K, V> extends IxSource<T, Map<K, Collection<V>>> {
 
-    final Func1<? super T, ? extends K> keySelector;
-    
-    final Func1<? super T, ? extends V> valueSelector;
+    final IxFunction<? super T, ? extends K> keySelector;
 
-    public IxToMultimap(Iterable<T> source, Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+    final IxFunction<? super T, ? extends V> valueSelector;
+
+    IxToMultimap(Iterable<T> source, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
         super(source);
         this.keySelector = keySelector;
         this.valueSelector = valueSelector;
@@ -36,14 +34,14 @@ final class IxToMultimap<T, K, V> extends IxSource<T, Map<K, Collection<V>>> {
     public Iterator<Map<K, Collection<V>>> iterator() {
         return new ToMapIterator<T, K, V>(source.iterator(), keySelector, valueSelector);
     }
-    
+
     static final class ToMapIterator<T, K, V> extends IxSourceIterator<T, Map<K, Collection<V>>> {
 
-        final Func1<? super T, ? extends K> keySelector;
-        
-        final Func1<? super T, ? extends V> valueSelector;
+        final IxFunction<? super T, ? extends K> keySelector;
 
-        public ToMapIterator(Iterator<T> it, Func1<? super T, ? extends K> keySelector, Func1<? super T, ? extends V> valueSelector) {
+        final IxFunction<? super T, ? extends V> valueSelector;
+
+        ToMapIterator(Iterator<T> it, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
             super(it);
             this.keySelector = keySelector;
             this.valueSelector = valueSelector;
@@ -52,29 +50,29 @@ final class IxToMultimap<T, K, V> extends IxSource<T, Map<K, Collection<V>>> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
-            Func1<? super T, ? extends K> keySelector = this.keySelector;
-            
-            Func1<? super T, ? extends V> valueSelector = this.valueSelector;
-            
+
+            IxFunction<? super T, ? extends K> keySelector = this.keySelector;
+
+            IxFunction<? super T, ? extends V> valueSelector = this.valueSelector;
+
             Map<K, Collection<V>> result = new HashMap<K, Collection<V>>();
-            
+
             while (it.hasNext()) {
                 T t = it.next();
-                
-                K k = keySelector.call(t);
-                
+
+                K k = keySelector.apply(t);
+
                 Collection<V> coll = result.get(k);
                 if (coll == null) {
                     coll = new ArrayList<V>();
                     result.put(k, coll);
                 }
-                
-                V v = valueSelector.call(t);
-                
+
+                V v = valueSelector.apply(t);
+
                 coll.add(v);
             }
-            
+
             value = result;
             hasValue = true;
             done = true;

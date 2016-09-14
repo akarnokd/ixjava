@@ -22,8 +22,8 @@ import java.util.concurrent.Callable;
 final class IxFlattenArrayIterable<T> extends Ix<T> {
 
     final Iterable<T>[] sources;
-    
-    public IxFlattenArrayIterable(Iterable<T>[] sources) {
+
+    IxFlattenArrayIterable(Iterable<T>[] sources) {
         this.sources = sources;
     }
 
@@ -31,7 +31,7 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
     public Iterator<T> iterator() {
         return new FlattenIterator<T>(sources);
     }
-    
+
     static final class FlattenIterator<T> extends IxBaseIterator<T> {
 
         final Iterable<T>[] sources;
@@ -39,8 +39,8 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
         Iterator<? extends T> current;
 
         int index;
-        
-        public FlattenIterator(Iterable<T>[] sources) {
+
+        FlattenIterator(Iterable<T>[] sources) {
             this.sources = sources;
         }
 
@@ -48,7 +48,7 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
         @Override
         protected boolean moveNext() {
             Iterator<? extends T> c = current;
-            
+
             while (c == null) {
                 int i = index;
                 if (i != sources.length) {
@@ -59,9 +59,9 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
                         hasValue = true;
                         return true;
                     }
-                    
+
                     c = inner.iterator();
-                    
+
                     if (c.hasNext()) {
                         current = c;
                         break;
@@ -73,16 +73,16 @@ final class IxFlattenArrayIterable<T> extends Ix<T> {
                     return false;
                 }
             }
-            
+
             value = c.next();
             hasValue = true;
-            
+
             if (!c.hasNext()) {
                 current = null;
             }
             return true;
         }
-        
+
     }
 
 }

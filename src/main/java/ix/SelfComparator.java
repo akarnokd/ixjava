@@ -22,7 +22,7 @@ import java.util.Comparator;
 enum SelfComparator implements Comparator<Comparable> {
     INSTANCE
     ;
-    
+
     @SuppressWarnings("unchecked")
     @Override
     public int compare(Comparable o1, Comparable o2) {

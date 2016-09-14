@@ -22,29 +22,29 @@ final class IxIntersect<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    public IxIntersect(Iterable<T> source, Iterable<? extends T> other) {
+    IxIntersect(Iterable<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new IntersectIterator<T>(source.iterator(), other.iterator());
     }
-    
+
     static final class IntersectIterator<T> extends IxSourceIterator<T, T> {
         final Iterator<? extends T> other;
-        
+
         final Set<T> set;
-        
+
         boolean once;
 
-        public IntersectIterator(Iterator<T> it, Iterator<? extends T> other) {
+        IntersectIterator(Iterator<T> it, Iterator<? extends T> other) {
             super(it);
             this.other = other;
             this.set = new HashSet<T>();
         }
-        
+
         @Override
         protected boolean moveNext() {
             Set<T> secondSet = set;
@@ -59,7 +59,7 @@ final class IxIntersect<T> extends IxSource<T, T> {
             Iterator<T> fIt = it;
             while (fIt.hasNext()) {
                 T v = fIt.next();
-                
+
                 if (secondSet.contains(v)) {
                     value = v;
                     hasValue = true;

@@ -19,15 +19,14 @@ package ix;
 import java.util.*;
 
 import ix.IxZipArray.ZipArrayIterator;
-import rx.functions.FuncN;
 
 final class IxZipIterable<T, R> extends Ix<R> {
 
     final Iterable<? extends Iterable<? extends T>> sources;
-    
-    final FuncN<R> zipper;
-    
-    public IxZipIterable(Iterable<? extends Iterable<? extends T>> sources, FuncN<R> zipper) {
+
+    final IxFunction<? super Object[], R> zipper;
+
+    IxZipIterable(Iterable<? extends Iterable<? extends T>> sources, IxFunction<? super Object[], R> zipper) {
         this.sources = sources;
         this.zipper = zipper;
     }
@@ -35,22 +34,22 @@ final class IxZipIterable<T, R> extends Ix<R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        
+
         Iterable<? extends T>[] src = new Iterable[8];
         int n = 0;
-        
+
         for (Iterable<? extends T> it : sources) {
             if (n == src.length) {
                 src = Arrays.copyOf(src, n + (n >> 1));
             }
             src[n++] = it;
         }
-        
-        Iterator<T>[] itors = new Iterator[n];
+
+        Iterator<T>[] iterators = new Iterator[n];
         for (int i = 0; i < n; i++) {
-            itors[i] = (Iterator<T>)src[i].iterator();
+            iterators[i] = (Iterator<T>)src[i].iterator();
         }
-        
-        return new ZipArrayIterator<T, R>(itors, zipper);
+
+        return new ZipArrayIterator<T, R>(iterators, zipper);
     }
 }

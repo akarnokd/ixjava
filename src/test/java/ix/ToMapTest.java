@@ -20,117 +20,115 @@ import java.util.*;
 
 import org.junit.Test;
 
-import rx.functions.Func1;
-
 public class ToMapTest {
 
     @SuppressWarnings("unchecked")
     @Test
     public void normal() {
-        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
         });
-        
+
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         map.put(1, 4);
         map.put(0, 3);
         map.put(2, 5);
-        
+
         IxTestHelper.assertValues(source, map);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void normalValueSelector() {
-        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.range(1, 5).collectToMap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
-        }, new Func1<Integer, Integer>() {
+        }, new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v * v;
             }
         });
-        
+
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
         map.put(1, 16);
         map.put(0, 9);
         map.put(2, 25);
-        
+
         IxTestHelper.assertValues(source, map);
     }
     @SuppressWarnings("unchecked")
     @Test
     public void empty() {
-        Ix<Map<Integer, Integer>> source = Ix.<Integer>empty().collectToMap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Integer>> source = Ix.<Integer>empty().collectToMap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
         });
-        
+
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        
+
         IxTestHelper.assertValues(source, map);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void multimap() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
         });
-        
+
         Map<Integer, Collection<Integer>> map = new HashMap<Integer, Collection<Integer>>();
         map.put(1, Arrays.asList(1, 4));
         map.put(0, Arrays.asList(3));
         map.put(2, Arrays.asList(2, 5));
-        
+
         IxTestHelper.assertValues(source, map);
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void multimapValueSelector() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.range(1, 5).collectToMultimap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
-        }, new Func1<Integer, Integer>() {
+        }, new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v * v;
             }
         });
-        
+
         Map<Integer, Collection<Integer>> map = new HashMap<Integer, Collection<Integer>>();
         map.put(1, Arrays.asList(1, 16));
         map.put(0, Arrays.asList(9));
         map.put(2, Arrays.asList(4, 25));
-        
+
         IxTestHelper.assertValues(source, map);
     }
     @SuppressWarnings("unchecked")
     @Test
     public void multimapEmpty() {
-        Ix<Map<Integer, Collection<Integer>>> source = Ix.<Integer>empty().collectToMultimap(new Func1<Integer, Integer>() {
+        Ix<Map<Integer, Collection<Integer>>> source = Ix.<Integer>empty().collectToMultimap(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v % 3;
             }
         });
-        
+
         Map<Integer, Collection<Integer>> map = new HashMap<Integer, Collection<Integer>>();
-        
+
         IxTestHelper.assertValues(source, map);
     }
 }

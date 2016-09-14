@@ -18,8 +18,6 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Action1;
-
 /**
  * Functional interface that allows transforming an
  * upstream Iterator for each downstream next() call.
@@ -45,10 +43,10 @@ import rx.functions.Action1;
 public interface IxTransform<T, R> {
 
     int STOP = 0;
-    
+
     int NEXT = 1;
-    
+
     int LAST = 2;
-    
-    int moveNext(Iterator<T> it, Action1<? super R> consumer);
+
+    int moveNext(Iterator<T> it, IxConsumer<? super R> consumer);
 }

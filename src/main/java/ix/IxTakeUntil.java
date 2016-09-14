@@ -20,9 +20,9 @@ import java.util.Iterator;
 
 final class IxTakeUntil<T> extends IxSource<T, T> {
 
-    final Pred<? super T> predicate;
-    
-    public IxTakeUntil(Iterable<T> source, Pred<? super T> predicate) {
+    final IxPredicate<? super T> predicate;
+
+    IxTakeUntil(Iterable<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }
@@ -31,12 +31,12 @@ final class IxTakeUntil<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new TakeUntilIterator<T>(source.iterator(), predicate);
     }
-    
+
     static final class TakeUntilIterator<T> extends IxSourceIterator<T, T> {
 
-        final Pred<? super T> predicate;
+        final IxPredicate<? super T> predicate;
 
-        public TakeUntilIterator(Iterator<T> it, Pred<? super T> predicate) {
+        TakeUntilIterator(Iterator<T> it, IxPredicate<? super T> predicate) {
             super(it);
             this.predicate = predicate;
         }
@@ -55,7 +55,7 @@ final class IxTakeUntil<T> extends IxSource<T, T> {
             done = true;
             return false;
         }
-        
+
         @Override
         public void remove() {
             it.remove();

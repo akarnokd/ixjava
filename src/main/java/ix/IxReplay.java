@@ -23,8 +23,8 @@ final class IxReplay<T> extends IxSource<T, T> {
     List<T> list;
 
     Iterator<T> it;
-    
-    public IxReplay(Iterable<T> source) {
+
+    IxReplay(Iterable<T> source) {
         super(source);
     }
 
@@ -35,37 +35,37 @@ final class IxReplay<T> extends IxSource<T, T> {
         }
         return new ReplayIterator<T>(this);
     }
-    
+
     boolean moveNext() {
         if (!it.hasNext()) {
             return false;
         }
-        
+
         List<T> list = this.list;
         if (list == null) {
             list = new ArrayList<T>();
             this.list = list;
         }
-        
+
         list.add(it.next());
         return true;
     }
 
     static final class ReplayIterator<T> extends IxBaseIterator<T> {
-        
+
         final IxReplay<T> parent;
-        
+
         int index;
 
-        public ReplayIterator(IxReplay<T> parent) {
+        ReplayIterator(IxReplay<T> parent) {
             this.parent = parent;
         }
-        
+
         @Override
         protected boolean moveNext() {
             int i = index;
             List<T> list = parent.list;
-            
+
             if (list == null || i == list.size()) {
                 if (!parent.moveNext()) {
                     done = true;

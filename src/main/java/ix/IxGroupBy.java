@@ -18,18 +18,16 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.Func1;
-
 final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
 
     static final Object NULL = new Object();
-    
-    final Func1<? super T, ? extends K> keySelector;
-    
-    final Func1<? super T, ? extends V> valueSelector;
-    
-    public IxGroupBy(Iterable<T> source, Func1<? super T, ? extends K> keySelector, 
-            Func1<? super T, ? extends V> valueSelector) {
+
+    final IxFunction<? super T, ? extends K> keySelector;
+
+    final IxFunction<? super T, ? extends V> valueSelector;
+
+    IxGroupBy(Iterable<T> source, IxFunction<? super T, ? extends K> keySelector,
+            IxFunction<? super T, ? extends V> valueSelector) {
         super(source);
         this.keySelector = keySelector;
         this.valueSelector = valueSelector;
@@ -41,16 +39,16 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
     }
 
     static final class GroupByIterator<T, K, V> extends IxSourceIterator<T, GroupedIx<K, V>> {
-        final Func1<? super T, ? extends K> keySelector;
-        
-        final Func1<? super T, ? extends V> valueSelector;
+        final IxFunction<? super T, ? extends K> keySelector;
+
+        final IxFunction<? super T, ? extends V> valueSelector;
 
         final Map<K, GroupedIterable<K, V>> groups;
 
         final Queue<GroupedIterable<K, V>> queue;
-        
-        public GroupByIterator(Iterator<T> it, Func1<? super T, ? extends K> keySelector, 
-                Func1<? super T, ? extends V> valueSelector) {
+
+        GroupByIterator(Iterator<T> it, IxFunction<? super T, ? extends K> keySelector,
+                IxFunction<? super T, ? extends V> valueSelector) {
             super(it);
             this.keySelector = keySelector;
             this.valueSelector = valueSelector;
@@ -82,18 +80,18 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
                     groups.clear();
                     return false;
                 }
-                
+
                 T v = it.next();
-                
-                K key = keySelector.call(v);
-                V val = valueSelector.call(v);
-                
+
+                K key = keySelector.apply(v);
+                V val = valueSelector.apply(v);
+
                 GroupedIterable<K, V> g = groups.get(key);
                 if (g == null) {
                     g = new GroupedIterable<K, V>(key, this);
                     groups.put(key, g);
                     g.iterator.queue.offer(val != null ? val : NULL);
-                    
+
                     queue.offer(g);
                     return true;
                 } else {
@@ -101,7 +99,7 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
                 }
             }
         }
-        
+
         boolean groupMoveNext(GroupByGroupIterator<K, V> groupIterator) {
             if (done) {
                 return false;
@@ -111,12 +109,12 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
                     groups.clear();
                     return false;
                 }
-                
+
                 T v = it.next();
-                
-                K key = keySelector.call(v);
-                V val = valueSelector.call(v);
-                
+
+                K key = keySelector.apply(v);
+                V val = valueSelector.apply(v);
+
                 GroupedIterable<K, V> g = groups.get(key);
                 if (g == null) {
                     g = new GroupedIterable<K, V>(key, this);
@@ -132,14 +130,14 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
             }
         }
     }
-    
+
     static final class GroupedIterable<K, V> extends GroupedIx<K, V> {
 
         final GroupByGroupIterator<K, V> iterator;
-        
+
         boolean once;
-        
-        public GroupedIterable(K key, GroupByIterator<?, K, V> parent) {
+
+        GroupedIterable(K key, GroupByIterator<?, K, V> parent) {
             super(key);
             this.iterator = new GroupByGroupIterator<K, V>(parent, key);
         }
@@ -152,26 +150,26 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
             }
             throw new IllegalStateException("This GroupedIx iterable can be consumed only once.");
         }
-        
+
         @Override
         public String toString() {
             return "GroupedIterable[key=" + iterator.key + ", queue=" + iterator.queue.size() + "]";
         }
     }
-    
+
     static final class GroupByGroupIterator<K, V> extends IxBaseIterator<V> {
         final GroupByIterator<?, K, V> parent;
-        
+
         final K key;
 
         final ArrayDeque<Object> queue;
-        
-        public GroupByGroupIterator(GroupByIterator<?, K, V> parent, K key) {
+
+        GroupByGroupIterator(GroupByIterator<?, K, V> parent, K key) {
             this.parent = parent;
             this.key = key;
             this.queue = new ArrayDeque<Object>();
         }
-        
+
         @SuppressWarnings("unchecked")
         @Override
         protected boolean moveNext() {

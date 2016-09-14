@@ -20,7 +20,7 @@ import java.util.*;
 
 final class IxReverse<T> extends IxSource<T, T> {
 
-    public IxReverse(Iterable<T> source) {
+    IxReverse(Iterable<T> source) {
         super(source);
     }
 
@@ -32,17 +32,17 @@ final class IxReverse<T> extends IxSource<T, T> {
     static final class ReverseIterator<T> extends IxSourceIterator<T, T> {
 
         List<T> list;
-        
+
         int index;
-        
-        public ReverseIterator(Iterator<T> it) {
+
+        ReverseIterator(Iterator<T> it) {
             super(it);
         }
-        
+
         @Override
         protected boolean moveNext() {
             List<T> list = this.list;
-            
+
             if (list == null) {
                 list = new ArrayList<T>();
                 this.list = list;
@@ -51,7 +51,7 @@ final class IxReverse<T> extends IxSource<T, T> {
                 }
                 index = list.size();
             }
-            
+
             int i = index;
             if (i == 0) {
                 done = true;

@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxSumInt extends IxSource<Integer, Integer> {
 
-    public IxSumInt(Iterable<Integer> source) {
+    IxSumInt(Iterable<Integer> source) {
         super(source);
     }
 
@@ -31,7 +31,7 @@ final class IxSumInt extends IxSource<Integer, Integer> {
 
     static final class SumIntIterator extends IxSourceIterator<Integer, Integer> {
 
-        public SumIntIterator(Iterator<Integer> it) {
+        SumIntIterator(Iterator<Integer> it) {
             super(it);
         }
 
@@ -47,12 +47,12 @@ final class IxSumInt extends IxSource<Integer, Integer> {
             while (it.hasNext()) {
                 sum += it.next();
             }
-            
+
             value = sum;
             hasValue = true;
             done = true;
             return true;
         }
-        
+
     }
 }

@@ -18,15 +18,13 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.FuncN;
-
 final class IxZipArray<T, R> extends Ix<R> {
 
     final Iterable<? extends T>[] sources;
-    
-    final FuncN<R> zipper;
-    
-    public IxZipArray(Iterable<? extends T>[] sources, FuncN<R> zipper) {
+
+    final IxFunction<? super Object[], R> zipper;
+
+    IxZipArray(Iterable<? extends T>[] sources, IxFunction<? super Object[], R> zipper) {
         this.sources = sources;
         this.zipper = zipper;
     }
@@ -34,37 +32,37 @@ final class IxZipArray<T, R> extends Ix<R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        
+
         Iterable<? extends T>[] src = sources;
-        
-        Iterator<T>[] itors = new Iterator[src.length];
-        for (int i = 0; i < itors.length; i++) {
-            itors[i] = (Iterator<T>)src[i].iterator();
+
+        Iterator<T>[] iterators = new Iterator[src.length];
+        for (int i = 0; i < iterators.length; i++) {
+            iterators[i] = (Iterator<T>)src[i].iterator();
         }
-        
-        return new ZipArrayIterator<T, R>(itors, zipper);
+
+        return new ZipArrayIterator<T, R>(iterators, zipper);
     }
-    
+
     static final class ZipArrayIterator<T, R> extends IxBaseIterator<R> {
 
         final Iterator<T>[] sources;
 
-        final FuncN<R> zipper;
+        final IxFunction<? super Object[], R> zipper;
 
-        public ZipArrayIterator(Iterator<T>[] sources, FuncN<R> zipper) {
+        ZipArrayIterator(Iterator<T>[] sources, IxFunction<? super Object[], R> zipper) {
             this.sources = sources;
             this.zipper = zipper;
         }
-        
+
         @SuppressWarnings("unchecked")
         @Override
         protected boolean moveNext() {
-            Iterator<T>[] itors = sources;
-            int n = itors.length;
+            Iterator<T>[] iterators = sources;
+            int n = iterators.length;
             T[] a = (T[])new Object[n];
-            
+
             for (int i = 0; i < n; i++) {
-                Iterator<T> it = itors[i];
+                Iterator<T> it = iterators[i];
                 if (it.hasNext()) {
                     a[i] = it.next();
                 } else {
@@ -72,13 +70,13 @@ final class IxZipArray<T, R> extends Ix<R> {
                     return false;
                 }
             }
-            
-            value = zipper.call(a);
+
+            value = zipper.apply(a);
             hasValue = true;
-            
+
             return true;
         }
-        
+
     }
 
 }

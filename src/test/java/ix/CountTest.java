@@ -23,54 +23,54 @@ public class CountTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 5).count();
-        
+
         IxTestHelper.assertValues(source, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.just(1).count();
-        
+
         IxTestHelper.assertValues(source, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void empty() {
         Ix<Integer> source = Ix.empty().count();
-        
+
         IxTestHelper.assertValues(source, 0);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalLong() {
         Ix<Long> source = Ix.range(1, 5).countLong();
-        
+
         IxTestHelper.assertValues(source, 5L);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void justLong() {
         Ix<Long> source = Ix.just(1).countLong();
-        
+
         IxTestHelper.assertValues(source, 1L);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void emptyLong() {
         Ix<Long> source = Ix.empty().countLong();
-        
+
         IxTestHelper.assertValues(source, 0L);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxMap<T, R> extends IxSource<T, R> {
 
-    final Func1<? super T, ? extends R> mapper;
-    
-    public IxMap(Iterable<T> source, Func1<? super T, ? extends R> mapper) {
+    final IxFunction<? super T, ? extends R> mapper;
+
+    IxMap(Iterable<T> source, IxFunction<? super T, ? extends R> mapper) {
         super(source);
         this.mapper = mapper;
     }
@@ -35,12 +33,12 @@ final class IxMap<T, R> extends IxSource<T, R> {
     }
 
     static final class MapIterator<T, R> implements Iterator<R> {
-        
-        final Iterator<T> it;
-        
-        final Func1<? super T, ? extends R> mapper;
 
-        public MapIterator(Iterator<T> it, Func1<? super T, ? extends R> mapper) {
+        final Iterator<T> it;
+
+        final IxFunction<? super T, ? extends R> mapper;
+
+        MapIterator(Iterator<T> it, IxFunction<? super T, ? extends R> mapper) {
             this.it = it;
             this.mapper = mapper;
         }
@@ -52,9 +50,9 @@ final class IxMap<T, R> extends IxSource<T, R> {
 
         @Override
         public R next() {
-            return mapper.call(it.next());
+            return mapper.apply(it.next());
         }
-        
+
         @Override
         public void remove() {
             it.remove();

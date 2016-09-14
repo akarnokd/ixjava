@@ -22,25 +22,25 @@ public class AggregateTest {
 
     @Test
     public void normal() {
-        
+
         Ix<Integer> source = Ix.range(1, 10).sumInt();
-        
+
         IxTestHelper.assertValues(source, 55);
     }
-    
+
     @Test
     public void just() {
-        
+
         Ix<Integer> source = Ix.just(1).sumInt();
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 
     @Test
     public void empty() {
-        
+
         Ix<Integer> source = Ix.<Integer>empty().sumInt();
-        
+
         IxTestHelper.assertValues(source);
     }
 

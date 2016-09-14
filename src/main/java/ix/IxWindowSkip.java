@@ -21,12 +21,12 @@ import java.util.*;
 final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
 
     final int size;
-    
+
     final int skip;
-    
+
     static final Object NULL = new Object();
 
-    public IxWindowSkip(Iterable<T> source, int size, int skip) {
+    IxWindowSkip(Iterable<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;
@@ -36,23 +36,23 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
     public Iterator<Ix<T>> iterator() {
         return new WindowIterator<T>(source.iterator(), size, skip);
     }
-    
+
     static final class WindowIterator<T> extends IxSourceIterator<T, Ix<T>> {
 
         final int size;
-        
+
         int index;
-        
+
         final int skip;
 
         WindowIterable<T> current;
-        
-        public WindowIterator(Iterator<T> it, int size, int skip) {
+
+        WindowIterator(Iterator<T> it, int size, int skip) {
             super(it);
             this.size = size;
             this.skip = skip;
         }
-        
+
         @Override
         protected boolean moveNext() {
             int i = index;
@@ -61,9 +61,9 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
                     done = true;
                     return false;
                 }
-                
+
                 T v = it.next();
-                
+
                 if (i++ == 0) {
                     index = i;
                     WindowIterable<T> c = new WindowIterable<T>(this, size);
@@ -73,26 +73,26 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
                     hasValue = true;
                     return true;
                 }
-                
+
                 WindowInnerIterator<T> ci = current.iterator;
-                
+
                 if (ci.offered < size) {
                     ci.offer(v);
                 }
-                
+
                 if (i == skip) {
                     i = 0;
                 }
             }
         }
-        
+
         boolean moveInner() {
             if (!it.hasNext()) {
                 return false;
             }
-            
+
             T v = it.next();
-            
+
             current.iterator.offer(v);
 
             index++;
@@ -103,10 +103,10 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
     static final class WindowIterable<T> extends Ix<T> {
 
         final WindowInnerIterator<T> iterator;
-        
+
         boolean once;
-        
-        public WindowIterable(WindowIterator<T> parent, int size) {
+
+        WindowIterable(WindowIterator<T> parent, int size) {
             this.iterator = new WindowInnerIterator<T>(parent, size);
         }
 
@@ -119,23 +119,23 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
             throw new IllegalStateException("This Window Ix iterable can be consumed only once.");
         }
     }
-    
+
     static final class WindowInnerIterator<T> extends IxBaseIterator<T> {
-        
+
         final WindowIterator<T> parent;
-        
+
         final ArrayDeque<Object> queue;
 
         int remaining;
-        
+
         int offered;
-        
-        public WindowInnerIterator(WindowIterator<T> parent, int size) {
+
+        WindowInnerIterator(WindowIterator<T> parent, int size) {
             this.parent = parent;
             this.queue = new ArrayDeque<Object>();
             this.remaining = size;
         }
-        
+
         @SuppressWarnings("unchecked")
         @Override
         protected boolean moveNext() {
@@ -145,7 +145,7 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
                 return false;
             }
             Object o = queue.poll();
-            
+
             if (o == null) {
                 if (!parent.moveInner()) {
                     done = true;
@@ -153,17 +153,17 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
                 }
                 o = queue.poll();
             }
-            
+
             value = o == NULL ? null : (T)o;
             hasValue = true;
             remaining = r - 1;
             return true;
         }
-        
+
         void offer(T t) {
             offered++;
             queue.offer(t != null ? t : NULL);
         }
     }
-    
+
 }

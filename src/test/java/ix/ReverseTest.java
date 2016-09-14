@@ -23,18 +23,18 @@ public class ReverseTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 5).reverse();
-        
+
         IxTestHelper.assertValues(source, 5, 4, 3, 2, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.<Integer>empty().reverse();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

@@ -18,15 +18,13 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
-
 final class IxReduce<T, C> extends IxSource<T, C> {
 
-    final Func0<C> initialFactory;
-    
-    final Func2<C, T, C> reducer;
-    
-    public IxReduce(Iterable<T> source, Func0<C> initialFactory, Func2<C, T, C> reducer) {
+    final IxSupplier<C> initialFactory;
+
+    final IxFunction2<C, T, C> reducer;
+
+    IxReduce(Iterable<T> source, IxSupplier<C> initialFactory, IxFunction2<C, T, C> reducer) {
         super(source);
         this.initialFactory = initialFactory;
         this.reducer = reducer;
@@ -34,14 +32,14 @@ final class IxReduce<T, C> extends IxSource<T, C> {
 
     @Override
     public Iterator<C> iterator() {
-        return new CollectorIterator<T, C>(source.iterator(), reducer, initialFactory.call());
+        return new CollectorIterator<T, C>(source.iterator(), reducer, initialFactory.get());
     }
 
     static final class CollectorIterator<T, C> extends IxSourceIterator<T, C> {
 
-        final Func2<C, T, C> reducer;
-        
-        public CollectorIterator(Iterator<T> it, Func2<C, T, C> reducer, C value) {
+        final IxFunction2<C, T, C> reducer;
+
+        CollectorIterator(Iterator<T> it, IxFunction2<C, T, C> reducer, C value) {
             super(it);
             this.reducer = reducer;
             this.value = value;
@@ -50,15 +48,15 @@ final class IxReduce<T, C> extends IxSource<T, C> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
-            Func2<C, T, C> f = reducer;
-            
+
+            IxFunction2<C, T, C> f = reducer;
+
             C c = value;
-            
+
             while (it.hasNext()) {
-                c = f.call(c, it.next());
+                c = f.apply(c, it.next());
             }
-            
+
             value = c;
             hasValue = true;
             done = true;

@@ -25,42 +25,42 @@ public class MaxTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10).maxInt();
-        
+
         assertEquals(10L, source.first().intValue());
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.just(1).maxInt();
-        
+
         assertEquals(1, source.first().intValue());
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.empty().maxInt();
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void normalLong() {
         Ix<Long> source = Ix.range(1, 10).toLong().maxLong();
-        
+
         assertEquals(10L, source.first().longValue());
     }
 
     @Test
     public void justLong() {
         Ix<Long> source = Ix.just(1L).maxLong();
-        
+
         assertEquals(1L, source.first().longValue());
     }
 
     @Test
     public void emptyLong() {
         Ix<Long> source = Ix.empty().maxLong();
-        
+
         IxTestHelper.assertValues(source);
     }
 

@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func2;
-
 final class IxScan<T> extends IxSource<T, T> {
 
-    final Func2<T, T, T> scanner;
-    
-    public IxScan(Iterable<T> source, Func2<T, T, T> scanner) {
+    final IxFunction2<T, T, T> scanner;
+
+    IxScan(Iterable<T> source, IxFunction2<T, T, T> scanner) {
         super(source);
         this.scanner = scanner;
     }
@@ -35,25 +33,25 @@ final class IxScan<T> extends IxSource<T, T> {
     }
 
     static final class ScanIterator<T> extends IxSourceIterator<T, T> {
-        
-        final Func2<T, T, T> scanner;
+
+        final IxFunction2<T, T, T> scanner;
 
         T last;
-        
+
         boolean once;
-        
-        public ScanIterator(Iterator<T> it, Func2<T, T, T> scanner) {
+
+        ScanIterator(Iterator<T> it, IxFunction2<T, T, T> scanner) {
             super(it);
             this.scanner = scanner;
         }
-        
+
         @Override
         protected boolean moveNext() {
             if (!once) {
                 if (it.hasNext()) {
                     once = true;
                     T v = it.next();
-                    
+
                     last = v;
                     value = v;
                     hasValue = true;
@@ -62,17 +60,17 @@ final class IxScan<T> extends IxSource<T, T> {
                 done = true;
                 return false;
             }
-            
+
             if (it.hasNext()) {
                 T v = it.next();
-                
-                v = scanner.call(last, v);
+
+                v = scanner.apply(last, v);
                 last = v;
                 value = v;
                 hasValue = true;
                 return true;
             }
-            
+
             last = null;
             done = true;
             return false;

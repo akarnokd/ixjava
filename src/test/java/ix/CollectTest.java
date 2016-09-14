@@ -16,28 +16,26 @@
 
 package ix;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-
-import rx.functions.*;
-
-import static org.junit.Assert.*;
 
 public class CollectTest {
 
     @Test
     public void normal() {
-        Ix<Integer[]> source = Ix.range(1, 10).collect(new Func0<Integer[]>() {
+        Ix<Integer[]> source = Ix.range(1, 10).collect(new IxSupplier<Integer[]>() {
             @Override
-            public Integer[] call() {
+            public Integer[] get() {
                 return new Integer[] { 0 };
             }
-        }, new Action2<Integer[], Integer>() {
+        }, new IxConsumer2<Integer[], Integer>() {
             @Override
-            public void call(Integer[] a, Integer b) {
+            public void accept(Integer[] a, Integer b) {
                 a[0] += b;
             }
         });
-        
+
         assertEquals(55, source.first()[0].intValue());
     }
 }

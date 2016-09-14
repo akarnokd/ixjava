@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxTake<T> extends IxSource<T, T> {
 
     final int n;
-    
-    public IxTake(Iterable<T> source, int n) {
+
+    IxTake(Iterable<T> source, int n) {
         super(source);
         this.n = n;
     }
@@ -31,15 +31,16 @@ final class IxTake<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new TakeIterator<T>(source.iterator(), n);
     }
-    
+
     static final class TakeIterator<T> extends IxSourceIterator<T, T> {
 
         int n;
-        public TakeIterator(Iterator<T> it, int n) {
+
+        TakeIterator(Iterator<T> it, int n) {
             super(it);
             this.n = n;
         }
-        
+
         @Override
         protected boolean moveNext() {
             int n = this.n;
@@ -47,14 +48,14 @@ final class IxTake<T> extends IxSource<T, T> {
                 done = true;
                 return false;
             }
-            
+
             value = it.next();
             hasValue = true;
             this.n = n - 1;
-            
+
             return true;
         }
-        
+
         @Override
         public void remove() {
             it.remove();

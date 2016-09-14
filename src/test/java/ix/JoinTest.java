@@ -23,54 +23,54 @@ public class JoinTest {
     @Test
     public void normal() {
         Ix<String> source = Ix.range(1, 5).join();
-        
+
         IxTestHelper.assertValues(source, "1, 2, 3, 4, 5");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void just() {
         Ix<String> source = Ix.just(1).join();
-        
+
         IxTestHelper.assertValues(source, "1");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void empty() {
         Ix<String> source = Ix.empty().join();
-        
+
         IxTestHelper.assertValues(source, "");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalSeparator() {
         Ix<String> source = Ix.range(1, 5).join("|");
-        
+
         IxTestHelper.assertValues(source, "1|2|3|4|5");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void justSeparator() {
         Ix<String> source = Ix.just(1).join("|");
-        
+
         IxTestHelper.assertValues(source, "1");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void emptySeparator() {
         Ix<String> source = Ix.empty().join("|");
-        
+
         IxTestHelper.assertValues(source, "");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

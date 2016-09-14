@@ -16,19 +16,17 @@
 
 package ix;
 
-import rx.functions.Func1;
-
-enum IdentityHelper implements Func1<Object, Object> {
+enum IdentityHelper implements IxFunction<Object, Object> {
     INSTANCE
     ;
-    
+
     @SuppressWarnings("unchecked")
-    public static <T> Func1<T, T> instance() {
-        return (Func1<T, T>)INSTANCE;
+    public static <T> IxFunction<T, T> instance() {
+        return (IxFunction<T, T>)INSTANCE;
     }
-    
+
     @Override
-    public Object call(Object t) {
+    public Object apply(Object t) {
         return t;
     }
 }

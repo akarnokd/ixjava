@@ -23,18 +23,18 @@ public class EmptyTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.empty();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void removeThrows() {
         Ix<Integer> source = Ix.empty();
-        
+
         IxTestHelper.assertNoRemove(source);
-        
+
         try {
             source.iterator().remove();
             Assert.fail("Should have thrown UnsupportedOperationException");

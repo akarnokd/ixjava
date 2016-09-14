@@ -18,34 +18,32 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.Action2;
-
 final class IxBufferOverlap<T> extends IxSource<T, List<T>> {
 
     final int size;
-    
+
     final int skip;
-    
-    public IxBufferOverlap(Iterable<T> source, int size, int skip) {
+
+    IxBufferOverlap(Iterable<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;
     }
-    
+
     @Override
     public Iterator<List<T>> iterator() {
         return new BufferIterator<T>(source.iterator(), size, skip);
     }
 
     static final class BufferIterator<T> extends IxSourceQueuedIterator<T, List<T>, List<T>>
-    implements Action2<List<T>, T> {
+    implements IxConsumer2<List<T>, T> {
         final int size;
-        
+
         final int skip;
-        
+
         int index;
-        
-        public BufferIterator(Iterator<T> it, int size, int skip) {
+
+        BufferIterator(Iterator<T> it, int size, int skip) {
             super(it);
             this.size = size;
             this.skip = skip;
@@ -55,12 +53,12 @@ final class IxBufferOverlap<T> extends IxSource<T, List<T>> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
+
             int s = size;
             int k = skip;
-            
+
             int i = index;
-            
+
             while (it.hasNext()) {
                 if (i == 0) {
                     offer(new ArrayList<T>());
@@ -70,26 +68,26 @@ final class IxBufferOverlap<T> extends IxSource<T, List<T>> {
                 if (++i == k) {
                     i = 0;
                 }
-                
+
                 if (((List<T>)peek()).size() == s) {
                     break;
                 }
             }
             index = i;
-            
+
             List<T> list = fromObject(poll());
             if (list == null) {
                 done = true;
                 return false;
             }
-            
+
             value = list;
             hasValue = true;
             return true;
         }
-        
+
         @Override
-        public void call(List<T> t1, T t2) {
+        public void accept(List<T> t1, T t2) {
             t1.add(t2);
         }
     }

@@ -18,8 +18,6 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
-
 /**
  * A base iterator that extends a custom ArrayDeque, references an upstream iterator
  * and manages the state between hasNext() and the next() calls; plus defines
@@ -28,21 +26,21 @@ import rx.functions.*;
  * @param <U> the queued element types
  * @param <R> the result value type
  */
-public abstract class IxSourceQueuedIterator<T, U, R> 
+public abstract class IxSourceQueuedIterator<T, U, R>
 extends IxSourceIterator<T, R> {
 
-    protected static final Object NULL = new Object(); 
-    
+    protected static final Object NULL = new Object();
+
     private Object[] array;
-    
+
     private int producerIndex;
-    
+
     private int consumerIndex;
-    
+
     public IxSourceQueuedIterator(Iterator<T> it) {
         super(it);
     }
-    
+
     /**
      * Cast the value into an object and turn
      * a null value into a sentinel value.
@@ -53,7 +51,7 @@ extends IxSourceIterator<T, R> {
     protected final Object toObject(U value) {
         return value != null ? value : NULL;
     }
-    
+
     /**
      * Cast the object back to a typed value.
      * @param value the value to cast back
@@ -63,7 +61,7 @@ extends IxSourceIterator<T, R> {
     protected final U fromObject(Object value) {
         return value == NULL ? null : (U)value;
     }
-    
+
     protected final boolean offer(Object value) {
         if (value == null) {
             throw new NullPointerException("The queue doesn't support null values.");
@@ -75,7 +73,7 @@ extends IxSourceIterator<T, R> {
         }
         int mask = a.length - 1;
         int pi = producerIndex;
-        
+
         int offset = pi & mask;
         if (a[offset] != null) {
             int newLen = mask * 2 + 2;
@@ -93,14 +91,14 @@ extends IxSourceIterator<T, R> {
         }
         return true;
     }
-    
+
     protected final Object poll() {
         Object[] a = array;
         if (a != null) {
             int m = a.length - 1;
             int ci = consumerIndex;
             int offset = ci & m;
-            
+
             Object v = a[offset];
             if (v != null) {
                 a[offset] = null;
@@ -110,30 +108,30 @@ extends IxSourceIterator<T, R> {
         }
         return null;
     }
-    
+
     protected final Object peek() {
         Object[] a = array;
         if (a != null) {
             int m = a.length - 1;
             int ci = consumerIndex;
             int offset = ci & m;
-            
+
             return a[offset];
         }
         return null;
     }
-    
+
     protected final boolean isEmpty() {
         return consumerIndex == producerIndex;
     }
-    
+
     protected final void clear() {
         array = null;
         consumerIndex = 0;
         producerIndex = 0;
     }
-    
-    protected final <S> void foreach(Action2<? super U, S> action, S state) {
+
+    protected final <S> void foreach(IxConsumer2<? super U, S> action, S state) {
         Object[] a = array;
         if (a != null) {
             int m = a.length - 1;
@@ -141,7 +139,7 @@ extends IxSourceIterator<T, R> {
             for (int ci = consumerIndex; ci != pi; ci++) {
                 int offset = ci & m;
                 Object o = a[offset];
-                action.call(fromObject(o), state);
+                action.accept(fromObject(o), state);
             }
         }
     }

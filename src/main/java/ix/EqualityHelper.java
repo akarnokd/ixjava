@@ -16,9 +16,9 @@
 
 package ix;
 
-enum EqualityHelper implements Pred2<Object, Object> {
+enum EqualityHelper implements IxPredicate2<Object, Object> {
     INSTANCE;
-    
+
     @Override
     public boolean test(Object t, Object u) {
         return (t == u) || (t != null && t.equals(u));

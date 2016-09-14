@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="ixjava:jmh" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="com.github.akarnokd" external.system.module.type="sourceSet" external.system.module.version="1.0.0-RC2" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../../build/classes/jmh" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../src/jmh">
+      <sourceFolder url="file://$MODULE_DIR$/../../src/jmh/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/jmh/resources" type="java-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="ixjava_main" />
+    <orderEntry type="library" name="Gradle: org.openjdk.jmh:jmh-core:1.14" level="project" />
+    <orderEntry type="library" name="Gradle: org.openjdk.jmh:jmh-generator-annprocess:1.14" level="project" />
+    <orderEntry type="library" name="Gradle: net.sf.jopt-simple:jopt-simple:4.6" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-math3:3.2" level="project" />
+  </component>
+</module>

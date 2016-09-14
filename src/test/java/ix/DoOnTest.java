@@ -20,23 +20,21 @@ import java.util.*;
 
 import org.junit.*;
 
-import rx.functions.*;
-
 public class DoOnTest {
 
     @Test
     public void normal() {
         final List<Integer> values = new ArrayList<Integer>();
         Ix<Integer> source = Ix.range(1, 5)
-                .doOnNext(new Action1<Integer>() {
+                .doOnNext(new IxConsumer<Integer>() {
                     @Override
-                    public void call(Integer v) {
+                    public void accept(Integer v) {
                         values.add(v);
                     }
                 })
-                .doOnCompleted(new Action0() {
+                .doOnCompleted(new Runnable() {
                     @Override
-                    public void call() {
+                    public void run() {
                         values.add(100);
                     }
                 })
@@ -44,20 +42,20 @@ public class DoOnTest {
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 100), values);
     }
-    
+
     @Test
     public void empty() {
         final List<Integer> values = new ArrayList<Integer>();
         Ix<Integer> source = Ix.<Integer>empty()
-                .doOnNext(new Action1<Integer>() {
+                .doOnNext(new IxConsumer<Integer>() {
                     @Override
-                    public void call(Integer v) {
+                    public void accept(Integer v) {
                         values.add(v);
                     }
                 })
-                .doOnCompleted(new Action0() {
+                .doOnCompleted(new Runnable() {
                     @Override
-                    public void call() {
+                    public void run() {
                         values.add(100);
                     }
                 })

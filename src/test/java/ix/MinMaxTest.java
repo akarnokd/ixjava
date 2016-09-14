@@ -30,10 +30,10 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 5);
     }
-    
+
     @Test
     public void minComparatorEmpty() {
         Ix<Integer> source = Ix.<Integer>empty().min(new Comparator<Integer>() {
@@ -42,7 +42,7 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
@@ -54,7 +54,7 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 
@@ -66,10 +66,10 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1);
     }
-    
+
     @Test
     public void maxComparatorEmpty() {
         Ix<Integer> source = Ix.<Integer>empty().max(new Comparator<Integer>() {
@@ -78,7 +78,7 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
@@ -90,49 +90,49 @@ public class MinMaxTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1);
     }
-    
+
     @Test
     public void min() {
         Ix<Integer> source = Ix.range(1, 5).min();
-        
+
         IxTestHelper.assertValues(source, 1);
     }
-    
+
     @Test
     public void minEmpty() {
         Ix<Integer> source = Ix.<Integer>empty().min();
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void minJust() {
         Ix<Integer> source = Ix.just(1).min();
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 
     @Test
     public void max() {
         Ix<Integer> source = Ix.range(1, 5).max();
-        
+
         IxTestHelper.assertValues(source, 5);
     }
-    
+
     @Test
     public void maxEmpty() {
         Ix<Integer> source = Ix.<Integer>empty().max();
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void maxJust() {
         Ix<Integer> source = Ix.just(1).max();
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 }

@@ -16,28 +16,26 @@
 
 package ix;
 
-import rx.functions.*;
-
-enum IxEmptyAction implements Action1<Object>, Action0 {
+enum IxEmptyAction implements IxConsumer<Object>, Runnable {
     INSTANCE;
 
     @SuppressWarnings("unchecked")
-    public static <T> Action1<T> instance1() {
-        return (Action1<T>)INSTANCE;
+    public static <T> IxConsumer<T> instance1() {
+        return (IxConsumer<T>)INSTANCE;
     }
 
-    public static Action0 instance0() {
+    public static Runnable instance0() {
         return INSTANCE;
     }
 
     @Override
-    public void call(Object t) {
+    public void accept(Object t) {
         // deliberately no op
     }
-    
+
     @Override
-    public void call() {
+    public void run() {
         // deliberately no op
     }
-    
+
 }

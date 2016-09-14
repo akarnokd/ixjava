@@ -39,15 +39,15 @@ public class ReducePerf {
     public int count;
 
     Ix<Integer> sum;
-    
+
     @Setup
     public void setup(Blackhole bh) {
         Integer[] array = new Integer[count];
         Arrays.fill(array, 1);
-        
+
         sum = Ix.fromArray(array).sumInt();
     }
-    
+
     @Benchmark
     public Object sumLast() {
         return sum.last();

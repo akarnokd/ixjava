@@ -21,8 +21,6 @@ import java.util.concurrent.TimeUnit;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
-import rx.functions.Func1;
-
 /**
  * Example benchmark. Run from command line as
  * <br>
@@ -34,39 +32,39 @@ import rx.functions.Func1;
 @OutputTimeUnit(TimeUnit.SECONDS)
 @Fork(value = 1)
 @State(Scope.Thread)
-public class FlattenIterablePerf implements Func1<Integer, Iterable<Integer>> {
+public class FlattenIterablePerf implements IxFunction<Integer, Iterable<Integer>> {
 
     @Param({"1", "10", "100", "1000", "10000", "100000", "1000000"})
     public int count;
-  
+
     Ix<Integer> source;
-    
+
     Ix<Integer> inner;
 
     Ix<Integer> flatMapJust;
 
     @Override
-    public Iterable<Integer> call(Integer t) {
+    public Iterable<Integer> apply(Integer t) {
         return inner;
     }
-    
+
     @Setup
     public void setup(Blackhole bh) {
 
         int d = 1000000 / count;
-        
+
         inner = Ix.range(1, count);
-        
+
         source = Ix.range(1, d).flatMap(this);
-        
-        flatMapJust = Ix.range(1, count).flatMap(new Func1<Integer, Iterable<Integer>>() {
+
+        flatMapJust = Ix.range(1, count).flatMap(new IxFunction<Integer, Iterable<Integer>>() {
             @Override
-            public Iterable<Integer> call(Integer v) {
+            public Iterable<Integer> apply(Integer v) {
                 return Ix.just(v);
             }
         });
     }
-    
+
     @Benchmark
     public Object xrangeLast() {
         return source.last();

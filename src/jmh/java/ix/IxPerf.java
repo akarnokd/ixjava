@@ -36,12 +36,12 @@ public class IxPerf {
 
 //    @Param({"1", "10", "100", "1000", "10000", "100000", "1000000"})
 //    public int count;
-    
+
     @Setup
     public void setup(Blackhole bh) {
 
     }
-    
+
     @Benchmark
     public Object just() {
         return new IxJust<Integer>(1).iterator().next();

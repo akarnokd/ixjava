@@ -23,35 +23,35 @@ public class SkipTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10).skip(5);
-        
+
         IxTestHelper.assertValues(source, 6, 7, 8, 9, 10);
     }
 
     @Test
     public void zero() {
         Ix<Integer> source = Ix.range(1, 10).skip(0);
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     @Test
     public void all() {
         Ix<Integer> source = Ix.range(1, 10).skip(10);
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.<Integer>empty().skip(10);
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void emptyZero() {
         Ix<Integer> source = Ix.<Integer>empty().skip(0);
-        
+
         IxTestHelper.assertValues(source);
     }
 

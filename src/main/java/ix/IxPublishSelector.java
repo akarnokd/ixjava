@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxPublishSelector<T, R> extends IxSource<T, R> {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector;
-    
-    public IxPublishSelector(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
+    final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
+
+    IxPublishSelector(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.selector = selector;
     }
@@ -32,18 +30,18 @@ final class IxPublishSelector<T, R> extends IxSource<T, R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        
-        return (Iterator<R>)selector.call(new PublishSelectorIterable<T>(source.iterator())).iterator();
+
+        return (Iterator<R>)selector.apply(new PublishSelectorIterable<T>(source.iterator())).iterator();
     }
 
     static final class PublishSelectorIterable<T> extends Ix<T> {
-        
+
         final Iterator<T> source;
 
-        public PublishSelectorIterable(Iterator<T> source) {
+        PublishSelectorIterable(Iterator<T> source) {
             this.source = source;
         }
-        
+
         @Override
         public Iterator<T> iterator() {
             return source;

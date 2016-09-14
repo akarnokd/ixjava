@@ -18,17 +18,15 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.Func1;
-
 final class IxOrderBy<T, K> extends IxSource<T, T> {
 
-    final Func1<? super T, K> keySelector;
-    
+    final IxFunction<? super T, K> keySelector;
+
     final Comparator<? super K> comparator;
-    
+
     final int flag;
-    
-    public IxOrderBy(Iterable<T> source, Func1<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
+
+    IxOrderBy(Iterable<T> source, IxFunction<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
         super(source);
         this.keySelector = keySelector;
         this.comparator = comparator;
@@ -39,20 +37,20 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new OrderByIterator<T, K>(source.iterator(), keySelector, comparator, flag);
     }
-    
+
     static final class OrderByIterator<T, K> extends IxSourceIterator<T, T> implements Comparator<T> {
 
-        final Func1<? super T, K> keySelector;
-        
+        final IxFunction<? super T, K> keySelector;
+
         final Comparator<? super K> comparator;
 
         final int flag;
-        
+
         List<T> values;
-        
+
         int index;
-        
-        public OrderByIterator(Iterator<T> it, Func1<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
+
+        OrderByIterator(Iterator<T> it, IxFunction<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
             super(it);
             this.keySelector = keySelector;
             this.comparator = comparator;
@@ -61,28 +59,28 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
 
         @Override
         protected boolean moveNext() {
-            
+
             List<T> list = values;
-            
+
             if (list == null) {
                 list = new ArrayList<T>();
-                
+
                 Iterator<T> it = this.it;
-                
+
                 while (it.hasNext()) {
                     list.add(it.next());
                 }
-                
+
                 if (list.isEmpty()) {
                     done = true;
                     return false;
                 }
-                
+
                 Collections.sort(list, this);
-                
+
                 values = list;
             }
-            
+
             int i = index;
             if (i != list.size()) {
                 index = i + 1;
@@ -94,11 +92,11 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
             done = true;
             return false;
         }
-        
+
         @Override
         public int compare(T o1, T o2) {
-            K k1 = keySelector.call(o1);
-            K k2 = keySelector.call(o2);
+            K k1 = keySelector.apply(o1);
+            K k2 = keySelector.apply(o2);
             return comparator.compare(k1, k2) * flag;
         }
     }

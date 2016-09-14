@@ -20,33 +20,31 @@ import java.util.*;
 
 import org.junit.*;
 
-import rx.functions.Func1;
-
 public class MapTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.range(1, 10).map(new Func1<Integer, Integer>() {
+        Ix<Integer> source = Ix.range(1, 10).map(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v + 1;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
     }
-    
+
     @Test
     public void removeComposes() {
         List<Integer> list = Ix.range(1, 10).collectToList().first();
-        
-        Ix.from(list).map(new Func1<Integer, Integer>() {
+
+        Ix.from(list).map(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return v + 1;
             }
         }).removeAll();
-        
+
         Assert.assertEquals(Arrays.asList(), list);
     }
 }

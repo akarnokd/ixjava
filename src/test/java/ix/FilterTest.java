@@ -24,51 +24,51 @@ public class FilterTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.range(1, 10).filter(new Pred<Integer>() {
+        Ix<Integer> source = Ix.range(1, 10).filter(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 3, 5, 7, 9);
     }
-    
+
     @Test
     public void empty() {
-        Ix<Integer> source = Ix.<Integer>empty().filter(new Pred<Integer>() {
+        Ix<Integer> source = Ix.<Integer>empty().filter(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void empty2() {
-        Ix<Integer> source = Ix.just(0).filter(new Pred<Integer>() {
+        Ix<Integer> source = Ix.just(0).filter(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void removeComposes() {
         List<Integer> list = Ix.range(1, 10).collectToList().first();
-        
-        Ix.from(list).filter(new Pred<Integer>() {
+
+        Ix.from(list).filter(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return (v & 1) != 0;
             }
         }).removeAll();
-        
+
         Assert.assertEquals(Arrays.asList(2, 4, 6, 8, 10), list);
     }
 }

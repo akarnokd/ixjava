@@ -23,8 +23,8 @@ final class IxFromArray<T> extends Ix<T> {
     final int start;
     final int end;
     final T[] array;
-    
-    public IxFromArray(int start, int end, T[] array) {
+
+    IxFromArray(int start, int end, T[] array) {
         this.start = start;
         this.end = end;
         this.array = array;
@@ -39,10 +39,10 @@ final class IxFromArray<T> extends Ix<T> {
         final T[] array;
 
         final int end;
-        
+
         int index;
 
-        public FromArray(int start, int end, T[] array) {
+        FromArray(int start, int end, T[] array) {
             this.index = start;
             this.end = end;
             this.array = array;

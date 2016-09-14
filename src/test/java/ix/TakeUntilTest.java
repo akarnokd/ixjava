@@ -24,52 +24,52 @@ public class TakeUntilTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.range(1, 10).takeUntil(new Pred<Integer>() {
+        Ix<Integer> source = Ix.range(1, 10).takeUntil(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return v == 5;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void takeOne() {
-        Ix<Integer> source = Ix.range(1, 10).takeUntil(new Pred<Integer>() {
+        Ix<Integer> source = Ix.range(1, 10).takeUntil(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return true;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1);
     }
 
     @Test
     public void takeAll() {
-        Ix<Integer> source = Ix.range(1, 10).takeUntil(new Pred<Integer>() {
+        Ix<Integer> source = Ix.range(1, 10).takeUntil(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return false;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
 
     @Test
     public void removeUnskipped() {
         List<Integer> list = IxTestHelper.range(1, 10);
-        Ix.from(list).takeUntil(new Pred<Integer>() {
+        Ix.from(list).takeUntil(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return v == 5;
             }
         }).removeAll();
-        
+
         Assert.assertEquals(Arrays.asList(6, 7, 8, 9, 10), list);
     }
 

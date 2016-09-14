@@ -23,45 +23,45 @@ public class IntersectTest {
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 5).intersect(Ix.range(3, 5));
-        
+
         IxTestHelper.assertValues(source, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void same() {
         Ix<Integer> source = Ix.range(1, 5).intersect(Ix.range(1, 5));
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void distinct() {
         Ix<Integer> source = Ix.range(1, 5).intersect(Ix.range(6, 5));
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void distinctEmptyFirst() {
         Ix<Integer> source = Ix.<Integer>empty().intersect(Ix.range(6, 5));
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void distinctEmptySecond() {
         Ix<Integer> source = Ix.range(1, 5).intersect(Ix.<Integer>empty());
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

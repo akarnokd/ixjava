@@ -16,17 +16,17 @@
 
 package ix;
 
-import java.util.*;
+import java.util.Iterator;
 
 final class IxRepeatPredicate<T> extends Ix<T> {
 
     final T value;
-    
+
     final long count;
-    
-    final Pred0 stopPredicate;
-    
-    public IxRepeatPredicate(T value, long count, Pred0 stopPredicate) {
+
+    final IxBooleanSupplier stopPredicate;
+
+    IxRepeatPredicate(T value, long count, IxBooleanSupplier stopPredicate) {
         this.value = value;
         this.stopPredicate = stopPredicate;
         this.count = count;
@@ -40,17 +40,17 @@ final class IxRepeatPredicate<T> extends Ix<T> {
     static final class RepeatPredicateIterator<T> extends IxBaseIterator<T> {
 
         final T valueToRepeat;
-        
+
         long count;
-        
-        final Pred0 stopPredicate;
-        
-        public RepeatPredicateIterator(T value, long count, Pred0 stopPredicate) {
+
+        final IxBooleanSupplier stopPredicate;
+
+        RepeatPredicateIterator(T value, long count, IxBooleanSupplier stopPredicate) {
             this.valueToRepeat = value;
             this.stopPredicate = stopPredicate;
             this.count = count;
         }
-        
+
         @Override
         protected boolean moveNext() {
             long c = count--;
@@ -62,6 +62,6 @@ final class IxRepeatPredicate<T> extends Ix<T> {
             done = true;
             return false;
         }
-        
+
     }
 }

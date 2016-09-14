@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxAverageFloat extends IxSource<Number, Float> {
 
-    public IxAverageFloat(Iterable<Number> source) {
+    IxAverageFloat(Iterable<Number> source) {
         super(source);
     }
 
@@ -31,7 +31,7 @@ final class IxAverageFloat extends IxSource<Number, Float> {
 
     static final class AverageFloatIterator extends IxSourceIterator<Number, Float> {
 
-        public AverageFloatIterator(Iterator<Number> it) {
+        AverageFloatIterator(Iterator<Number> it) {
             super(it);
         }
 
@@ -41,17 +41,17 @@ final class IxAverageFloat extends IxSource<Number, Float> {
 
             float accumulator = 0f;
             int count = 0;
-            
+
             if (!it.hasNext()) {
                 done = true;
                 return false;
             }
-            
+
             do {
                 accumulator += it.next().floatValue();
                 count++;
             } while (it.hasNext());
-            
+
             value = accumulator / count;
             hasValue = true;
             done = true;

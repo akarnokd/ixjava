@@ -21,10 +21,10 @@ import java.util.*;
 final class IxRepeatCount<T> extends Ix<T> {
 
     final T value;
-    
+
     final long count;
-    
-    public IxRepeatCount(T value, long count) {
+
+    IxRepeatCount(T value, long count) {
         this.value = value;
         this.count = count;
     }
@@ -35,21 +35,21 @@ final class IxRepeatCount<T> extends Ix<T> {
     }
 
     static final class RepeatCountIterator<T> implements Iterator<T> {
-        
+
         final T value;
-        
+
         long count;
-        
-        public RepeatCountIterator(T value, long count) {
+
+        RepeatCountIterator(T value, long count) {
             this.value = value;
             this.count = count;
         }
-        
+
         @Override
         public boolean hasNext() {
             return count != 0L;
         }
-        
+
         @Override
         public T next() {
             long c = count;
@@ -59,7 +59,7 @@ final class IxRepeatCount<T> extends Ix<T> {
             }
             throw new NoSuchElementException();
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

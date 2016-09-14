@@ -27,31 +27,31 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
         IxTestHelper.assertValues(list.get(1), 3, 4);
         IxTestHelper.assertValues(list.get(2), 5);
     }
-    
+
     @Test
     public void normalSizeSkipSame() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 2);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
         IxTestHelper.assertValues(list.get(1), 3, 4);
         IxTestHelper.assertValues(list.get(2), 5);
     }
-    
+
     @Test
     public void normalOne() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
         IxTestHelper.assertValues(list.get(1), 2);
@@ -65,7 +65,7 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(5);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
     }
@@ -75,22 +75,22 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(10);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
     }
-    
+
     @Test
     public void innerMovesParent() {
 
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3);
 
         Iterator<Ix<Integer>> it0 = source.iterator();
-        
+
         Ix<Integer> inner = it0.next();
-        
+
         Iterator<Integer> it1 = inner.iterator();
-        
+
         try {
             inner.iterator();
             Assert.fail("Should have thrown IllegalStateException");
@@ -109,18 +109,18 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 3);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(2, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
         IxTestHelper.assertValues(list.get(1), 4, 5);
     }
-    
+
     @Test
     public void normalSkip2() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1, 2);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
         IxTestHelper.assertValues(list.get(1), 3);
@@ -132,7 +132,7 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(1, 6);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
     }
@@ -142,21 +142,21 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(5, 10);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
     }
-    
+
     @Test
     public void normalMoreSkip() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(10, 15);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3, 4, 5);
     }
-    
+
     @Test
     public void justSkip() {
         Ix<Ix<Integer>> source = Ix.just(1).window(2, 3);
@@ -166,7 +166,7 @@ public class WindowTest {
         Assert.assertEquals(1, list.size());
         IxTestHelper.assertValues(list.get(0), 1);
     }
-    
+
     @Test
     public void emptySkip() {
         Ix<Ix<Integer>> source = Ix.<Integer>empty().window(2, 3);
@@ -175,18 +175,18 @@ public class WindowTest {
 
         Assert.assertEquals(0, list.size());
     }
-    
+
     @Test
     public void skipInnerMovesParent() {
 
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 3);
 
         Iterator<Ix<Integer>> it0 = source.iterator();
-        
+
         Ix<Integer> inner = it0.next();
-        
+
         Iterator<Integer> it1 = inner.iterator();
-        
+
         try {
             inner.iterator();
             Assert.fail("Should have thrown IllegalStateException");
@@ -196,23 +196,23 @@ public class WindowTest {
         Assert.assertEquals(1, it1.next().intValue());
         Assert.assertEquals(2, it1.next().intValue());
         Assert.assertFalse(it1.hasNext());
-        
+
         inner = it0.next();
         it1 = inner.iterator();
-        
+
         Assert.assertEquals(4, it1.next().intValue());
         Assert.assertEquals(5, it1.next().intValue());
         Assert.assertFalse(it1.hasNext());
-        
+
         Assert.assertFalse(it0.hasNext());
     }
-    
+
     @Test
     public void normalOverlap() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 1);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2);
         IxTestHelper.assertValues(list.get(1), 2, 3);
@@ -220,13 +220,13 @@ public class WindowTest {
         IxTestHelper.assertValues(list.get(3), 4, 5);
         IxTestHelper.assertValues(list.get(4), 5);
     }
-    
+
     @Test
     public void normalOverlap2() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3, 1);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3);
         IxTestHelper.assertValues(list.get(1), 2, 3, 4);
@@ -234,13 +234,13 @@ public class WindowTest {
         IxTestHelper.assertValues(list.get(3), 4, 5);
         IxTestHelper.assertValues(list.get(4), 5);
     }
-    
+
     @Test
     public void normalOverlap3() {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3, 2);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), 1, 2, 3);
         IxTestHelper.assertValues(list.get(1), 3, 4, 5);
@@ -252,13 +252,13 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(3, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);
         IxTestHelper.assertValues(list.get(1), null, null);
         IxTestHelper.assertValues(list.get(2), (Integer)null);
     }
-    
+
     @Test
     public void nullExact2() {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(6);
@@ -278,18 +278,18 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2, 3);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(2, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);
         IxTestHelper.assertValues(list.get(1), null, null);
     }
-    
+
     @Test
     public void nullOverlap() {
         Ix<Ix<Integer>> source = Ix.<Integer>fromArray(null, null, null, null, null).window(2, 1);
 
         List<Ix<Integer>> list = source.collectToList().first();
-        
+
         Assert.assertEquals(5, list.size());
         IxTestHelper.assertValues(list.get(0), null, null);
         IxTestHelper.assertValues(list.get(1), null, null);
@@ -297,18 +297,18 @@ public class WindowTest {
         IxTestHelper.assertValues(list.get(3), null, null);
         IxTestHelper.assertValues(list.get(4), (Integer)null);
     }
-    
+
     @Test
     public void overlapInnerMovesParent() {
 
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(2, 1);
 
         Iterator<Ix<Integer>> it0 = source.iterator();
-        
+
         Ix<Integer> inner = it0.next();
-        
+
         Iterator<Integer> it1 = inner.iterator();
-        
+
         try {
             inner.iterator();
             Assert.fail("Should have thrown IllegalStateException");
@@ -318,28 +318,28 @@ public class WindowTest {
         Assert.assertEquals(1, it1.next().intValue());
         Assert.assertEquals(2, it1.next().intValue());
         Assert.assertFalse(it1.hasNext());
-        
+
         inner = it0.next();
         it1 = inner.iterator();
-        
+
         Assert.assertEquals(2, it1.next().intValue());
         Assert.assertEquals(3, it1.next().intValue());
         Assert.assertFalse(it1.hasNext());
-        
+
         Assert.assertTrue(it0.hasNext());
     }
-    
+
     @Test
     public void overlapInnerMovesParent2() {
 
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(3, 2);
 
         Iterator<Ix<Integer>> it0 = source.iterator();
-        
+
         Ix<Integer> inner = it0.next();
-        
+
         Iterator<Integer> it1 = inner.iterator();
-        
+
         try {
             inner.iterator();
             Assert.fail("Should have thrown IllegalStateException");
@@ -350,10 +350,10 @@ public class WindowTest {
         Assert.assertEquals(2, it1.next().intValue());
         Assert.assertEquals(3, it1.next().intValue());
         Assert.assertFalse(it1.hasNext());
-        
+
         inner = it0.next();
         it1 = inner.iterator();
-        
+
         Assert.assertEquals(3, it1.next().intValue());
         Assert.assertEquals(4, it1.next().intValue());
         Assert.assertEquals(5, it1.next().intValue());
@@ -368,10 +368,10 @@ public class WindowTest {
         Ix<Ix<Integer>> source = Ix.range(1, 5).window(4, 3);
 
         Iterator<Ix<Integer>> it0 = source.iterator();
-        
+
         Ix<Integer> inner1 = it0.next();
         Ix<Integer> inner2 = it0.next();
-        
+
         Assert.assertFalse(it0.hasNext());
 
         IxTestHelper.assertValues(inner1, 1, 2, 3, 4);

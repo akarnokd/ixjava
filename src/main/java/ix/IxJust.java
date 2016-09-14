@@ -21,31 +21,31 @@ import java.util.*;
 final class IxJust<T> extends Ix<T> implements IxScalarCallable<T> {
 
     final T value;
-    
-    public IxJust(T value) {
+
+    IxJust(T value) {
         this.value = value;
     }
-    
+
     @Override
     public T call() {
         return value;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new JustIterator<T>(value);
     }
-    
+
     static final class JustIterator<T> implements Iterator<T> {
 
         final T value;
-        
+
         boolean empty;
-        
-        public JustIterator(T value) {
+
+        JustIterator(T value) {
             this.value = value;
         }
-        
+
         @Override
         public boolean hasNext() {
             return !empty;
@@ -59,7 +59,7 @@ final class IxJust<T> extends Ix<T> implements IxScalarCallable<T> {
             }
             throw new NoSuchElementException();
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

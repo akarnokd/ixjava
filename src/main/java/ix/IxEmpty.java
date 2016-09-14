@@ -21,12 +21,12 @@ import java.util.*;
 final class IxEmpty extends Ix<Object> implements Iterator<Object> {
 
     static final IxEmpty INSTANCE = new IxEmpty();
-    
+
     @SuppressWarnings("unchecked")
     static <T> Ix<T> instance() {
         return (Ix<T>)INSTANCE;
     }
-    
+
     @Override
     public Iterator<Object> iterator() {
         return this;
@@ -41,7 +41,7 @@ final class IxEmpty extends Ix<Object> implements Iterator<Object> {
     public Object next() {
         throw new NoSuchElementException();
     }
-    
+
     @Override
     public void remove() {
         throw new UnsupportedOperationException();

@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxJoin<T> extends IxSource<T, String> {
 
     final CharSequence separator;
-    
-    public IxJoin(Iterable<T> source, CharSequence separator) {
+
+    IxJoin(Iterable<T> source, CharSequence separator) {
         super(source);
         this.separator = separator;
     }
@@ -31,32 +31,32 @@ final class IxJoin<T> extends IxSource<T, String> {
     public Iterator<String> iterator() {
         return new JoinIterator<T>(source.iterator(), separator);
     }
-    
+
     static final class JoinIterator<T> extends IxSourceIterator<T, String> {
         final CharSequence separator;
 
-        public JoinIterator(Iterator<T> it, CharSequence separator) {
+        JoinIterator(Iterator<T> it, CharSequence separator) {
             super(it);
             this.separator = separator;
         }
-        
+
         @Override
         protected boolean moveNext() {
             CharSequence sep = separator;
-            
+
             Iterator<T> it = this.it;
-            
+
             StringBuilder b = new StringBuilder();
-            
+
             if (it.hasNext()) {
                 b.append(it.next());
-                
+
                 while (it.hasNext()) {
                     b.append(sep);
                     b.append(it.next());
                 }
             }
-            
+
             value = b.toString();
             hasValue = true;
             done = true;

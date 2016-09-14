@@ -21,122 +21,116 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.*;
 
-import rx.Observer;
-import rx.functions.*;
-
 public class GenerateTest {
 
-    Func0<Integer> stateFactory = new Func0<Integer>() {
+    IxSupplier<Integer> stateFactory = new IxSupplier<Integer>() {
         @Override
-        public Integer call() {
+        public Integer get() {
             return 0;
         }
     };
-    
+
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
                 int i = ++s;
                 t.onNext(i);
                 if (i == 10) {
-                    t.onCompleted();
+                    t.onComplete();
                 }
                 return i;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     }
-    
+
     @Test
     public void normalState() {
         final AtomicInteger value = new AtomicInteger();
-        
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
                 int i = ++s;
                 t.onNext(i);
                 if (i == 10) {
-                    t.onCompleted();
+                    t.onComplete();
                 }
                 return i;
             }
-        }, new Action1<Integer>() {
+        }, new IxConsumer<Integer>() {
             @Override
-            public void call(Integer t) {
+            public void accept(Integer t) {
                 value.set(t);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        
+
         Assert.assertEquals(10, value.get());
     }
-    
+
     @Test
     public void empty() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
-                t.onCompleted();
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
+                t.onComplete();
                 return s;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
-    
+
     @Test(expected = IllegalStateException.class)
     public void never() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
                 return s;
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void runtimeError() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
-                t.onError(new IllegalArgumentException());
-                return s;
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
+                throw new IllegalArgumentException();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = InternalError.class)
     public void error() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
-                t.onError(new InternalError());
-                return s;
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
+                throw new InternalError();
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test(expected = RuntimeException.class)
     public void exceptionError() {
-        Ix<Integer> source = Ix.generate(stateFactory, new Func2<Integer, Observer<Integer>, Integer>() {
+        Ix<Integer> source = Ix.generate(stateFactory, new IxFunction2<Integer, IxEmitter<Integer>, Integer>() {
             @Override
-            public Integer call(Integer s, Observer<Integer> t) {
-                t.onError(new IOException());
-                return s;
+            public Integer apply(Integer s, IxEmitter<Integer> t) {
+                throw new RuntimeException(new IOException());
             }
         });
-        
+
         IxTestHelper.assertValues(source);
     }
 

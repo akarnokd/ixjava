@@ -25,7 +25,7 @@ public class IxTest {
 
     @Test(expected = RuntimeException.class)
     public void checkedCallWraps() {
-        
+
         Ix.checkedCall(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -33,10 +33,10 @@ public class IxTest {
             }
         });
     }
-    
+
     @Test(expected = InternalError.class)
     public void checkedCallNoWrapsError() {
-        
+
         Ix.checkedCall(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -47,7 +47,7 @@ public class IxTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void checkedCallNoWrapping() {
-        
+
         Ix.checkedCall(new Callable<Integer>() {
             @Override
             public Integer call() throws Exception {
@@ -55,7 +55,7 @@ public class IxTest {
             }
         });
     }
-    
+
     @Test
     public void nullCheck() {
         Ix.nullCheck(1, "Should not fail");
@@ -66,24 +66,24 @@ public class IxTest {
             Assert.assertEquals("Failure", ex.getMessage());
         }
     }
-    
+
     @Test
     public void nonNegativeLong() {
         Ix.nonNegative(0L, "n");
         Ix.nonNegative(1L, "n");
-        
+
         try {
             Ix.nonNegative(-99L, "n");
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals("n >= 0 required but it was -99", ex.getMessage());
         }
     }
-    
+
     @Test
     public void nonNegativeInt() {
         Ix.nonNegative(0, "n");
         Ix.nonNegative(1, "n");
-        
+
         try {
             Ix.nonNegative(-99, "n");
         } catch (IllegalArgumentException ex) {
@@ -94,7 +94,7 @@ public class IxTest {
     @Test
     public void positiveInt() {
         Ix.nonNegative(1, "n");
-        
+
         try {
             Ix.positive(0, "n");
         } catch (IllegalArgumentException ex) {

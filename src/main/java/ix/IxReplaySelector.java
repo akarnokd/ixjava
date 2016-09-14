@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxReplaySelector<T, R> extends IxSource<T, R> {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector;
-    
-    public IxReplaySelector(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
+    final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
+
+    IxReplaySelector(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.selector = selector;
     }
@@ -32,7 +30,7 @@ final class IxReplaySelector<T, R> extends IxSource<T, R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        
-        return (Iterator<R>)selector.call(new IxReplay<T>(source)).iterator();
+
+        return (Iterator<R>)selector.apply(new IxReplay<T>(source)).iterator();
     }
 }

@@ -20,57 +20,55 @@ import java.util.*;
 
 import org.junit.*;
 
-import rx.functions.Action1;
-
-public class ForeachTest implements Action1<Integer>, Pred<Integer> {
+public class ForeachTest implements IxConsumer<Integer>, IxPredicate<Integer> {
 
     List<Integer> list;
-    
+
     @Before
     public void before() {
         list = new ArrayList<Integer>();
     }
-    
+
     @Override
-    public void call(Integer t) {
+    public void accept(Integer t) {
         list.add(t);
     }
-    
+
     @Override
     public boolean test(Integer t) {
         list.add(t);
         return list.size() < 5;
     }
-    
+
     @Test
     public void normal() {
         Ix<Integer> source = Ix.range(1, 10);
-        
+
         source.foreach(this);
-        
+
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), list);
     }
 
     @Test
     public void normalWhile() {
         Ix<Integer> source = Ix.range(1, 10);
-        
+
         source.foreachWhile(this);
-        
+
         Assert.assertEquals(Arrays.asList(1, 2, 3, 4, 5), list);
     }
 
     @Test
     public void normalWhileAll() {
         Ix<Integer> source = Ix.range(1, 5);
-        
-        source.foreachWhile(new Pred<Integer>() {
+
+        source.foreachWhile(new IxPredicate<Integer>() {
             @Override
             public boolean test(Integer v) {
                 return true;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
     }
 }

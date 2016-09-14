@@ -19,13 +19,11 @@ package ix;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
-import rx.functions.Func1;
-
 final class IxFlattenIterable<T, R> extends IxSource<T, R> {
 
-    final Func1<? super T, ? extends Iterable<? extends R>> mapper;
-    
-    public IxFlattenIterable(Iterable<T> source, Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+    final IxFunction<? super T, ? extends Iterable<? extends R>> mapper;
+
+    IxFlattenIterable(Iterable<T> source, IxFunction<? super T, ? extends Iterable<? extends R>> mapper) {
         super(source);
         this.mapper = mapper;
     }
@@ -34,18 +32,18 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
     @Override
     public Iterator<R> iterator() {
         if (source instanceof Callable) {
-            return (Iterator<R>)(mapper.call(checkedCall((Callable<T>)source)).iterator());
+            return (Iterator<R>)(mapper.apply(checkedCall((Callable<T>)source)).iterator());
         }
         return new FlattenIterator<T, R>(source.iterator(), mapper);
     }
-    
+
     static final class FlattenIterator<T, R> extends IxSourceIterator<T, R> {
 
-        final Func1<? super T, ? extends Iterable<? extends R>> mapper;
+        final IxFunction<? super T, ? extends Iterable<? extends R>> mapper;
 
         Iterator<? extends R> current;
-        
-        public FlattenIterator(Iterator<T> it, Func1<? super T, ? extends Iterable<? extends R>> mapper) {
+
+        FlattenIterator(Iterator<T> it, IxFunction<? super T, ? extends Iterable<? extends R>> mapper) {
             super(it);
             this.mapper = mapper;
         }
@@ -54,18 +52,18 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
         @Override
         protected boolean moveNext() {
             Iterator<? extends R> c = current;
-            
+
             while (c == null) {
                 if (it.hasNext()) {
-                    Iterable<? extends R> inner = mapper.call(it.next());
+                    Iterable<? extends R> inner = mapper.apply(it.next());
                     if (inner instanceof Callable) {
                         value = checkedCall((Callable<R>)inner);
                         hasValue = true;
                         return true;
                     }
-                    
+
                     c = inner.iterator();
-                    
+
                     if (c.hasNext()) {
                         current = c;
                         break;
@@ -77,16 +75,16 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
                     return false;
                 }
             }
-            
+
             value = c.next();
             hasValue = true;
-            
+
             if (!c.hasNext()) {
                 current = null;
             }
             return true;
         }
-        
+
     }
 
 }

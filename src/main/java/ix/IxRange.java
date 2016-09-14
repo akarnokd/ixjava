@@ -21,26 +21,26 @@ import java.util.*;
 final class IxRange extends Ix<Integer> {
 
     final int start;
-    
+
     final int end;
-    
-    public IxRange(int start, int count) {
+
+    IxRange(int start, int count) {
         this.start = start;
         this.end = start + count;
     }
-    
+
     @Override
     public Iterator<Integer> iterator() {
         return new RangeIterator(start, end);
     }
-    
+
     static final class RangeIterator implements Iterator<Integer> {
-        
+
         final int end;
-        
+
         int index;
-        
-        public RangeIterator(int start, int end) {
+
+        RangeIterator(int start, int end) {
             this.index = start;
             this.end = end;
         }
@@ -59,7 +59,7 @@ final class IxRange extends Ix<Integer> {
             }
             throw new NoSuchElementException();
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

@@ -24,7 +24,7 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
 
     static final Object NULL = new Object();
 
-    public IxWindow(Iterable<T> source, int size) {
+    IxWindow(Iterable<T> source, int size) {
         super(source);
         this.size = size;
     }
@@ -33,20 +33,20 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
     public Iterator<Ix<T>> iterator() {
         return new WindowIterator<T>(source.iterator(), size);
     }
-    
+
     static final class WindowIterator<T> extends IxSourceIterator<T, Ix<T>> {
 
         final int size;
-        
+
         int index;
 
         WindowIterable<T> current;
-        
-        public WindowIterator(Iterator<T> it, int size) {
+
+        WindowIterator(Iterator<T> it, int size) {
             super(it);
             this.size = size;
         }
-        
+
         @Override
         protected boolean moveNext() {
             int i = index;
@@ -55,9 +55,9 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
                     done = true;
                     return false;
                 }
-                
+
                 T v = it.next();
-                
+
                 WindowIterable<T> c;
                 if (i++ == 0) {
                     if (i == size) {
@@ -72,24 +72,24 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
                     hasValue = true;
                     return true;
                 }
-                
+
                 current.iterator.queue.offer(v != null ? v : NULL);
-                
+
                 if (i == size) {
                     i = 0;
                 }
             }
         }
-        
+
         boolean moveInner() {
             if (!it.hasNext()) {
                 return false;
             }
-            
+
             T v = it.next();
-            
+
             current.iterator.queue.offer(v != null ? v : NULL);
-            
+
             int i = index + 1;
             if (i == size) {
                 current = null;
@@ -104,10 +104,10 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
     static final class WindowIterable<T> extends Ix<T> {
 
         final WindowInnerIterator<T> iterator;
-        
+
         boolean once;
-        
-        public WindowIterable(WindowIterator<T> parent, int size) {
+
+        WindowIterable(WindowIterator<T> parent, int size) {
             this.iterator = new WindowInnerIterator<T>(parent, size);
         }
 
@@ -120,21 +120,21 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
             throw new IllegalStateException("This Window Ix iterable can be consumed only once.");
         }
     }
-    
+
     static final class WindowInnerIterator<T> extends IxBaseIterator<T> {
-        
+
         final WindowIterator<T> parent;
-        
+
         final ArrayDeque<Object> queue;
 
         int remaining;
-        
-        public WindowInnerIterator(WindowIterator<T> parent, int remaining) {
+
+        WindowInnerIterator(WindowIterator<T> parent, int remaining) {
             this.parent = parent;
             this.queue = new ArrayDeque<Object>();
             this.remaining = remaining;
         }
-        
+
         @SuppressWarnings("unchecked")
         @Override
         protected boolean moveNext() {
@@ -144,7 +144,7 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
                 return false;
             }
             Object o = queue.poll();
-            
+
             if (o == null) {
                 if (!parent.moveInner()) {
                     done = true;
@@ -152,12 +152,12 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
                 }
                 o = queue.poll();
             }
-            
+
             value = o == NULL ? null : (T)o;
             hasValue = true;
             remaining = r - 1;
             return true;
         }
     }
-    
+
 }

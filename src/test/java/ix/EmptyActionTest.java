@@ -16,16 +16,16 @@
 
 package ix;
 
-import org.junit.Test;
-
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class EmptyActionTest {
 
     @Test
     public void normal() {
         assertNotNull(IxEmptyAction.valueOf("INSTANCE"));
-        
+
         assertEquals(1, IxEmptyAction.values().length);
     }
 }

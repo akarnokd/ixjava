@@ -22,7 +22,7 @@ final class IxSwitchIfEmpty<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    public IxSwitchIfEmpty(Iterable<T> source, Iterable<? extends T> other) {
+    IxSwitchIfEmpty(Iterable<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }
@@ -40,7 +40,7 @@ final class IxSwitchIfEmpty<T> extends IxSource<T, T> {
 
         boolean nonEmpty;
 
-        public SwitchIfEmptyIterator(Iterator<T> it, Iterable<? extends T> other) {
+        SwitchIfEmptyIterator(Iterator<T> it, Iterable<? extends T> other) {
             super(it);
             this.other = other;
         }
@@ -57,7 +57,7 @@ final class IxSwitchIfEmpty<T> extends IxSource<T, T> {
                 done = true;
                 return false;
             }
-            
+
             if (nonEmpty) {
                 if (it.hasNext()) {
                     value = it.next();
@@ -67,14 +67,14 @@ final class IxSwitchIfEmpty<T> extends IxSource<T, T> {
                 done = true;
                 return false;
             }
-            
+
             if (it.hasNext()) {
                 nonEmpty = true;
                 value = it.next();
                 hasValue = true;
                 return true;
             }
-            
+
             ot = other.iterator();
             otherIterator = ot;
             if (ot.hasNext()) {

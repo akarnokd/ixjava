@@ -29,7 +29,7 @@ public abstract class IxSourceIterator<T, R> extends IxBaseIterator<R> {
 
     /** The upstream's iterator. */
     protected final Iterator<T> it;
-    
+
     public IxSourceIterator(Iterator<T> it) {
         this.it = it;
     }

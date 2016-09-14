@@ -17,15 +17,16 @@
 package ix;
 
 /**
- * A predicate functional interface to test a value and return a primitive
- * boolean. 
- * @param <T> the value to test
+ * A function callback with two input values and a boolean return value.
+ * @param <T> the first input value type
+ * @param <U> the second input value
  */
-public interface Pred<T> {
+public interface IxPredicate2<T, U> {
     /**
-     * Test the given value.
-     * @param t the value to test
-     * @return true if the value passes the test
+     * Applies a function to the input value and returns a boolean value.
+     * @param t the first input value
+     * @param u the second input value
+     * @return the output boolean
      */
-    boolean test(T t);
+    boolean test(T t, U u);
 }

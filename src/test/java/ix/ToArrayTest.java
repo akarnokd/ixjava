@@ -23,7 +23,7 @@ public class ToArrayTest {
     @Test
     public void normal() {
         Ix<Object[]> source = Ix.range(1, 10).collectToArray();
-        
+
         IxTestHelper.assertValues(source, new Object[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
     }
 }

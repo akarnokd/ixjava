@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxRepeat<T> extends Ix<T> {
 
     final T value;
-    
-    public IxRepeat(T value) {
+
+    IxRepeat(T value) {
         this.value = value;
     }
 
@@ -32,23 +32,23 @@ final class IxRepeat<T> extends Ix<T> {
     }
 
     static final class RepeatIterator<T> implements Iterator<T> {
-        
+
         final T value;
-        
-        public RepeatIterator(T value) {
+
+        RepeatIterator(T value) {
             this.value = value;
         }
-        
+
         @Override
         public boolean hasNext() {
             return true;
         }
-        
+
         @Override
         public T next() {
             return value;
         }
-        
+
         @Override
         public void remove() {
             throw new UnsupportedOperationException();

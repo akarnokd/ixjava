@@ -21,10 +21,10 @@ import java.util.*;
 final class IxMinMax<T> extends IxSource<T, T> {
 
     final Comparator<? super T> comparator;
-    
+
     final int flag;
-    
-    public IxMinMax(Iterable<T> source, Comparator<? super T> comparator, int flag) {
+
+    IxMinMax(Iterable<T> source, Comparator<? super T> comparator, int flag) {
         super(source);
         this.comparator = comparator;
         this.flag = flag;
@@ -34,14 +34,14 @@ final class IxMinMax<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new MinMaxIterator<T>(source.iterator(), comparator, flag);
     }
-    
+
     static final class MinMaxIterator<T> extends IxSourceIterator<T, T> {
 
         final Comparator<? super T> comparator;
-        
+
         final int flag;
-        
-        public MinMaxIterator(Iterator<T> it, Comparator<? super T> comparator, int flag) {
+
+        MinMaxIterator(Iterator<T> it, Comparator<? super T> comparator, int flag) {
             super(it);
             this.comparator = comparator;
             this.flag = flag;
@@ -50,16 +50,16 @@ final class IxMinMax<T> extends IxSource<T, T> {
         @Override
         protected boolean moveNext() {
             T v;
-            
+
             Iterator<T> it = this.it;
-            
+
             if (!it.hasNext()) {
                 done = true;
                 return false;
             }
-            
+
             v = it.next();
-            
+
             Comparator<? super T> f = comparator;
             int g = flag;
 
@@ -69,13 +69,13 @@ final class IxMinMax<T> extends IxSource<T, T> {
                     v = w;
                 }
             }
-            
+
             value = v;
             hasValue = true;
             done = true;
             return true;
         }
-        
+
     }
 
 }

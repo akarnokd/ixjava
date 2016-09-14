@@ -18,38 +18,36 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.*;
-
-enum ToListHelper implements Func0<List<Object>>, Action2<List<Object>, Object>, Func1<List<Object>, Object[]> {
+enum ToListHelper implements IxSupplier<List<Object>>, IxConsumer2<List<Object>, Object>, IxFunction<List<Object>, Object[]> {
     INSTANCE;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static <T> Func0<List<T>> initialFactory() {
-        return (Func0)INSTANCE;
+    public static <T> IxSupplier<List<T>> initialFactory() {
+        return (IxSupplier)INSTANCE;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static <T> Action2<List<T>, T> collector() {
-        return (Action2)INSTANCE;
+    public static <T> IxConsumer2<List<T>, T> collector() {
+        return (IxConsumer2)INSTANCE;
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static <T> Func1<List<T>, Object[]> toArray() {
-        return (Func1)INSTANCE;
+    public static <T> IxFunction<List<T>, Object[]> toArray() {
+        return (IxFunction)INSTANCE;
     }
     @Override
-    public void call(List<Object> t1, Object t2) {
+    public void accept(List<Object> t1, Object t2) {
         t1.add(t2);
     }
 
     @Override
-    public List<Object> call() {
+    public List<Object> get() {
         return new ArrayList<Object>();
     }
 
     @Override
-    public Object[] call(List<Object> t) {
+    public Object[] apply(List<Object> t) {
         return t.toArray();
     }
-    
+
 }

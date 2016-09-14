@@ -18,39 +18,37 @@ package ix;
 
 import org.junit.*;
 
-import rx.functions.Func1;
-
 public class AsComposeTest {
 
     @Test
     public void normal() {
-        Integer value = Ix.range(1, 5).as(new Func1<Ix<Integer>, Integer>() {
+        Integer value = Ix.range(1, 5).as(new IxFunction<Ix<Integer>, Integer>() {
             @Override
-            public Integer call(Ix<Integer> ix) {
+            public Integer apply(Ix<Integer> ix) {
                 return ix.first();
             }
         });
-        
+
         Assert.assertEquals(1, value.intValue());
     }
-    
+
     @Test
     public void compose() {
-        Ix<String> source = Ix.range(1, 5).compose(new Func1<Ix<Integer>, Iterable<String>>() {
+        Ix<String> source = Ix.range(1, 5).compose(new IxFunction<Ix<Integer>, Iterable<String>>() {
             @Override
-            public Iterable<String> call(Ix<Integer> ix) {
+            public Iterable<String> apply(Ix<Integer> ix) {
                 final int[] index = { 1 };
-                return ix.map(new Func1<Integer, String>() {
+                return ix.map(new IxFunction<Integer, String>() {
                     @Override
-                    public String call(Integer v) {
+                    public String apply(Integer v) {
                         return v + "-" + (index[0]++);
                     }
                 });
             }
         });
-        
+
         IxTestHelper.assertValues(source, "1-1", "2-2", "3-3", "4-4", "5-5");
-        
+
         IxTestHelper.assertValues(source, "1-1", "2-2", "3-3", "4-4", "5-5");
     }
 }

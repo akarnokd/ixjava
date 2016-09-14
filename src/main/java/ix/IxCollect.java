@@ -18,15 +18,13 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
-
 final class IxCollect<T, C> extends IxSource<T, C> {
 
-    final Func0<C> initialFactory;
-    
-    final Action2<C, T> collector;
-    
-    public IxCollect(Iterable<T> source, Func0<C> initialFactory, Action2<C, T> collector) {
+    final IxSupplier<C> initialFactory;
+
+    final IxConsumer2<C, T> collector;
+
+    IxCollect(Iterable<T> source, IxSupplier<C> initialFactory, IxConsumer2<C, T> collector) {
         super(source);
         this.initialFactory = initialFactory;
         this.collector = collector;
@@ -34,14 +32,14 @@ final class IxCollect<T, C> extends IxSource<T, C> {
 
     @Override
     public Iterator<C> iterator() {
-        return new CollectorIterator<T, C>(source.iterator(), collector, initialFactory.call());
+        return new CollectorIterator<T, C>(source.iterator(), collector, initialFactory.get());
     }
 
     static final class CollectorIterator<T, C> extends IxSourceIterator<T, C> {
 
-        final Action2<C, T> collector;
-        
-        public CollectorIterator(Iterator<T> it, Action2<C, T> collector, C value) {
+        final IxConsumer2<C, T> collector;
+
+        CollectorIterator(Iterator<T> it, IxConsumer2<C, T> collector, C value) {
             super(it);
             this.collector = collector;
             this.value = value;
@@ -50,15 +48,15 @@ final class IxCollect<T, C> extends IxSource<T, C> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
-            Action2<C, T> coll = collector;
-            
+
+            IxConsumer2<C, T> coll = collector;
+
             C c = value;
-            
+
             while (it.hasNext()) {
-                coll.call(c, it.next());
+                coll.accept(c, it.next());
             }
-            
+
             hasValue = true;
             done = true;
             return true;

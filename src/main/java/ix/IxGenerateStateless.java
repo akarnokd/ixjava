@@ -18,62 +18,48 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.Observer;
-import rx.functions.Action1;
-
 final class IxGenerateStateless<T> extends Ix<T> {
 
-    final Action1<Observer<T>> generator;
-    
-    public IxGenerateStateless(Action1<Observer<T>> generator) {
+    final IxConsumer<IxEmitter<T>> generator;
+
+    IxGenerateStateless(IxConsumer<IxEmitter<T>> generator) {
         this.generator = generator;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new GenerateIterator<T>(generator);
     }
-    
-    static final class GenerateIterator<T> extends IxBaseIterator<T>
-    implements Observer<T> {
 
-        final Action1<Observer<T>> generator;
-        
-        public GenerateIterator(Action1<Observer<T>> generator) {
+    static final class GenerateIterator<T> extends IxBaseIterator<T>
+    implements IxEmitter<T> {
+
+        final IxConsumer<IxEmitter<T>> generator;
+
+        GenerateIterator(IxConsumer<IxEmitter<T>> generator) {
             this.generator = generator;
         }
 
         @Override
         protected boolean moveNext() {
-            
-            generator.call(this);
-            
+
+            generator.accept(this);
+
             boolean hv = hasValue;
             if (!hv && !done) {
                 throw new IllegalStateException("The generator didn't call any of the onXXX methods!");
             }
             return hv;
         }
-        
+
         @Override
         public void onNext(T t) {
             value = t;
             hasValue = true;
         }
-        
+
         @Override
-        public void onError(Throwable e) {
-            if (e instanceof RuntimeException) {
-                throw (RuntimeException)e;
-            }
-            if (e instanceof Error) {
-                throw (Error)e;
-            }
-            throw new RuntimeException(e);
-        }
-        
-        @Override
-        public void onCompleted() {
+        public void onComplete() {
             done = true;
         }
     }

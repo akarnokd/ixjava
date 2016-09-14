@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func2;
-
 final class IxAggregate<T> extends IxSource<T, T> {
 
-    final Func2<T, T, T> aggregator;
-    
-    public IxAggregate(Iterable<T> source, Func2<T, T, T> aggregator) {
+    final IxFunction2<T, T, T> aggregator;
+
+    IxAggregate(Iterable<T> source, IxFunction2<T, T, T> aggregator) {
         super(source);
         this.aggregator = aggregator;
     }
@@ -33,12 +31,12 @@ final class IxAggregate<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new AggregateIterator<T>(source.iterator(), aggregator);
     }
-    
+
     static final class AggregateIterator<T> extends IxSourceIterator<T, T> {
-        
-        final Func2<T, T, T> aggregator;
-        
-        public AggregateIterator(Iterator<T> it, Func2<T, T, T> aggregator) {
+
+        final IxFunction2<T, T, T> aggregator;
+
+        AggregateIterator(Iterator<T> it, IxFunction2<T, T, T> aggregator) {
             super(it);
             this.aggregator = aggregator;
         }
@@ -46,12 +44,12 @@ final class IxAggregate<T> extends IxSource<T, T> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            Func2<T, T, T> f = aggregator;
-            
+            IxFunction2<T, T, T> f = aggregator;
+
             if (it.hasNext()) {
                 T acc = it.next();
                 while (it.hasNext()) {
-                    acc = f.call(acc, it.next());
+                    acc = f.apply(acc, it.next());
                 }
                 value = acc;
                 hasValue = true;

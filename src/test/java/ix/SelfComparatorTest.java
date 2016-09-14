@@ -16,10 +16,10 @@
 
 package ix;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
 import static ix.SelfComparator.INSTANCE;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 public class SelfComparatorTest {
 
@@ -29,11 +29,11 @@ public class SelfComparatorTest {
         assertEquals(0, INSTANCE.compare(1, new Integer(1)));
 
         assertTrue(INSTANCE.compare(1, 2) < 0);
-        
+
         assertTrue(INSTANCE.compare(2, 1) > 0);
 
         assertNotNull(SelfComparator.valueOf("INSTANCE"));
-        
+
         assertEquals(1, SelfComparator.values().length);
     }
 }

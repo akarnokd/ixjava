@@ -18,15 +18,13 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
-
 final class IxDoOn<T> extends IxSource<T, T> {
 
-    final Action1<? super T> onNext;
-    
-    final Action0 onCompleted;
-    
-    public IxDoOn(Iterable<T> source, Action1<? super T> onNext, Action0 onCompleted) {
+    final IxConsumer<? super T> onNext;
+
+    final Runnable onCompleted;
+
+    IxDoOn(Iterable<T> source, IxConsumer<? super T> onNext, Runnable onCompleted) {
         super(source);
         this.onNext = onNext;
         this.onCompleted = onCompleted;
@@ -38,11 +36,11 @@ final class IxDoOn<T> extends IxSource<T, T> {
     }
 
     static final class DoOnIterator<T> extends IxSourceIterator<T, T> {
-        final Action1<? super T> onNext;
-        
-        final Action0 onCompleted;
+        final IxConsumer<? super T> onNext;
 
-        public DoOnIterator(Iterator<T> it, Action1<? super T> onNext, Action0 onCompleted) {
+        final Runnable onCompleted;
+
+        DoOnIterator(Iterator<T> it, IxConsumer<? super T> onNext, Runnable onCompleted) {
             super(it);
             this.onNext = onNext;
             this.onCompleted = onCompleted;
@@ -54,10 +52,10 @@ final class IxDoOn<T> extends IxSource<T, T> {
                 T v = it.next();
                 value = v;
                 hasValue = true;
-                onNext.call(v);
+                onNext.accept(v);
                 return true;
             }
-            onCompleted.call();
+            onCompleted.run();
             done = true;
             return false;
         }

@@ -20,9 +20,9 @@ import java.util.Iterator;
 
 final class IxFilter<T> extends IxSource<T, T> {
 
-    final Pred<? super T> predicate;
-    
-    public IxFilter(Iterable<T> source, Pred<? super T> predicate) {
+    final IxPredicate<? super T> predicate;
+
+    IxFilter(Iterable<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }
@@ -34,9 +34,9 @@ final class IxFilter<T> extends IxSource<T, T> {
 
     static final class FilterIterator<T> extends IxSourceIterator<T, T> {
 
-        final Pred<? super T> predicate;
-        
-        public FilterIterator(Iterator<T> it, Pred<? super T> predicate) {
+        final IxPredicate<? super T> predicate;
+
+        FilterIterator(Iterator<T> it, IxPredicate<? super T> predicate) {
             super(it);
             this.predicate = predicate;
         }
@@ -57,7 +57,7 @@ final class IxFilter<T> extends IxSource<T, T> {
                 }
             }
         }
-        
+
         @Override
         public void remove() {
             it.remove();

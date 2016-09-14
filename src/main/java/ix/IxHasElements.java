@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxHasElements<T> extends IxSource<T, Boolean> {
 
-    public IxHasElements(Iterable<T> source) {
+    IxHasElements(Iterable<T> source) {
         super(source);
     }
 
@@ -31,10 +31,10 @@ final class IxHasElements<T> extends IxSource<T, Boolean> {
 
     static final class HasElementsIterator<T> extends IxSourceIterator<T, Boolean> {
 
-        public HasElementsIterator(Iterator<T> it) {
+        HasElementsIterator(Iterator<T> it) {
             super(it);
         }
-        
+
         @Override
         protected boolean moveNext() {
             value = it.hasNext();

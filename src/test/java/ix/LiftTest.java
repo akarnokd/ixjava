@@ -20,26 +20,24 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
-import rx.functions.Func1;
-
 public class LiftTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.just(1).lift(new Func1<Iterator<Integer>, Iterator<Integer>>() {
+        Ix<Integer> source = Ix.just(1).lift(new IxFunction<Iterator<Integer>, Iterator<Integer>>() {
             @Override
-            public Iterator<Integer> call(final Iterator<Integer> it) {
+            public Iterator<Integer> apply(final Iterator<Integer> it) {
                 return new Iterator<Integer>() {
                     @Override
                     public boolean hasNext() {
                         return it.hasNext();
                     }
-                    
+
                     @Override
                     public Integer next() {
                         return it.next() + 10;
                     }
-                    
+
                     @Override
                     public void remove() {
                         throw new UnsupportedOperationException();
@@ -47,9 +45,9 @@ public class LiftTest {
                 };
             }
         });
-        
+
         IxTestHelper.assertValues(source, 11);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

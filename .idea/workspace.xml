@@ -1,0 +1,1719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="2" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="07f46092-dc06-4241-914f-dfb172a12baa" name="Default" comment="" />
+    <ignored path="ixjava.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view />
+      </state>
+    </system>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="ixjava" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="IxPredicate.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxPredicate.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+              <folding>
+                <marker date="1473889152208" expanded="true" signature="615:728" ph="/**...*/" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Ix.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/Ix.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="2494" column="32" selection-start-line="2494" selection-start-column="32" selection-end-line="2494" selection-end-column="32" />
+              <folding>
+                <element signature="e#15697#15698#0" expanded="true" />
+                <element signature="e#15740#15741#0" expanded="true" />
+                <element signature="e#16372#16373#0" expanded="true" />
+                <element signature="e#16410#16411#0" expanded="true" />
+                <element signature="e#18165#18166#0" expanded="true" />
+                <element signature="e#18210#18211#0" expanded="true" />
+                <element signature="e#28614#28615#0" expanded="true" />
+                <element signature="e#28660#28661#0" expanded="true" />
+                <element signature="e#29108#29138#0" expanded="true" />
+                <element signature="e#29181#29182#0" expanded="true" />
+                <element signature="e#29246#29247#0" expanded="true" />
+                <element signature="e#29695#29725#0" expanded="true" />
+                <element signature="e#29770#29771#0" expanded="true" />
+                <element signature="e#29836#29837#0" expanded="true" />
+                <element signature="e#30257#30258#0" expanded="true" />
+                <element signature="e#30325#30326#0" expanded="true" />
+                <element signature="e#31502#31548#0" expanded="true" />
+                <element signature="e#31597#31598#0" expanded="true" />
+                <element signature="e#31628#31629#0" expanded="true" />
+                <element signature="e#36991#36992#0" expanded="true" />
+                <element signature="e#37034#37035#0" expanded="true" />
+                <element signature="e#39101#39102#0" expanded="true" />
+                <element signature="e#39143#39144#0" expanded="true" />
+                <element signature="e#39464#39465#0" expanded="true" />
+                <element signature="e#39513#39514#0" expanded="true" />
+                <element signature="e#39764#39765#0" expanded="true" />
+                <element signature="e#39807#39808#0" expanded="true" />
+                <element signature="e#40071#40072#0" expanded="true" />
+                <element signature="e#40118#40119#0" expanded="true" />
+                <element signature="e#40458#40459#0" expanded="true" />
+                <element signature="e#40510#40511#0" expanded="true" />
+                <element signature="e#40924#40925#0" expanded="true" />
+                <element signature="e#40982#40983#0" expanded="true" />
+                <element signature="e#42176#42177#0" expanded="true" />
+                <element signature="e#42246#42247#0" expanded="true" />
+                <element signature="e#45357#45358#0" expanded="true" />
+                <element signature="e#45411#45412#0" expanded="true" />
+                <element signature="e#49779#49780#0" expanded="true" />
+                <element signature="e#49828#49829#0" expanded="true" />
+                <element signature="e#50116#50117#0" expanded="true" />
+                <element signature="e#50161#50162#0" expanded="true" />
+                <element signature="e#50975#50976#0" expanded="true" />
+                <element signature="e#51027#51028#0" expanded="true" />
+                <element signature="e#51322#51323#0" expanded="true" />
+                <element signature="e#51355#51356#0" expanded="true" />
+                <element signature="e#51764#51765#0" expanded="true" />
+                <element signature="e#51817#51818#0" expanded="true" />
+                <element signature="e#53040#53041#0" expanded="true" />
+                <element signature="e#53092#53093#0" expanded="true" />
+                <element signature="e#53653#53654#0" expanded="true" />
+                <element signature="e#53713#53714#0" expanded="true" />
+                <element signature="e#54116#54162#0" expanded="true" />
+                <element signature="e#54192#54193#0" expanded="true" />
+                <element signature="e#54255#54256#0" expanded="true" />
+                <element signature="e#54565#54595#0" expanded="true" />
+                <element signature="e#54634#54635#0" expanded="true" />
+                <element signature="e#54688#54689#0" expanded="true" />
+                <element signature="e#54991#55021#0" expanded="true" />
+                <element signature="e#55058#55059#0" expanded="true" />
+                <element signature="e#55110#55111#0" expanded="true" />
+                <element signature="e#55672#55673#0" expanded="true" />
+                <element signature="e#55712#55713#0" expanded="true" />
+                <element signature="e#56273#56274#0" expanded="true" />
+                <element signature="e#56332#56333#0" expanded="true" />
+                <element signature="e#56734#56780#0" expanded="true" />
+                <element signature="e#56810#56811#0" expanded="true" />
+                <element signature="e#56873#56874#0" expanded="true" />
+                <element signature="e#57183#57213#0" expanded="true" />
+                <element signature="e#57252#57253#0" expanded="true" />
+                <element signature="e#57306#57307#0" expanded="true" />
+                <element signature="e#57609#57639#0" expanded="true" />
+                <element signature="e#57676#57677#0" expanded="true" />
+                <element signature="e#57728#57729#0" expanded="true" />
+                <element signature="e#58168#58214#0" expanded="true" />
+                <element signature="e#58248#58249#0" expanded="true" />
+                <element signature="e#58315#58316#0" expanded="true" />
+                <element signature="e#60197#60243#0" expanded="true" />
+                <element signature="e#60284#60285#0" expanded="true" />
+                <element signature="e#60358#60359#0" expanded="true" />
+                <element signature="e#62227#62228#0" expanded="true" />
+                <element signature="e#62272#62273#0" expanded="true" />
+                <element signature="e#65475#65476#0" expanded="true" />
+                <element signature="e#65523#65524#0" expanded="true" />
+                <element signature="e#66038#66039#0" expanded="true" />
+                <element signature="e#66093#66094#0" expanded="true" />
+                <element signature="e#66629#66630#0" expanded="true" />
+                <element signature="e#66692#66693#0" expanded="true" />
+                <element signature="e#67886#67887#0" expanded="true" />
+                <element signature="e#67930#67931#0" expanded="true" />
+                <element signature="e#68557#68558#0" expanded="true" />
+                <element signature="e#68629#68630#0" expanded="true" />
+                <element signature="e#71541#71542#0" expanded="true" />
+                <element signature="e#71586#71587#0" expanded="true" />
+                <element signature="e#76491#76492#0" expanded="true" />
+                <element signature="e#76545#76546#0" expanded="true" />
+                <element signature="e#76906#76936#0" expanded="true" />
+                <element signature="e#76975#76976#0" expanded="true" />
+                <element signature="e#77029#77030#0" expanded="true" />
+                <element signature="e#77384#77414#0" expanded="true" />
+                <element signature="e#77451#77452#0" expanded="true" />
+                <element signature="e#77503#77504#0" expanded="true" />
+                <element signature="e#78415#78416#0" expanded="true" />
+                <element signature="e#78478#78479#0" expanded="true" />
+                <element signature="e#78855#78856#0" expanded="true" />
+                <element signature="e#78922#78923#0" expanded="true" />
+                <element signature="e#80647#80677#0" expanded="true" />
+                <element signature="e#80713#80714#0" expanded="true" />
+                <element signature="e#80787#80788#0" expanded="true" />
+                <element signature="e#82460#82461#0" expanded="true" />
+                <element signature="e#82528#82529#0" expanded="true" />
+                <element signature="e#84627#84657#0" expanded="true" />
+                <element signature="e#85140#85170#0" expanded="true" />
+                <element signature="e#87226#87256#0" expanded="true" />
+                <element signature="e#87958#87988#0" expanded="true" />
+                <element signature="e#88590#88591#0" expanded="true" />
+                <element signature="e#88621#88622#0" expanded="true" />
+                <element signature="e#96756#96757#0" expanded="true" />
+                <element signature="e#96802#96803#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxAll.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAll.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxAny.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAny.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxBaseIterator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxBaseIterator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxSkipWhile.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxSkipWhile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxZipArray.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxZipArray.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxZipIterable.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxZipIterable.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="256">
+              <caret line="47" column="31" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IxDistinctUntilChanged.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxDistinctUntilChanged.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="197">
+              <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EqualityHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ix/EqualityHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="24">
+              <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="myGradleHomes">
+      <map>
+        <entry key="$PROJECT_DIR$" value="C:\Users\akarnokd\.gradle\wrapper\dists\gradle-2.14-bin\76oc0mnc3ieqtsukq90mp0rxk\gradle-2.14" />
+      </map>
+    </option>
+    <option name="myGradleVersions">
+      <map>
+        <entry key="$PROJECT_DIR$" value="2.14" />
+      </map>
+    </option>
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="ixjava" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="ixjava" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="availableTasks">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <list>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on test files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseFormatTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the sub-projects of root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="projects" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jmh" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates Gradle wrapper files. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="wrapper" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="sourcesJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles jmh Java source." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileJmhJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates the Eclipse classpath file." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="eclipseClasspath" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles a jar archive containing the main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the configuration model of root project 'ixjava'. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="model" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run AnimalSniffer checks for main classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="animalsnifferMain" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Processes main resources." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="processResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the tasks runnable from root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="tasks" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Initializes a new Gradle build. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="init" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Runs the unit tests." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="test" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles main Java source." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="javadocJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="pmdPrint" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Runs all checks." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="check" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on jmh files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseJmh" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays all dependencies declared in root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="dependencies" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates all Eclipse files." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="eclipse" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Applies the license found in the header file in files missing the header." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseFormat" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Processes test resources." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="processTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Checks for header consistency." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="license" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates the Eclipse JDT settings file." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="eclipseJdt" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run PMD analysis for jmh classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="pmdJmh" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Installs the 'archives' artifacts into the local Maven repository." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="install" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles and tests this project and all projects it depends on." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="buildNeeded" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run AnimalSniffer checks for test classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="animalsnifferTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates the Eclipse project file." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="eclipseProject" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on jmh files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseFormatJmh" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on main files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseFormatMain" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on test files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run PMD analysis for main classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="pmdMain" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles jmh classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jmhClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Processes jmh resources." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="processJmhResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the components produced by root project 'ixjava'. [incubating]" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="components" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles and tests this project and all projects that depend on it." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="buildDependents" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanEclipseClasspath" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jmhJar" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Cleans all Eclipse files." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanEclipse" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles main classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="classes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays all buildscript dependencies declared in root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="buildEnvironment" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanEclipseProject" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run AnimalSniffer checks for jmh classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="animalsnifferJmh" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles test classes." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="testClasses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates Javadoc API documentation for the main source code." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="javadoc" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates reports on your runtime dependencies." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="downloadLicenses" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="signArchives" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Generates the Maven POM file for publication 'mavenJava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="generatePomFileForMavenJavaPublication" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Run PMD analysis for test classes" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="pmdTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Scanning license on main files" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="licenseMain" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="cleanEclipseJdt" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Publishes Maven publication 'mavenJava' to the local Maven repository." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="publishMavenJavaPublicationToMavenLocal" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the insight into a specific dependency in root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="dependencyInsight" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="jacocoTestReport" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles the outputs of this project." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="assemble" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Deletes the build directory." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="clean" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Compiles test Java source." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="compileTestJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays a help message." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="help" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Assembles and tests this project." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="build" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Publishes all publications produced by this project." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="publish" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="uploadMavenCentral" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Publishes all Maven publications produced by this project to the local Maven cache." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="publishToMavenLocal" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Displays the properties of root project 'ixjava'." />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="properties" />
+              </ExternalTaskPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$/../RxJava" value="2939027766044" />
+        <entry key="$PROJECT_DIR$" value="2888506121525" />
+      </map>
+    </option>
+    <option name="projectBuildClasspath">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <ExternalProjectBuildClasspathPojo>
+              <option name="modulesBuildClasspath">
+                <map>
+                  <entry key="$PROJECT_DIR$">
+                    <value>
+                      <ExternalModuleBuildClasspathPojo>
+                        <option name="entries">
+                          <list>
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/gradle.plugin.nl.javadude.gradle.plugins/license-gradle-plugin/0.13.1/c270280ba46f95804a3aee4698725718ade3035c/license-gradle-plugin-0.13.1.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.champeau.gradle/jmh-gradle-plugin/0.2.0/11f88edea7ce5cdb64d1a736c8bc3dd9ed3019c6/jmh-gradle-plugin-0.2.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.vyarus/gradle-animalsniffer-plugin/1.1.0/a73586868b38db00cc162618868312866542a01e/gradle-animalsniffer-plugin-1.1.0-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/ru.vyarus/gradle-animalsniffer-plugin/1.1.0/94e9401bc1914cce5d89115ae16121b259d69f8a/gradle-animalsniffer-plugin-1.1.0.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/2.0.5/9fa5995004da6efeb01122240ea3c935f0a4a33b/plexus-utils-2.0.5-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/2.0.5/7841ba10ea46c9611ce702c3833ff9fccc8ae6eb/plexus-utils-2.0.5.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mycila.xmltool/xmltool/3.3/562a89efa33653e5c59f5215ea83013dc4359729/xmltool-3.3-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mycila.xmltool/xmltool/3.3/b45958476a332904c1152eb590bd4764dea5dc6d/xmltool-3.3.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mycila.maven-license-plugin/maven-license-plugin/1.10.b1/432c7d5469c2a3143691334be560f59db0d410ff/maven-license-plugin-1.10.b1-sources.jar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mycila.maven-license-plugin/maven-license-plugin/1.10.b1/f2c4f13c8d30e7305f3407bd4e3980f2eed8d1cf/maven-license-plugin-1.10.b1.jar" />
+                          </list>
+                        </option>
+                        <option name="path" value="$PROJECT_DIR$" />
+                      </ExternalModuleBuildClasspathPojo>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="name" value="ixjava" />
+              <option name="projectBuildClasspath">
+                <list>
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/ant-1.9.6.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/ant-launcher-1.9.6.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-base-services-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-base-services-groovy-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-cli-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-core-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-docs-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-installation-beacon-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-jvm-services-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-launcher-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-logging-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-messaging-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-model-core-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-model-groovy-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-native-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-open-api-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-process-services-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-resources-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-tooling-api-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-ui-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/gradle-wrapper-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/groovy-all-2.4.4.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-announce-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-antlr-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-build-comparison-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-build-init-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-code-quality-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-dependency-management-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-diagnostics-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-ear-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-ide-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-ide-native-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-ide-play-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-ivy-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-jacoco-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-javascript-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-jetty-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-language-groovy-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-language-java-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-language-jvm-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-language-native-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-language-scala-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-maven-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-osgi-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-platform-base-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-platform-jvm-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-platform-native-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-platform-play-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-plugin-development-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-plugin-use-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-plugins-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-publish-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-reporting-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-resources-http-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-resources-s3-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-resources-sftp-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-scala-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-signing-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-sonar-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-test-kit-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-testing-base-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-testing-jvm-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-testing-native-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/gradle-tooling-api-builders-2.14.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.14-bin/76oc0mnc3ieqtsukq90mp0rxk/gradle-2.14/lib/plugins/ivy-2.2.0.jar" />
+                  <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
+                  <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
+                </list>
+              </option>
+            </ExternalProjectBuildClasspathPojo>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxDistinctUntilChanged.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/Ix.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxAll.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxAny.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxBaseIterator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxSkipWhile.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxZipArray.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ix/IxZipIterable.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Bundled (Maven 3)" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope">
+        <subPane subId="Problems" />
+      </pane>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ixjava" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ix" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Cold Fusion runner description" factoryName="Cold Fusion" custom_browser="" web_path="">
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browser" value="a7bb68e0-33c0-4d6f-a81a-aac1fdb870c8" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="FlashPlayerDebugger.exe" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnitTestDiscovery" factoryName="JUnit Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Java Scratch" factoryName="Java Scratch">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="SCRATCH_FILE_ID" value="0" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
+      <method />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType" factoryName="Kotlin">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="ixjava" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType" factoryName="Kotlin script">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="filePath" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNGTestDiscovery" factoryName="TestNG Test Discovery" changeList="All">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <method />
+    </configuration>
+    <configuration default="true" type="js.build_tools.npm" factoryName="npm">
+      <command value="run-script" />
+      <scripts />
+      <node-interpreter value="project" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="07f46092-dc06-4241-914f-dfb172a12baa" name="Default" comment="" />
+      <created>1473888618399</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1473888618399</updated>
+      <workItem from="1473888619735" duration="922000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="922000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAggregate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/GroupedIx.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxPredicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+          <folding>
+            <marker date="1473889152208" expanded="true" signature="615:728" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxBufferOverlap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxDistinctUntilChanged.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/EqualityHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/Pred.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/Ix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="1128" column="93" selection-start-line="1128" selection-start-column="93" selection-end-line="1128" selection-end-column="93" />
+          <folding>
+            <element signature="e#15697#15698#0" expanded="true" />
+            <element signature="e#15740#15741#0" expanded="true" />
+            <element signature="e#16372#16373#0" expanded="true" />
+            <element signature="e#16410#16411#0" expanded="true" />
+            <element signature="e#18165#18166#0" expanded="true" />
+            <element signature="e#18210#18211#0" expanded="true" />
+            <element signature="e#28614#28615#0" expanded="true" />
+            <element signature="e#28660#28661#0" expanded="true" />
+            <element signature="e#29108#29138#0" expanded="true" />
+            <element signature="e#29181#29182#0" expanded="true" />
+            <element signature="e#29246#29247#0" expanded="true" />
+            <element signature="e#29695#29725#0" expanded="true" />
+            <element signature="e#29770#29771#0" expanded="true" />
+            <element signature="e#29836#29837#0" expanded="true" />
+            <element signature="e#30257#30258#0" expanded="true" />
+            <element signature="e#30325#30326#0" expanded="true" />
+            <element signature="e#31502#31548#0" expanded="true" />
+            <element signature="e#31597#31598#0" expanded="true" />
+            <element signature="e#31628#31629#0" expanded="true" />
+            <element signature="e#36991#36992#0" expanded="true" />
+            <element signature="e#37034#37035#0" expanded="true" />
+            <element signature="e#39101#39102#0" expanded="true" />
+            <element signature="e#39143#39144#0" expanded="true" />
+            <element signature="e#39464#39465#0" expanded="true" />
+            <element signature="e#39513#39514#0" expanded="true" />
+            <element signature="e#39764#39765#0" expanded="true" />
+            <element signature="e#39807#39808#0" expanded="true" />
+            <element signature="e#40071#40072#0" expanded="true" />
+            <element signature="e#40118#40119#0" expanded="true" />
+            <element signature="e#40458#40459#0" expanded="true" />
+            <element signature="e#40510#40511#0" expanded="true" />
+            <element signature="e#40924#40925#0" expanded="true" />
+            <element signature="e#40982#40983#0" expanded="true" />
+            <element signature="e#42176#42177#0" expanded="true" />
+            <element signature="e#42246#42247#0" expanded="true" />
+            <element signature="e#45357#45358#0" expanded="true" />
+            <element signature="e#45411#45412#0" expanded="true" />
+            <element signature="e#49779#49780#0" expanded="true" />
+            <element signature="e#49828#49829#0" expanded="true" />
+            <element signature="e#50116#50117#0" expanded="true" />
+            <element signature="e#50161#50162#0" expanded="true" />
+            <element signature="e#50975#50976#0" expanded="true" />
+            <element signature="e#51027#51028#0" expanded="true" />
+            <element signature="e#51322#51323#0" expanded="true" />
+            <element signature="e#51355#51356#0" expanded="true" />
+            <element signature="e#51764#51765#0" expanded="true" />
+            <element signature="e#51817#51818#0" expanded="true" />
+            <element signature="e#53040#53041#0" expanded="true" />
+            <element signature="e#53092#53093#0" expanded="true" />
+            <element signature="e#53653#53654#0" expanded="true" />
+            <element signature="e#53713#53714#0" expanded="true" />
+            <element signature="e#54116#54162#0" expanded="true" />
+            <element signature="e#54192#54193#0" expanded="true" />
+            <element signature="e#54255#54256#0" expanded="true" />
+            <element signature="e#54565#54595#0" expanded="true" />
+            <element signature="e#54634#54635#0" expanded="true" />
+            <element signature="e#54688#54689#0" expanded="true" />
+            <element signature="e#54991#55021#0" expanded="true" />
+            <element signature="e#55058#55059#0" expanded="true" />
+            <element signature="e#55110#55111#0" expanded="true" />
+            <element signature="e#55672#55673#0" expanded="true" />
+            <element signature="e#55712#55713#0" expanded="true" />
+            <element signature="e#56273#56274#0" expanded="true" />
+            <element signature="e#56332#56333#0" expanded="true" />
+            <element signature="e#56734#56780#0" expanded="true" />
+            <element signature="e#56810#56811#0" expanded="true" />
+            <element signature="e#56873#56874#0" expanded="true" />
+            <element signature="e#57183#57213#0" expanded="true" />
+            <element signature="e#57252#57253#0" expanded="true" />
+            <element signature="e#57306#57307#0" expanded="true" />
+            <element signature="e#57609#57639#0" expanded="true" />
+            <element signature="e#57676#57677#0" expanded="true" />
+            <element signature="e#57728#57729#0" expanded="true" />
+            <element signature="e#58168#58214#0" expanded="true" />
+            <element signature="e#58248#58249#0" expanded="true" />
+            <element signature="e#58315#58316#0" expanded="true" />
+            <element signature="e#60197#60243#0" expanded="true" />
+            <element signature="e#60284#60285#0" expanded="true" />
+            <element signature="e#60358#60359#0" expanded="true" />
+            <element signature="e#62227#62228#0" expanded="true" />
+            <element signature="e#62272#62273#0" expanded="true" />
+            <element signature="e#65475#65476#0" expanded="true" />
+            <element signature="e#65523#65524#0" expanded="true" />
+            <element signature="e#66038#66039#0" expanded="true" />
+            <element signature="e#66093#66094#0" expanded="true" />
+            <element signature="e#66629#66630#0" expanded="true" />
+            <element signature="e#66692#66693#0" expanded="true" />
+            <element signature="e#67886#67887#0" expanded="true" />
+            <element signature="e#67930#67931#0" expanded="true" />
+            <element signature="e#68557#68558#0" expanded="true" />
+            <element signature="e#68629#68630#0" expanded="true" />
+            <element signature="e#71541#71542#0" expanded="true" />
+            <element signature="e#71586#71587#0" expanded="true" />
+            <element signature="e#76491#76492#0" expanded="true" />
+            <element signature="e#76545#76546#0" expanded="true" />
+            <element signature="e#76906#76936#0" expanded="true" />
+            <element signature="e#76975#76976#0" expanded="true" />
+            <element signature="e#77029#77030#0" expanded="true" />
+            <element signature="e#77384#77414#0" expanded="true" />
+            <element signature="e#77451#77452#0" expanded="true" />
+            <element signature="e#77503#77504#0" expanded="true" />
+            <element signature="e#78415#78416#0" expanded="true" />
+            <element signature="e#78478#78479#0" expanded="true" />
+            <element signature="e#78855#78856#0" expanded="true" />
+            <element signature="e#78922#78923#0" expanded="true" />
+            <element signature="e#80647#80677#0" expanded="true" />
+            <element signature="e#80713#80714#0" expanded="true" />
+            <element signature="e#80787#80788#0" expanded="true" />
+            <element signature="e#82460#82461#0" expanded="true" />
+            <element signature="e#82528#82529#0" expanded="true" />
+            <element signature="e#84627#84657#0" expanded="true" />
+            <element signature="e#85140#85170#0" expanded="true" />
+            <element signature="e#87226#87256#0" expanded="true" />
+            <element signature="e#87958#87988#0" expanded="true" />
+            <element signature="e#88590#88591#0" expanded="true" />
+            <element signature="e#88621#88622#0" expanded="true" />
+            <element signature="e#96756#96757#0" expanded="true" />
+            <element signature="e#96802#96803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAggregate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="46" column="33" selection-start-line="46" selection-start-column="33" selection-end-line="46" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/GroupedIx.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="27" column="22" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxPredicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
+          <folding>
+            <marker date="1473889152208" expanded="true" signature="615:728" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxBufferOverlap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="71" column="38" selection-start-line="71" selection-start-column="38" selection-end-line="71" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxDistinctUntilChanged.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="60" column="18" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/EqualityHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="1" column="32" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxPredicate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
+          <folding>
+            <marker date="1473889152208" expanded="true" signature="615:728" ph="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAll.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxAny.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxBaseIterator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="28" column="10" selection-start-line="28" selection-start-column="10" selection-end-line="28" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxSkipWhile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxZipArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="59" column="35" selection-start-line="59" selection-start-column="35" selection-end-line="59" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/IxZipIterable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="47" column="31" selection-start-line="47" selection-start-column="31" selection-end-line="47" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ix/Ix.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="2494" column="32" selection-start-line="2494" selection-start-column="32" selection-end-line="2494" selection-end-column="32" />
+          <folding>
+            <element signature="e#15697#15698#0" expanded="true" />
+            <element signature="e#15740#15741#0" expanded="true" />
+            <element signature="e#16372#16373#0" expanded="true" />
+            <element signature="e#16410#16411#0" expanded="true" />
+            <element signature="e#18165#18166#0" expanded="true" />
+            <element signature="e#18210#18211#0" expanded="true" />
+            <element signature="e#28614#28615#0" expanded="true" />
+            <element signature="e#28660#28661#0" expanded="true" />
+            <element signature="e#29108#29138#0" expanded="true" />
+            <element signature="e#29181#29182#0" expanded="true" />
+            <element signature="e#29246#29247#0" expanded="true" />
+            <element signature="e#29695#29725#0" expanded="true" />
+            <element signature="e#29770#29771#0" expanded="true" />
+            <element signature="e#29836#29837#0" expanded="true" />
+            <element signature="e#30257#30258#0" expanded="true" />
+            <element signature="e#30325#30326#0" expanded="true" />
+            <element signature="e#31502#31548#0" expanded="true" />
+            <element signature="e#31597#31598#0" expanded="true" />
+            <element signature="e#31628#31629#0" expanded="true" />
+            <element signature="e#36991#36992#0" expanded="true" />
+            <element signature="e#37034#37035#0" expanded="true" />
+            <element signature="e#39101#39102#0" expanded="true" />
+            <element signature="e#39143#39144#0" expanded="true" />
+            <element signature="e#39464#39465#0" expanded="true" />
+            <element signature="e#39513#39514#0" expanded="true" />
+            <element signature="e#39764#39765#0" expanded="true" />
+            <element signature="e#39807#39808#0" expanded="true" />
+            <element signature="e#40071#40072#0" expanded="true" />
+            <element signature="e#40118#40119#0" expanded="true" />
+            <element signature="e#40458#40459#0" expanded="true" />
+            <element signature="e#40510#40511#0" expanded="true" />
+            <element signature="e#40924#40925#0" expanded="true" />
+            <element signature="e#40982#40983#0" expanded="true" />
+            <element signature="e#42176#42177#0" expanded="true" />
+            <element signature="e#42246#42247#0" expanded="true" />
+            <element signature="e#45357#45358#0" expanded="true" />
+            <element signature="e#45411#45412#0" expanded="true" />
+            <element signature="e#49779#49780#0" expanded="true" />
+            <element signature="e#49828#49829#0" expanded="true" />
+            <element signature="e#50116#50117#0" expanded="true" />
+            <element signature="e#50161#50162#0" expanded="true" />
+            <element signature="e#50975#50976#0" expanded="true" />
+            <element signature="e#51027#51028#0" expanded="true" />
+            <element signature="e#51322#51323#0" expanded="true" />
+            <element signature="e#51355#51356#0" expanded="true" />
+            <element signature="e#51764#51765#0" expanded="true" />
+            <element signature="e#51817#51818#0" expanded="true" />
+            <element signature="e#53040#53041#0" expanded="true" />
+            <element signature="e#53092#53093#0" expanded="true" />
+            <element signature="e#53653#53654#0" expanded="true" />
+            <element signature="e#53713#53714#0" expanded="true" />
+            <element signature="e#54116#54162#0" expanded="true" />
+            <element signature="e#54192#54193#0" expanded="true" />
+            <element signature="e#54255#54256#0" expanded="true" />
+            <element signature="e#54565#54595#0" expanded="true" />
+            <element signature="e#54634#54635#0" expanded="true" />
+            <element signature="e#54688#54689#0" expanded="true" />
+            <element signature="e#54991#55021#0" expanded="true" />
+            <element signature="e#55058#55059#0" expanded="true" />
+            <element signature="e#55110#55111#0" expanded="true" />
+            <element signature="e#55672#55673#0" expanded="true" />
+            <element signature="e#55712#55713#0" expanded="true" />
+            <element signature="e#56273#56274#0" expanded="true" />
+            <element signature="e#56332#56333#0" expanded="true" />
+            <element signature="e#56734#56780#0" expanded="true" />
+            <element signature="e#56810#56811#0" expanded="true" />
+            <element signature="e#56873#56874#0" expanded="true" />
+            <element signature="e#57183#57213#0" expanded="true" />
+            <element signature="e#57252#57253#0" expanded="true" />
+            <element signature="e#57306#57307#0" expanded="true" />
+            <element signature="e#57609#57639#0" expanded="true" />
+            <element signature="e#57676#57677#0" expanded="true" />
+            <element signature="e#57728#57729#0" expanded="true" />
+            <element signature="e#58168#58214#0" expanded="true" />
+            <element signature="e#58248#58249#0" expanded="true" />
+            <element signature="e#58315#58316#0" expanded="true" />
+            <element signature="e#60197#60243#0" expanded="true" />
+            <element signature="e#60284#60285#0" expanded="true" />
+            <element signature="e#60358#60359#0" expanded="true" />
+            <element signature="e#62227#62228#0" expanded="true" />
+            <element signature="e#62272#62273#0" expanded="true" />
+            <element signature="e#65475#65476#0" expanded="true" />
+            <element signature="e#65523#65524#0" expanded="true" />
+            <element signature="e#66038#66039#0" expanded="true" />
+            <element signature="e#66093#66094#0" expanded="true" />
+            <element signature="e#66629#66630#0" expanded="true" />
+            <element signature="e#66692#66693#0" expanded="true" />
+            <element signature="e#67886#67887#0" expanded="true" />
+            <element signature="e#67930#67931#0" expanded="true" />
+            <element signature="e#68557#68558#0" expanded="true" />
+            <element signature="e#68629#68630#0" expanded="true" />
+            <element signature="e#71541#71542#0" expanded="true" />
+            <element signature="e#71586#71587#0" expanded="true" />
+            <element signature="e#76491#76492#0" expanded="true" />
+            <element signature="e#76545#76546#0" expanded="true" />
+            <element signature="e#76906#76936#0" expanded="true" />
+            <element signature="e#76975#76976#0" expanded="true" />
+            <element signature="e#77029#77030#0" expanded="true" />
+            <element signature="e#77384#77414#0" expanded="true" />
+            <element signature="e#77451#77452#0" expanded="true" />
+            <element signature="e#77503#77504#0" expanded="true" />
+            <element signature="e#78415#78416#0" expanded="true" />
+            <element signature="e#78478#78479#0" expanded="true" />
+            <element signature="e#78855#78856#0" expanded="true" />
+            <element signature="e#78922#78923#0" expanded="true" />
+            <element signature="e#80647#80677#0" expanded="true" />
+            <element signature="e#80713#80714#0" expanded="true" />
+            <element signature="e#80787#80788#0" expanded="true" />
+            <element signature="e#82460#82461#0" expanded="true" />
+            <element signature="e#82528#82529#0" expanded="true" />
+            <element signature="e#84627#84657#0" expanded="true" />
+            <element signature="e#85140#85170#0" expanded="true" />
+            <element signature="e#87226#87256#0" expanded="true" />
+            <element signature="e#87958#87988#0" expanded="true" />
+            <element signature="e#88590#88591#0" expanded="true" />
+            <element signature="e#88621#88622#0" expanded="true" />
+            <element signature="e#96756#96757#0" expanded="true" />
+            <element signature="e#96802#96803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>ixjava</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Gradle: junit:junit:4.12</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

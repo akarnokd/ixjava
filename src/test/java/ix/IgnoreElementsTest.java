@@ -23,18 +23,18 @@ public class IgnoreElementsTest {
     @Test
     public void range() {
         Ix<Integer> source = Ix.range(1, 5).ignoreElements();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.<Integer>empty().ignoreElements();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

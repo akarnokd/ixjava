@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Action1;
-
 final class IxTransformer<T, R> extends IxSource<T, R> {
 
     final IxTransform<T, R> transform;
-    
-    public IxTransformer(Iterable<T> source, IxTransform<T, R> transform) {
+
+    IxTransformer(Iterable<T> source, IxTransform<T, R> transform) {
         super(source);
         this.transform = transform;
     }
@@ -35,15 +33,15 @@ final class IxTransformer<T, R> extends IxSource<T, R> {
     }
 
     static final class TransformerIterator<T, R> extends IxSourceIterator<T, R>
-    implements Action1<R> {
-        
+    implements IxConsumer<R> {
+
         final IxTransform<T, R> transform;
 
-        public TransformerIterator(Iterator<T> it, IxTransform<T, R> transform) {
+        TransformerIterator(Iterator<T> it, IxTransform<T, R> transform) {
             super(it);
             this.transform = transform;
         }
-        
+
         @Override
         protected boolean moveNext() {
             int m = transform.moveNext(it, this);
@@ -61,9 +59,9 @@ final class IxTransformer<T, R> extends IxSource<T, R> {
             }
             return true;
         }
-        
+
         @Override
-        public void call(R t) {
+        public void accept(R t) {
             if (hasValue) {
                 throw new IllegalStateException("Value already set in this turn!");
             }

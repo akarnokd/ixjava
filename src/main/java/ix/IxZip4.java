@@ -18,8 +18,6 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func4;
-
 final class IxZip4<T1, T2, T3, T4, R> extends Ix<R> {
     final Iterable<T1> source1;
 
@@ -29,11 +27,11 @@ final class IxZip4<T1, T2, T3, T4, R> extends Ix<R> {
 
     final Iterable<T4> source4;
 
-    final Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper;
-    
-    public IxZip4(Iterable<T1> source1, Iterable<T2> source2, 
+    final IxFunction4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper;
+
+    IxZip4(Iterable<T1> source1, Iterable<T2> source2,
             Iterable<T3> source3, Iterable<T4> source4,
-            Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
+            IxFunction4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
         this.source1 = source1;
         this.source2 = source2;
         this.source3 = source3;
@@ -43,7 +41,7 @@ final class IxZip4<T1, T2, T3, T4, R> extends Ix<R> {
 
     @Override
     public Iterator<R> iterator() {
-        return new Zip4Iterator<T1, T2, T3, T4, R>(source1.iterator(), source2.iterator(), 
+        return new Zip4Iterator<T1, T2, T3, T4, R>(source1.iterator(), source2.iterator(),
                 source3.iterator(), source4.iterator(), zipper);
     }
 
@@ -57,18 +55,18 @@ final class IxZip4<T1, T2, T3, T4, R> extends Ix<R> {
 
         final Iterator<T4> source4;
 
-        final Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper;
-        
-        public Zip4Iterator(Iterator<T1> source1, Iterator<T2> source2, Iterator<T3> source3,
+        final IxFunction4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper;
+
+        Zip4Iterator(Iterator<T1> source1, Iterator<T2> source2, Iterator<T3> source3,
                 Iterator<T4> source4,
-                Func4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
+                IxFunction4<? super T1, ? super T2, ? super T3, ? super T4, ? extends R> zipper) {
             this.source1 = source1;
             this.source2 = source2;
             this.source3 = source3;
             this.source4 = source4;
             this.zipper = zipper;
         }
-        
+
         @Override
         protected boolean moveNext() {
             if (!source1.hasNext()) {
@@ -98,11 +96,11 @@ final class IxZip4<T1, T2, T3, T4, R> extends Ix<R> {
             }
 
             T4 t4 = source4.next();
-            
-            value = zipper.call(t1, t2, t3, t4);
+
+            value = zipper.apply(t1, t2, t3, t4);
             hasValue = true;
             return true;
         }
-        
+
     }
 }

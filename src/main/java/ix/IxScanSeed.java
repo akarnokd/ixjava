@@ -18,15 +18,13 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.*;
-
 final class IxScanSeed<T, R> extends IxSource<T, R> {
 
-    final Func0<R> seed;
-    
-    final Func2<R, T, R> scanner;
-    
-    public IxScanSeed(Iterable<T> source, Func0<R> seed, Func2<R, T, R> scanner) {
+    final IxSupplier<R> seed;
+
+    final IxFunction2<R, T, R> scanner;
+
+    IxScanSeed(Iterable<T> source, IxSupplier<R> seed, IxFunction2<R, T, R> scanner) {
         super(source);
         this.seed = seed;
         this.scanner = scanner;
@@ -34,22 +32,22 @@ final class IxScanSeed<T, R> extends IxSource<T, R> {
 
     @Override
     public Iterator<R> iterator() {
-        return new ScanSeedIterator<T, R>(source.iterator(), seed.call(), scanner);
+        return new ScanSeedIterator<T, R>(source.iterator(), seed.get(), scanner);
     }
-    
+
     static final class ScanSeedIterator<T, R> extends IxSourceIterator<T, R> {
-        final Func2<R, T, R> scanner;
+        final IxFunction2<R, T, R> scanner;
 
         R accumulator;
-        
+
         boolean once;
 
-        public ScanSeedIterator(Iterator<T> it, R accumulator, Func2<R, T, R> scanner) {
+        ScanSeedIterator(Iterator<T> it, R accumulator, IxFunction2<R, T, R> scanner) {
             super(it);
             this.accumulator = accumulator;
             this.scanner = scanner;
         }
-        
+
         @Override
         protected boolean moveNext() {
             if (!once) {
@@ -58,17 +56,17 @@ final class IxScanSeed<T, R> extends IxSource<T, R> {
                 hasValue = true;
                 return true;
             }
-            
+
             if (it.hasNext()) {
-                
-                R v = scanner.call(accumulator, it.next());
-                
+
+                R v = scanner.apply(accumulator, it.next());
+
                 accumulator = v;
                 value = v;
                 hasValue = true;
                 return true;
             }
-            
+
             accumulator = null;
             done = true;
             return false;

@@ -23,45 +23,45 @@ public class SplitTest {
     @Test
     public void normal() {
         Ix<String> source = Ix.split("a|b|c|d", "|");
-        
+
         IxTestHelper.assertValues(source, "a", "b", "c", "d");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normal2() {
         Ix<String> source = Ix.split("a|b|c|", "|");
-        
+
         IxTestHelper.assertValues(source, "a", "b", "c", "");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normal3() {
         Ix<String> source = Ix.split("a1|b2|c3", "|");
-        
+
         IxTestHelper.assertValues(source, "a1", "b2", "c3");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normal4() {
         Ix<String> source = Ix.split("a1|<b2|c3|<d4", "|<");
-        
+
         IxTestHelper.assertValues(source, "a1", "b2|c3", "d4");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void empty() {
         Ix<String> source = Ix.split("", "|");
-        
+
         IxTestHelper.assertValues(source, "");
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

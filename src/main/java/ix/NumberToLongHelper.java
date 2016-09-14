@@ -16,13 +16,11 @@
 
 package ix;
 
-import rx.functions.Func1;
-
-enum NumberToLongHelper implements Func1<Number, Long> {
+enum NumberToLongHelper implements IxFunction<Number, Long> {
     INSTANCE;
-    
+
     @Override
-    public Long call(Number t1) {
+    public Long apply(Number t1) {
         return t1.longValue();
     }
 }

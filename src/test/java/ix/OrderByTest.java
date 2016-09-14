@@ -20,16 +20,14 @@ import java.util.Comparator;
 
 import org.junit.Test;
 
-import rx.functions.Func1;
-
 public class OrderByTest {
 
     @Test
     public void normal() {
         Ix<Integer> source = Ix.fromArray(5, 4, 3, 2, 1).orderBy();
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
@@ -41,53 +39,53 @@ public class OrderByTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 5, 4, 3, 2, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalKeySelector() {
-        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderBy(new Func1<Integer, Integer>() {
+        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderBy(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return 3 - v;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 5, 4, 3, 2, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void empty() {
         Ix<Integer> source = Ix.<Integer>empty().orderBy();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void just() {
         Ix<Integer> source = Ix.just(1).orderBy();
-        
+
         IxTestHelper.assertValues(source, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalReverse() {
         Ix<Integer> source = Ix.range(1, 5).orderByReverse();
-        
+
         IxTestHelper.assertValues(source, 5, 4, 3, 2, 1);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normalComparatorReverse() {
         Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderByReverse(new Comparator<Integer>() {
@@ -96,23 +94,23 @@ public class OrderByTest {
                 return b.compareTo(a);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void normalKeySelectorReverse() {
-        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderByReverse(new Func1<Integer, Integer>() {
+        Ix<Integer> source = Ix.fromArray(1, 2, 3, 4, 5).orderByReverse(new IxFunction<Integer, Integer>() {
             @Override
-            public Integer call(Integer v) {
+            public Integer apply(Integer v) {
                 return 3 - v;
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2, 3, 4, 5);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

@@ -18,68 +18,66 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.*;
-
 public class Zip4Test {
 
-    Func4<Integer, Integer, Integer, Integer, Integer> sum = new Func4<Integer, Integer, Integer, Integer, Integer>() {
+    IxFunction4<Integer, Integer, Integer, Integer, Integer> sum = new IxFunction4<Integer, Integer, Integer, Integer, Integer>() {
         @Override
-        public Integer call(Integer a, Integer b, Integer c, Integer d) {
+        public Integer apply(Integer a, Integer b, Integer c, Integer d) {
             return a + b + c + d;
         }
     };
-    
+
     @Test
     public void normal() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 2), Ix.range(10, 2), Ix.range(100, 2), Ix.range(1000, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 1111, 1115);
     }
-    
+
     @Test
     public void firstShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 1), Ix.range(10, 2), Ix.range(100, 2), Ix.range(1000, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 1111);
     }
 
     @Test
     public void secondShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 3), Ix.range(10, 2), Ix.range(100, 3), Ix.range(1000, 3), sum);
-        
+
         IxTestHelper.assertValues(source, 1111, 1115);
     }
 
     @Test
     public void thirdShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 3), Ix.range(10, 3), Ix.range(100, 2), Ix.range(1000, 3), sum);
-        
+
         IxTestHelper.assertValues(source, 1111, 1115);
     }
 
     @Test
     public void fourthShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 3), Ix.range(10, 3), Ix.range(100, 3), Ix.range(1000, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 1111, 1115);
     }
 
     @Test
     public void allEmpty() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.<Integer>empty(), Ix.<Integer>empty(), Ix.<Integer>empty(), Ix.<Integer>empty(), sum);
-        
+
         IxTestHelper.assertValues(source);
     }
 

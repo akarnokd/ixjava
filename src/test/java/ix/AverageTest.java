@@ -23,54 +23,54 @@ public class AverageTest {
     @Test
     public void normalFloat() {
         Ix<Float> source = Ix.range(1, 5).averageFloat();
-        
+
         IxTestHelper.assertValues(source, 3f);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void justFloat() {
         Ix<Float> source = Ix.just(1).averageFloat();
-        
+
         IxTestHelper.assertValues(source, 1f);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void emptyFloat() {
         Ix<Float> source = Ix.<Integer>empty().averageFloat();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normalDouble() {
         Ix<Double> source = Ix.range(1, 5).averageDouble();
-        
+
         IxTestHelper.assertValues(source, 3d);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void justDouble() {
         Ix<Double> source = Ix.just(1).averageDouble();
-        
+
         IxTestHelper.assertValues(source, 1d);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 
     @Test
     public void emptyDouble() {
         Ix<Double> source = Ix.<Integer>empty().averageDouble();
-        
+
         IxTestHelper.assertValues(source);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 

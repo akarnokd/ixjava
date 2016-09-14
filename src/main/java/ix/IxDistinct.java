@@ -18,28 +18,26 @@ package ix;
 
 import java.util.*;
 
-import rx.functions.Func1;
-
 final class IxDistinct<T, K> extends IxSource<T, T> {
 
-    final Func1<? super T, K> keySelector;
-    
-    public IxDistinct(Iterable<T> source, Func1<? super T, K> keySelector) {
+    final IxFunction<? super T, K> keySelector;
+
+    IxDistinct(Iterable<T> source, IxFunction<? super T, K> keySelector) {
         super(source);
         this.keySelector = keySelector;
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new DistinctIterator<T, K>(source.iterator(), keySelector);
     }
 
     static final class DistinctIterator<T, K> extends IxSourceIterator<T, T> {
-        final Func1<? super T, K> keySelector;
+        final IxFunction<? super T, K> keySelector;
 
         final Set<K> set;
-        
-        public DistinctIterator(Iterator<T> it, Func1<? super T, K> keySelector) {
+
+        DistinctIterator(Iterator<T> it, IxFunction<? super T, K> keySelector) {
             super(it);
             this.keySelector = keySelector;
             this.set = new HashSet<K>();
@@ -48,19 +46,19 @@ final class IxDistinct<T, K> extends IxSource<T, T> {
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
-            
+
             while (it.hasNext()) {
                 T v = it.next();
-                
-                K k = keySelector.call(v);
-                
+
+                K k = keySelector.apply(v);
+
                 if (set.add(k)) {
                     value = v;
                     hasValue = true;
                     return true;
                 }
             }
-            
+
             done = true;
             return false;
         }

@@ -18,13 +18,11 @@ package ix;
 
 import java.util.Iterator;
 
-import rx.functions.Func1;
-
 final class IxCompose<T, R> extends IxSource<T, R> {
 
-    final Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
-    
-    public IxCompose(Iterable<T> source, Func1<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
+    final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
+
+    IxCompose(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
         super(source);
         this.transformer = transformer;
     }
@@ -32,7 +30,7 @@ final class IxCompose<T, R> extends IxSource<T, R> {
     @SuppressWarnings("unchecked")
     @Override
     public Iterator<R> iterator() {
-        return (Iterator<R>)transformer.call(from(source)).iterator();
+        return (Iterator<R>)transformer.apply(from(source)).iterator();
     }
 
 }

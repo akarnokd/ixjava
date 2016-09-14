@@ -23,63 +23,63 @@ public class ContainsTest {
     @Test
     public void normal() {
         Ix<Boolean> source = Ix.range(1, 5).contains(3);
-        
+
         IxTestHelper.assertValues(source, true);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void normalNoReferenceEquals() {
         Ix<Boolean> source = Ix.range(1, 5).contains(new Integer(3));
-        
+
         IxTestHelper.assertValues(source, true);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void doesntContain() {
         Ix<Boolean> source = Ix.range(1, 5).contains(6);
-        
+
         IxTestHelper.assertValues(source, false);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void doesntContainNull() {
         Ix<Boolean> source = Ix.range(1, 5).contains(null);
-        
+
         IxTestHelper.assertValues(source, false);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void empty() {
         Ix<Boolean> source = Ix.empty().contains(6);
-        
+
         IxTestHelper.assertValues(source, false);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void justNull() {
         Ix<Boolean> source = Ix.just(null).contains(6);
-        
+
         IxTestHelper.assertValues(source, false);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
-    
+
     @Test
     public void justNullContains() {
         Ix<Boolean> source = Ix.just(null).contains(null);
-        
+
         IxTestHelper.assertValues(source, true);
-        
+
         IxTestHelper.assertNoRemove(source);
     }
 }

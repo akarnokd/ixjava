@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxMaxLong extends IxSource<Long, Long> {
 
-    public IxMaxLong(Iterable<Long> source) {
+    IxMaxLong(Iterable<Long> source) {
         super(source);
     }
 
@@ -31,7 +31,7 @@ final class IxMaxLong extends IxSource<Long, Long> {
 
     static final class MaxLongIterator extends IxSourceIterator<Long, Long> {
 
-        public MaxLongIterator(Iterator<Long> it) {
+        MaxLongIterator(Iterator<Long> it) {
             super(it);
         }
 
@@ -47,12 +47,12 @@ final class IxMaxLong extends IxSource<Long, Long> {
             while (it.hasNext()) {
                 sum = Math.max(sum, it.next());
             }
-            
+
             value = sum;
             hasValue = true;
             done = true;
             return true;
         }
-        
+
     }
 }

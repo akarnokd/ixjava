@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxSkip<T> extends IxSource<T, T> {
 
     final int n;
-    
-    public IxSkip(Iterable<T> source, int n) {
+
+    IxSkip(Iterable<T> source, int n) {
         super(source);
         this.n = n;
     }
@@ -35,7 +35,8 @@ final class IxSkip<T> extends IxSource<T, T> {
     static final class SkipIterator<T> extends IxSourceIterator<T, T> {
 
         int n;
-        public SkipIterator(Iterator<T> it, int n) {
+
+        SkipIterator(Iterator<T> it, int n) {
             super(it);
             this.n = n;
         }
@@ -43,7 +44,7 @@ final class IxSkip<T> extends IxSource<T, T> {
         protected boolean moveNext() {
             Iterator<T> it = this.it;
             int n = this.n;
-            
+
             if (n != 0) {
                 while (n != 0) {
                     if (it.hasNext()) {
@@ -64,7 +65,7 @@ final class IxSkip<T> extends IxSource<T, T> {
             done = true;
             return false;
         }
-        
-        
+
+
     }
 }

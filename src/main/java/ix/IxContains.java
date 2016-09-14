@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxContains<T> extends IxSource<T, Boolean> {
 
     final Object o;
-    
-    public IxContains(Iterable<T> source, Object o) {
+
+    IxContains(Iterable<T> source, Object o) {
         super(source);
         this.o = o;
     }
@@ -31,21 +31,21 @@ final class IxContains<T> extends IxSource<T, Boolean> {
     public Iterator<Boolean> iterator() {
         return new ContainsIterator<T>(source.iterator(), o);
     }
-    
+
     static final class ContainsIterator<T> extends IxSourceIterator<T, Boolean> {
 
         final Object o;
 
-        public ContainsIterator(Iterator<T> it, Object o) {
+        ContainsIterator(Iterator<T> it, Object o) {
             super(it);
             this.o = o;
         }
-        
+
         @Override
         protected boolean moveNext() {
             Iterator<T> it = this.it;
             Object o = this.o;
-            
+
             while (it.hasNext()) {
                 T v = it.next();
                 if (o == v || (o != null && o.equals(v))) {
@@ -55,7 +55,7 @@ final class IxContains<T> extends IxSource<T, Boolean> {
                     return true;
                 }
             }
-            
+
             value = false;
             hasValue = true;
             done = true;

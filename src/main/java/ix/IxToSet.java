@@ -20,7 +20,7 @@ import java.util.*;
 
 final class IxToSet<T> extends IxSource<T, Set<T>> {
 
-    public IxToSet(Iterable<T> source) {
+    IxToSet(Iterable<T> source) {
         super(source);
     }
 
@@ -28,24 +28,24 @@ final class IxToSet<T> extends IxSource<T, Set<T>> {
     public Iterator<Set<T>> iterator() {
         return new ToSetIterator<T>(source.iterator());
     }
-    
+
     static final class ToSetIterator<T> extends IxSourceIterator<T, Set<T>> {
 
-        public ToSetIterator(Iterator<T> it) {
+        ToSetIterator(Iterator<T> it) {
             super(it);
         }
 
         @Override
         protected boolean moveNext() {
-            
+
             Set<T> set = new HashSet<T>();
 
             Iterator<T> it = this.it;
-            
+
             while (it.hasNext()) {
                 set.add(it.next());
             }
-            
+
             value = set;
             hasValue = true;
             done = true;

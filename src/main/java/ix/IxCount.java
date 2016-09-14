@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxCount<T> extends IxSource<T, Integer> {
 
-    public IxCount(Iterable<T> source) {
+    IxCount(Iterable<T> source) {
         super(source);
     }
 
@@ -31,21 +31,21 @@ final class IxCount<T> extends IxSource<T, Integer> {
 
     static final class CountIterator<T> extends IxSourceIterator<T, Integer> {
 
-        public CountIterator(Iterator<T> it) {
+        CountIterator(Iterator<T> it) {
             super(it);
         }
 
         @Override
         protected boolean moveNext() {
             int c = 0;
-            
+
             Iterator<T> it = this.it;
-            
+
             while (it.hasNext()) {
                 it.next();
                 c++;
             }
-            
+
             value = c;
             hasValue = true;
             done = true;

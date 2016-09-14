@@ -18,20 +18,18 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.Func0;
-
 public class DeferTest {
 
     @Test
     public void normal() {
-        Ix<Integer> source = Ix.defer(new Func0<Iterable<Integer>>() {
+        Ix<Integer> source = Ix.defer(new IxSupplier<Iterable<Integer>>() {
             int count;
             @Override
-            public Iterable<Integer> call() {
+            public Iterable<Integer> get() {
                 return Ix.range(++count, 2);
             }
         });
-        
+
         IxTestHelper.assertValues(source, 1, 2);
         IxTestHelper.assertValues(source, 2, 3);
         IxTestHelper.assertValues(source, 3, 4);

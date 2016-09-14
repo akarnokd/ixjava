@@ -21,8 +21,8 @@ import java.util.Iterator;
 final class IxSkipLast<T> extends IxSource<T, T> {
 
     final int n;
-    
-    public IxSkipLast(Iterable<T> source, int n) {
+
+    IxSkipLast(Iterable<T> source, int n) {
         super(source);
         this.n = n;
     }
@@ -31,14 +31,14 @@ final class IxSkipLast<T> extends IxSource<T, T> {
     public Iterator<T> iterator() {
         return new SkipLastIterator<T>(source.iterator(), n);
     }
-    
+
     static final class SkipLastIterator<T> extends IxSourceQueuedIterator<T, T, T> {
 
         final int n;
-        
+
         int size;
-        
-        public SkipLastIterator(Iterator<T> it, int n) {
+
+        SkipLastIterator(Iterator<T> it, int n) {
             super(it);
             this.n = n;
         }
@@ -47,13 +47,13 @@ final class IxSkipLast<T> extends IxSource<T, T> {
         protected boolean moveNext() {
             int s = size;
             int n = this.n;
-            
+
             Iterator<T> it = this.it;
             if (!it.hasNext()) {
                 done = true;
                 return false;
             }
-            
+
             if (s != n) {
                 while (s != n) {
                     offer(toObject(it.next()));
@@ -70,9 +70,9 @@ final class IxSkipLast<T> extends IxSource<T, T> {
             offer(toObject(it.next()));
 
             hasValue = true;
-            
+
             return true;
         }
-        
+
     }
 }

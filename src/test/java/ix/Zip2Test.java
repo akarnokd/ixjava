@@ -18,58 +18,56 @@ package ix;
 
 import org.junit.Test;
 
-import rx.functions.*;
-
 public class Zip2Test {
 
-    Func2<Integer, Integer, Integer> sum = new Func2<Integer, Integer, Integer>() {
+    IxFunction2<Integer, Integer, Integer> sum = new IxFunction2<Integer, Integer, Integer>() {
         @Override
-        public Integer call(Integer a, Integer b) {
+        public Integer apply(Integer a, Integer b) {
             return a + b;
         }
     };
-    
+
     @Test
     public void normal() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 2), Ix.range(10, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 11, 13);
     }
-    
+
     @Test
     public void firstShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 1), Ix.range(10, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 11);
     }
 
     @Test
     public void secondShorter() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.range(1, 3), Ix.range(10, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 11, 13);
     }
 
     @Test
     public void bothEmpty() {
-        
-        Ix<Integer> source = Ix.zip( 
+
+        Ix<Integer> source = Ix.zip(
                 Ix.<Integer>empty(), Ix.<Integer>empty(), sum);
-        
+
         IxTestHelper.assertValues(source);
     }
 
     @Test
     public void normalWith() {
-        
+
         Ix<Integer> source = Ix.range(1, 2).zipWith(Ix.range(10, 2), sum);
-        
+
         IxTestHelper.assertValues(source, 11, 13);
     }
 

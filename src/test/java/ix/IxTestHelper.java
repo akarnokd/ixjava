@@ -22,11 +22,11 @@ import org.junit.Assert;
 
 public enum IxTestHelper {
     ;
-    
+
     static String classOf(Object o) {
         return o != null ? o.getClass().getSimpleName() : "null";
     }
-    
+
     /**
      * Asserts that the iterable produces the specified array of values and
      * verifies if it honors the iterator contract.
@@ -37,38 +37,38 @@ public enum IxTestHelper {
     public static <T> void assertValues(Iterable<T> source, T... values) {
         Iterator<T> a = source.iterator();
         int i = 0;
-        
+
         for (;;) {
             boolean b1 = a.hasNext();
             boolean b2 = a.hasNext();
-            
+
             Assert.assertEquals("Inconsistent hasNext()", b1, b2);
 
             if (!b1) {
                 break;
             }
-            
+
             if (i == values.length) {
                 throw new AssertionError("The source is longer than " + values.length);
             }
-            
+
             T t = a.next();
-            
+
             if (t instanceof Object[]) {
                 Assert.assertArrayEquals((Object[])values[i], (Object[])t);
             } else {
-            Assert.assertEquals("index=" + i + ", expected class=" 
-                    + classOf(values[i]) 
+            Assert.assertEquals("index=" + i + ", expected class="
+                    + classOf(values[i])
                     + ", actual class="
                     + classOf(t), values[i], t);
             }
             i++;
         }
-        
+
         if (i != values.length) {
             throw new AssertionError("The source is shorter than " + values.length + ": " + i);
         }
-        
+
         try {
             a.next();
             Assert.fail("The next() should have thrown a NoSuchElementException");
@@ -76,7 +76,7 @@ public enum IxTestHelper {
             // expected
         }
     }
-    
+
     /**
      * Assert that calling remove() on the source's Iterator throws
      * an UnsupportedOperationException.
@@ -84,7 +84,7 @@ public enum IxTestHelper {
      */
     public static void assertNoRemove(Iterable<?> source) {
         Iterator<?> it = source.iterator();
-        
+
         if (it.hasNext()) {
             it.next();
             try {
@@ -95,7 +95,7 @@ public enum IxTestHelper {
             }
         }
     }
-    
+
     public static List<Integer> range(int start, int count) {
         return Ix.range(start, count).collectToList().first();
     }

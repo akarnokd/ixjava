@@ -21,11 +21,11 @@ import java.util.Iterator;
 final class IxSequenceEqual<T> extends IxSource<T, Boolean> {
 
     final Iterable<? extends T> other;
-    
-    final Pred2<? super T, ? super T> comparer;
-    
-    public IxSequenceEqual(Iterable<T> source, Iterable<? extends T> other, 
-            Pred2<? super T, ? super T> comparer) {
+
+    final IxPredicate2<? super T, ? super T> comparer;
+
+    IxSequenceEqual(Iterable<T> source, Iterable<? extends T> other,
+            IxPredicate2<? super T, ? super T> comparer) {
         super(source);
         this.other = other;
         this.comparer = comparer;
@@ -35,15 +35,15 @@ final class IxSequenceEqual<T> extends IxSource<T, Boolean> {
     public Iterator<Boolean> iterator() {
         return new SequenceEqualIterator<T>(source.iterator(), other.iterator(), comparer);
     }
-    
+
     static final class SequenceEqualIterator<T> extends IxSourceIterator<T, Boolean> {
-        
+
         final Iterator<? extends T> other;
 
-        final Pred2<? super T, ? super T> comparer;
-        
-        public SequenceEqualIterator(Iterator<T> it, Iterator<? extends T> other, 
-                Pred2<? super T, ? super T> comparer) {
+        final IxPredicate2<? super T, ? super T> comparer;
+
+        SequenceEqualIterator(Iterator<T> it, Iterator<? extends T> other,
+                IxPredicate2<? super T, ? super T> comparer) {
             super(it);
             this.other = other;
             this.comparer = comparer;
@@ -51,19 +51,19 @@ final class IxSequenceEqual<T> extends IxSource<T, Boolean> {
 
         @Override
         protected boolean moveNext() {
-            
+
             Iterator<T> it2 = it;
-            
+
             while (it2.hasNext()) {
-                
+
                 T v = it2.next();
-                
+
                 if (other.hasNext()) {
 
                     T u = other.next();
-                    
+
                     if (!comparer.test(v, u)) {
-                        
+
                         value = false;
                         hasValue = true;
                         done = true;
@@ -82,14 +82,14 @@ final class IxSequenceEqual<T> extends IxSource<T, Boolean> {
                 done = true;
                 return true;
             }
-            
+
             value = true;
             hasValue = true;
             done = true;
             return true;
         }
-        
-        
+
+
     }
 
 }
