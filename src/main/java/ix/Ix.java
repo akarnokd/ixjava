@@ -2520,7 +2520,7 @@ public abstract class Ix<T> implements Iterable<T> {
      * @since 1.0
      */
     public final <K> Map<K, T> toMap(IxFunction<? super T, ? extends K> keySelector) {
-        return collectToMap(keySelector).first();
+        return this.<K>collectToMap(keySelector).first();
     }
 
     /**
@@ -2540,7 +2540,7 @@ public abstract class Ix<T> implements Iterable<T> {
      * @since 1.0
      */
     public final <K, V> Map<K, V> toMap(IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
-        return collectToMap(keySelector, valueSelector).first();
+        return this.<K, V>collectToMap(keySelector, valueSelector).first();
     }
 
     /**
@@ -2555,7 +2555,7 @@ public abstract class Ix<T> implements Iterable<T> {
      * @since 1.0
      */
     public final <K> Map<K, Collection<T>> toMultimap(IxFunction<? super T, ? extends K> keySelector) {
-        return collectToMultimap(keySelector).first();
+        return this.<K>collectToMultimap(keySelector).first();
     }
 
     /**
@@ -2574,7 +2574,7 @@ public abstract class Ix<T> implements Iterable<T> {
      * @since 1.0
      */
     public final <K, V> Map<K, Collection<V>> toMultimap(IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
-        return collectToMultimap(keySelector, valueSelector).first();
+        return this.<K, V>collectToMultimap(keySelector, valueSelector).first();
     }
 
     /**
