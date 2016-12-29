@@ -1963,7 +1963,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     /**
-     * Take elements from this sequence while the given predicate returns true
+     * Take elements from this sequence until the given predicate returns true
      * for the current element (checked after emission of that element).
      * <p>
      * The result's Iterator forwards calls of remove() to this' Iterator.
@@ -1978,7 +1978,7 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     /**
-     * Take elements from this sequence until the given predicate returns true
+     * Take elements from this sequence while the given predicate returns true
      * for the current element (checked before emission of that element).
      * <p>
      * The result's Iterator forwards calls of remove() to this' Iterator.
