@@ -32,6 +32,20 @@ import java.util.concurrent.Callable;
 public abstract class Ix<T> implements Iterable<T> {
 
     /**
+     * Returns an IxEnumerator for this Ix instance.
+     * @return the IxEnumerator instance
+     */
+    public /* abstract */ IxEnumerator<T> enumerator() {
+        // TODO
+        throw new UnsupportedOperationException();
+    }
+    
+    @Override
+    public Iterator<T> iterator() {
+        return new IxEnumeratorIterator<T>(enumerator());
+    }
+    
+    /**
      * Emits all characters from the given CharSequence as integer values.
      * <p>
      * The result's iterator() doesn't support remove().

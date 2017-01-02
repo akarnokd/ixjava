@@ -37,6 +37,11 @@ final class IxCharacters extends Ix<Integer> {
         return new CharactersIterator(source, start, end);
     }
 
+    @Override
+    public IxEnumerator<Integer> enumerator() {
+        return new CharactersEnumerator(source, start, end);
+    }
+    
     static final class CharactersIterator implements Iterator<Integer> {
 
         final CharSequence source;
@@ -65,11 +70,40 @@ final class IxCharacters extends Ix<Integer> {
             }
             throw new NoSuchElementException();
         }
-
+        
         @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
     }
 
+    static final class CharactersEnumerator implements IxEnumerator<Integer> {
+        
+        final CharSequence chars;
+        
+        final int end;
+        
+        int index;
+        
+        CharactersEnumerator(CharSequence chars, int start, int end) {
+            this.chars = chars;
+            this.index = start - 1;
+            this.end = end;
+        }
+
+        @Override
+        public boolean moveNext() {
+            return ++index < end;
+        }
+
+        @Override
+        public Integer current() {
+            return (int)chars.charAt(index);
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
