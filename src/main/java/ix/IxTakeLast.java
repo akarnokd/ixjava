@@ -22,7 +22,7 @@ final class IxTakeLast<T> extends IxSource<T, T> {
 
     final int n;
 
-    IxTakeLast(Iterable<T> source, int n) {
+    IxTakeLast(Ix<T> source, int n) {
         super(source);
         this.n = n;
     }

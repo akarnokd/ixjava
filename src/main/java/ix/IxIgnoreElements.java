@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxIgnoreElements<T> extends IxSource<T, T> {
 
-    IxIgnoreElements(Iterable<T> source) {
+    IxIgnoreElements(Ix<T> source) {
         super(source);
     }
 

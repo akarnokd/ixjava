@@ -22,7 +22,7 @@ final class IxDistinct<T, K> extends IxSource<T, T> {
 
     final IxFunction<? super T, K> keySelector;
 
-    IxDistinct(Iterable<T> source, IxFunction<? super T, K> keySelector) {
+    IxDistinct(Ix<T> source, IxFunction<? super T, K> keySelector) {
         super(source);
         this.keySelector = keySelector;
     }

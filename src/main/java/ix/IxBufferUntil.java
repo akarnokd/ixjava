@@ -28,7 +28,7 @@ final class IxBufferUntil<T> extends IxSource<T, List<T>> {
 
     final IxPredicate<? super T> predicate;
 
-    IxBufferUntil(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxBufferUntil(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

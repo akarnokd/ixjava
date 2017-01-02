@@ -23,7 +23,7 @@ final class IxFlattenIterable<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super T, ? extends Iterable<? extends R>> mapper;
 
-    IxFlattenIterable(Iterable<T> source, IxFunction<? super T, ? extends Iterable<? extends R>> mapper) {
+    IxFlattenIterable(Ix<T> source, IxFunction<? super T, ? extends Iterable<? extends R>> mapper) {
         super(source);
         this.mapper = mapper;
     }

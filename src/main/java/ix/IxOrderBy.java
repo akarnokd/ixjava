@@ -26,7 +26,7 @@ final class IxOrderBy<T, K> extends IxSource<T, T> {
 
     final int flag;
 
-    IxOrderBy(Iterable<T> source, IxFunction<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
+    IxOrderBy(Ix<T> source, IxFunction<? super T, K> keySelector, Comparator<? super K> comparator, int flag) {
         super(source);
         this.keySelector = keySelector;
         this.comparator = comparator;

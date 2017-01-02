@@ -28,7 +28,7 @@ final class IxBufferSplit<T> extends IxSource<T, List<T>> {
 
     final IxPredicate<? super T> predicate;
 
-    IxBufferSplit(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxBufferSplit(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

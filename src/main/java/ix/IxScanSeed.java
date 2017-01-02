@@ -24,7 +24,7 @@ final class IxScanSeed<T, R> extends IxSource<T, R> {
 
     final IxFunction2<R, T, R> scanner;
 
-    IxScanSeed(Iterable<T> source, IxSupplier<R> seed, IxFunction2<R, T, R> scanner) {
+    IxScanSeed(Ix<T> source, IxSupplier<R> seed, IxFunction2<R, T, R> scanner) {
         super(source);
         this.seed = seed;
         this.scanner = scanner;

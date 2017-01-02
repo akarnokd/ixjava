@@ -24,7 +24,7 @@ final class IxBufferOverlap<T> extends IxSource<T, List<T>> {
 
     final int skip;
 
-    IxBufferOverlap(Iterable<T> source, int size, int skip) {
+    IxBufferOverlap(Ix<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;

@@ -24,7 +24,7 @@ final class IxToMap<T, K, V> extends IxSource<T, Map<K, V>> {
 
     final IxFunction<? super T, ? extends V> valueSelector;
 
-    IxToMap(Iterable<T> source, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
+    IxToMap(Ix<T> source, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
         super(source);
         this.keySelector = keySelector;
         this.valueSelector = valueSelector;

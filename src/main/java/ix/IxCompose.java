@@ -22,7 +22,7 @@ final class IxCompose<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> transformer;
 
-    IxCompose(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
+    IxCompose(Ix<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> transformer) {
         super(source);
         this.transformer = transformer;
     }

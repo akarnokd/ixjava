@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxMaxLong extends IxSource<Long, Long> {
 
-    IxMaxLong(Iterable<Long> source) {
+    IxMaxLong(Ix<Long> source) {
         super(source);
     }
 

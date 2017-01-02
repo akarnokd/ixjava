@@ -22,7 +22,7 @@ final class IxContains<T> extends IxSource<T, Boolean> {
 
     final Object o;
 
-    IxContains(Iterable<T> source, Object o) {
+    IxContains(Ix<T> source, Object o) {
         super(source);
         this.o = o;
     }

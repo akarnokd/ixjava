@@ -22,7 +22,7 @@ final class IxScan<T> extends IxSource<T, T> {
 
     final IxFunction2<T, T, T> scanner;
 
-    IxScan(Iterable<T> source, IxFunction2<T, T, T> scanner) {
+    IxScan(Ix<T> source, IxFunction2<T, T, T> scanner) {
         super(source);
         this.scanner = scanner;
     }

@@ -24,7 +24,7 @@ final class IxDoOn<T> extends IxSource<T, T> {
 
     final Runnable onCompleted;
 
-    IxDoOn(Iterable<T> source, IxConsumer<? super T> onNext, Runnable onCompleted) {
+    IxDoOn(Ix<T> source, IxConsumer<? super T> onNext, Runnable onCompleted) {
         super(source);
         this.onNext = onNext;
         this.onCompleted = onCompleted;

@@ -18,7 +18,7 @@ package ix;
 
 import java.util.*;
 
-final class IxEmpty extends Ix<Object> implements Iterator<Object> {
+final class IxEmpty extends Ix<Object> implements Iterator<Object>, IxEnumerator<Object> {
 
     static final IxEmpty INSTANCE = new IxEmpty();
 
@@ -45,5 +45,15 @@ final class IxEmpty extends Ix<Object> implements Iterator<Object> {
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Object current() {
+        return null;
+    }
+
+    @Override
+    public boolean moveNext() {
+        return false;
     }
 }

@@ -22,7 +22,7 @@ final class IxRetain<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxRetain(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxRetain(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

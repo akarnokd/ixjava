@@ -24,7 +24,7 @@ final class IxDistinctUntilChanged<T, K> extends IxSource<T, T> {
 
     final IxPredicate2<? super K, ? super K> comparer;
 
-    IxDistinctUntilChanged(Iterable<T> source, IxFunction<? super T, K> keySelector,
+    IxDistinctUntilChanged(Ix<T> source, IxFunction<? super T, K> keySelector,
             IxPredicate2<? super K, ? super K> comparer) {
         super(source);
         this.keySelector = keySelector;

@@ -22,7 +22,7 @@ final class IxSwitchIfEmpty<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    IxSwitchIfEmpty(Iterable<T> source, Iterable<? extends T> other) {
+    IxSwitchIfEmpty(Ix<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }

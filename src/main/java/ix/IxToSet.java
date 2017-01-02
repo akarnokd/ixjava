@@ -20,7 +20,7 @@ import java.util.*;
 
 final class IxToSet<T> extends IxSource<T, Set<T>> {
 
-    IxToSet(Iterable<T> source) {
+    IxToSet(Ix<T> source) {
         super(source);
     }
 

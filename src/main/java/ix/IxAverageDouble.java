@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxAverageDouble extends IxSource<Number, Double> {
 
-    IxAverageDouble(Iterable<Number> source) {
+    IxAverageDouble(Ix<Number> source) {
         super(source);
     }
 

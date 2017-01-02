@@ -22,7 +22,7 @@ final class IxTransformer<T, R> extends IxSource<T, R> {
 
     final IxTransform<T, R> transform;
 
-    IxTransformer(Iterable<T> source, IxTransform<T, R> transform) {
+    IxTransformer(Ix<T> source, IxTransform<T, R> transform) {
         super(source);
         this.transform = transform;
     }

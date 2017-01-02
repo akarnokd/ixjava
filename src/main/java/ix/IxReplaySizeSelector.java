@@ -24,7 +24,7 @@ final class IxReplaySizeSelector<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
 
-    IxReplaySizeSelector(Iterable<T> source, int maxSize,
+    IxReplaySizeSelector(Ix<T> source, int maxSize,
             IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.maxSize = maxSize;

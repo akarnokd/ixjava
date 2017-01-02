@@ -22,7 +22,7 @@ final class IxPublishSelector<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
 
-    IxPublishSelector(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
+    IxPublishSelector(Ix<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.selector = selector;
     }

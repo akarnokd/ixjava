@@ -22,7 +22,7 @@ final class IxTakeUntil<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxTakeUntil(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxTakeUntil(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

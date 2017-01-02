@@ -23,9 +23,9 @@ package ix;
  */
 abstract class IxSource<T, R> extends Ix<R> {
 
-    protected final Iterable<T> source;
+    protected final Ix<T> source;
 
-    IxSource(Iterable<T> source) {
+    IxSource(Ix<T> source) {
         this.source = source;
     }
 

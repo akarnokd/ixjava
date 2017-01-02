@@ -22,7 +22,7 @@ final class IxUnion<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    IxUnion(Iterable<T> source, Iterable<? extends T> other) {
+    IxUnion(Ix<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }

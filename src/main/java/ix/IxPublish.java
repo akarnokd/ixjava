@@ -22,7 +22,7 @@ final class IxPublish<T> extends IxSource<T, T> {
 
     Iterator<T> current;
 
-    IxPublish(Iterable<T> source) {
+    IxPublish(Ix<T> source) {
         super(source);
     }
 

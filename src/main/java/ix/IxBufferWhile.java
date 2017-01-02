@@ -27,7 +27,7 @@ final class IxBufferWhile<T> extends IxSource<T, List<T>> {
 
     final IxPredicate<? super T> predicate;
 
-    IxBufferWhile(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxBufferWhile(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

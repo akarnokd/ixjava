@@ -24,7 +24,7 @@ final class IxMinMax<T> extends IxSource<T, T> {
 
     final int flag;
 
-    IxMinMax(Iterable<T> source, Comparator<? super T> comparator, int flag) {
+    IxMinMax(Ix<T> source, Comparator<? super T> comparator, int flag) {
         super(source);
         this.comparator = comparator;
         this.flag = flag;

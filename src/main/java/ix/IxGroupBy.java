@@ -26,7 +26,7 @@ final class IxGroupBy<T, K, V> extends IxSource<T, GroupedIx<K, V>> {
 
     final IxFunction<? super T, ? extends V> valueSelector;
 
-    IxGroupBy(Iterable<T> source, IxFunction<? super T, ? extends K> keySelector,
+    IxGroupBy(Ix<T> source, IxFunction<? super T, ? extends K> keySelector,
             IxFunction<? super T, ? extends V> valueSelector) {
         super(source);
         this.keySelector = keySelector;

@@ -23,7 +23,7 @@ final class IxExcept<T> extends IxSource<T, T> {
 
     final Iterable<? extends T> other;
 
-    IxExcept(Iterable<T> source, Iterable<? extends T> other) {
+    IxExcept(Ix<T> source, Iterable<? extends T> other) {
         super(source);
         this.other = other;
     }

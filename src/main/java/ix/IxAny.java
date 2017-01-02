@@ -22,7 +22,7 @@ final class IxAny<T> extends IxSource<T, Boolean> {
 
     final IxPredicate<? super T> predicate;
 
-    IxAny(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxAny(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

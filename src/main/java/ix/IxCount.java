@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxCount<T> extends IxSource<T, Integer> {
 
-    IxCount(Iterable<T> source) {
+    IxCount(Ix<T> source) {
         super(source);
     }
 

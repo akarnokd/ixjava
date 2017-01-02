@@ -22,7 +22,7 @@ final class IxJoin<T> extends IxSource<T, String> {
 
     final CharSequence separator;
 
-    IxJoin(Iterable<T> source, CharSequence separator) {
+    IxJoin(Ix<T> source, CharSequence separator) {
         super(source);
         this.separator = separator;
     }

@@ -27,7 +27,7 @@ final class IxReadOnly<T> extends IxSource<T, T> {
 
     final boolean silent;
 
-    IxReadOnly(Iterable<T> source, boolean silent) {
+    IxReadOnly(Ix<T> source, boolean silent) {
         super(source);
         this.silent = silent;
     }

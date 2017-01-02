@@ -22,7 +22,7 @@ final class IxTake<T> extends IxSource<T, T> {
 
     final int n;
 
-    IxTake(Iterable<T> source, int n) {
+    IxTake(Ix<T> source, int n) {
         super(source);
         this.n = n;
     }

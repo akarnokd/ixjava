@@ -22,7 +22,7 @@ final class IxBuffer<T> extends IxSource<T, List<T>> {
 
     final int size;
 
-    IxBuffer(Iterable<T> source, int size) {
+    IxBuffer(Ix<T> source, int size) {
         super(source);
         this.size = size;
     }

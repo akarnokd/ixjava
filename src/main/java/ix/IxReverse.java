@@ -20,7 +20,7 @@ import java.util.*;
 
 final class IxReverse<T> extends IxSource<T, T> {
 
-    IxReverse(Iterable<T> source) {
+    IxReverse(Ix<T> source) {
         super(source);
     }
 

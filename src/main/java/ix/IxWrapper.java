@@ -18,15 +18,52 @@ package ix;
 
 import java.util.Iterator;
 
-final class IxWrapper<T> extends IxSource<T, T> {
+final class IxWrapper<T> extends Ix<T> {
 
+    final Iterable<T> source;
+    
     IxWrapper(Iterable<T> source) {
-        super(source);
+        this.source = source;
     }
 
     @Override
     public Iterator<T> iterator() {
         return source.iterator();
     }
+    
+    @Override
+    public IxEnumerator<T> enumerator() {
+        return new WrapperEnumerator<T>(source.iterator());
+    }
 
+    static final class WrapperEnumerator<T> implements IxEnumerator<T> {
+        
+        final Iterator<T> source;
+
+        T value;
+
+        WrapperEnumerator(Iterator<T> source) {
+            this.source = source;
+        }
+
+        @Override
+        public boolean moveNext() {
+            Iterator<T> src = source;
+            if (src.hasNext()) {
+                value = src.next();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public T current() {
+            return value;
+        }
+
+        @Override
+        public void remove() {
+            source.remove();
+        }
+    }
 }

@@ -26,7 +26,7 @@ final class IxWindowSkip<T> extends IxSource<T, Ix<T>> {
 
     static final Object NULL = new Object();
 
-    IxWindowSkip(Iterable<T> source, int size, int skip) {
+    IxWindowSkip(Ix<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;

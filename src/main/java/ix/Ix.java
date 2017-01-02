@@ -39,7 +39,7 @@ public abstract class Ix<T> implements Iterable<T> {
         // TODO
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public Iterator<T> iterator() {
         return new IxEnumeratorIterator<T>(enumerator());
@@ -94,7 +94,7 @@ public abstract class Ix<T> implements Iterable<T> {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <T> Ix<T> concat(Iterable<? extends Iterable<? extends T>> sources) {
         return new IxFlattenIterable<Iterable<? extends T>, T>(
-                (Iterable)nullCheck(sources, "sources is null"),
+                nullCheck(from((Iterable)sources), "sources is null"),
                 IdentityHelper.<Iterable<? extends T>>instance());
     }
 
@@ -787,7 +787,7 @@ public abstract class Ix<T> implements Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     public final Ix<Float> averageFloat() {
-        return new IxAverageFloat((Iterable<Number>)this);
+        return new IxAverageFloat((Ix<Number>)this);
     }
 
     /**
@@ -803,7 +803,7 @@ public abstract class Ix<T> implements Iterable<T> {
      */
     @SuppressWarnings("unchecked")
     public final Ix<Double> averageDouble() {
-        return new IxAverageDouble((Iterable<Number>)this);
+        return new IxAverageDouble((Ix<Number>)this);
     }
 
     /**

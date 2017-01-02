@@ -24,7 +24,7 @@ final class IxSequenceEqual<T> extends IxSource<T, Boolean> {
 
     final IxPredicate2<? super T, ? super T> comparer;
 
-    IxSequenceEqual(Iterable<T> source, Iterable<? extends T> other,
+    IxSequenceEqual(Ix<T> source, Iterable<? extends T> other,
             IxPredicate2<? super T, ? super T> comparer) {
         super(source);
         this.other = other;

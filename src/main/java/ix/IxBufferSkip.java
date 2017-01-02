@@ -24,7 +24,7 @@ final class IxBufferSkip<T> extends IxSource<T, List<T>> {
 
     final int skip;
 
-    IxBufferSkip(Iterable<T> source, int size, int skip) {
+    IxBufferSkip(Ix<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;

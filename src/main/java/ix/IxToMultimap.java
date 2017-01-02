@@ -24,7 +24,7 @@ final class IxToMultimap<T, K, V> extends IxSource<T, Map<K, Collection<V>>> {
 
     final IxFunction<? super T, ? extends V> valueSelector;
 
-    IxToMultimap(Iterable<T> source, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
+    IxToMultimap(Ix<T> source, IxFunction<? super T, ? extends K> keySelector, IxFunction<? super T, ? extends V> valueSelector) {
         super(source);
         this.keySelector = keySelector;
         this.valueSelector = valueSelector;

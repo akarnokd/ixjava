@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxAverageFloat extends IxSource<Number, Float> {
 
-    IxAverageFloat(Iterable<Number> source) {
+    IxAverageFloat(Ix<Number> source) {
         super(source);
     }
 

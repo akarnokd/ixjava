@@ -26,7 +26,7 @@ final class IxWindowOverlap<T> extends IxSource<T, Ix<T>> {
 
     static final Object NULL = new Object();
 
-    IxWindowOverlap(Iterable<T> source, int size, int skip) {
+    IxWindowOverlap(Ix<T> source, int size, int skip) {
         super(source);
         this.size = size;
         this.skip = skip;

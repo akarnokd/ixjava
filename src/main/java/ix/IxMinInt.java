@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxMinInt extends IxSource<Integer, Integer> {
 
-    IxMinInt(Iterable<Integer> source) {
+    IxMinInt(Ix<Integer> source) {
         super(source);
     }
 

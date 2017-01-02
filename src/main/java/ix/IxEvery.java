@@ -27,7 +27,7 @@ final class IxEvery<T> extends IxSource<T, T> {
 
     final int nth;
 
-    IxEvery(Iterable<T> source, int nth) {
+    IxEvery(Ix<T> source, int nth) {
         super(source);
         this.nth = nth;
     }

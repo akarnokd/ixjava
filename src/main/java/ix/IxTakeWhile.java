@@ -22,7 +22,7 @@ final class IxTakeWhile<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxTakeWhile(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxTakeWhile(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

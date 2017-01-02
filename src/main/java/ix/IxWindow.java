@@ -24,7 +24,7 @@ final class IxWindow<T> extends IxSource<T, Ix<T>> {
 
     static final Object NULL = new Object();
 
-    IxWindow(Iterable<T> source, int size) {
+    IxWindow(Ix<T> source, int size) {
         super(source);
         this.size = size;
     }

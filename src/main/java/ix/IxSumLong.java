@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxSumLong extends IxSource<Long, Long> {
 
-    IxSumLong(Iterable<Long> source) {
+    IxSumLong(Ix<Long> source) {
         super(source);
     }
 

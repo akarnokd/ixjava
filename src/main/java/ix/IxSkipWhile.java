@@ -22,7 +22,7 @@ final class IxSkipWhile<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxSkipWhile(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxSkipWhile(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

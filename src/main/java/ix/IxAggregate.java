@@ -22,7 +22,7 @@ final class IxAggregate<T> extends IxSource<T, T> {
 
     final IxFunction2<T, T, T> aggregator;
 
-    IxAggregate(Iterable<T> source, IxFunction2<T, T, T> aggregator) {
+    IxAggregate(Ix<T> source, IxFunction2<T, T, T> aggregator) {
         super(source);
         this.aggregator = aggregator;
     }

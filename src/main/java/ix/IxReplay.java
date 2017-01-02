@@ -24,7 +24,7 @@ final class IxReplay<T> extends IxSource<T, T> {
 
     Iterator<T> it;
 
-    IxReplay(Iterable<T> source) {
+    IxReplay(Ix<T> source) {
         super(source);
     }
 

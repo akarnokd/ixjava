@@ -22,7 +22,7 @@ final class IxMap<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super T, ? extends R> mapper;
 
-    IxMap(Iterable<T> source, IxFunction<? super T, ? extends R> mapper) {
+    IxMap(Ix<T> source, IxFunction<? super T, ? extends R> mapper) {
         super(source);
         this.mapper = mapper;
     }

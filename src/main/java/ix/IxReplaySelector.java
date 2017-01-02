@@ -22,7 +22,7 @@ final class IxReplaySelector<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector;
 
-    IxReplaySelector(Iterable<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
+    IxReplaySelector(Ix<T> source, IxFunction<? super Ix<T>, ? extends Iterable<? extends R>> selector) {
         super(source);
         this.selector = selector;
     }

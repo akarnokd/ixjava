@@ -30,7 +30,7 @@ final class IxReplaySize<T> extends IxSource<T, T> {
 
     int size;
 
-    IxReplaySize(Iterable<T> source, int maxSize) {
+    IxReplaySize(Ix<T> source, int maxSize) {
         super(source);
         this.maxSize = maxSize;
         this.head = this.tail = new Node<T>(null);

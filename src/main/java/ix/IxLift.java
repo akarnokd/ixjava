@@ -22,7 +22,7 @@ final class IxLift<T, R> extends IxSource<T, R> {
 
     final IxFunction<? super Iterator<T>, ? extends Iterator<R>> lifter;
 
-    IxLift(Iterable<T> source, IxFunction<? super Iterator<T>, ? extends Iterator<R>> lifter) {
+    IxLift(Ix<T> source, IxFunction<? super Iterator<T>, ? extends Iterator<R>> lifter) {
         super(source);
         this.lifter = lifter;
     }

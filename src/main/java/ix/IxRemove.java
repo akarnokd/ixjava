@@ -22,7 +22,7 @@ final class IxRemove<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxRemove(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxRemove(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

@@ -22,7 +22,7 @@ final class IxFilter<T> extends IxSource<T, T> {
 
     final IxPredicate<? super T> predicate;
 
-    IxFilter(Iterable<T> source, IxPredicate<? super T> predicate) {
+    IxFilter(Ix<T> source, IxPredicate<? super T> predicate) {
         super(source);
         this.predicate = predicate;
     }

@@ -22,7 +22,7 @@ final class IxSkip<T> extends IxSource<T, T> {
 
     final int n;
 
-    IxSkip(Iterable<T> source, int n) {
+    IxSkip(Ix<T> source, int n) {
         super(source);
         this.n = n;
     }

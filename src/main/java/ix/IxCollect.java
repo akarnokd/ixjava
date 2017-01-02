@@ -24,7 +24,7 @@ final class IxCollect<T, C> extends IxSource<T, C> {
 
     final IxConsumer2<C, T> collector;
 
-    IxCollect(Iterable<T> source, IxSupplier<C> initialFactory, IxConsumer2<C, T> collector) {
+    IxCollect(Ix<T> source, IxSupplier<C> initialFactory, IxConsumer2<C, T> collector) {
         super(source);
         this.initialFactory = initialFactory;
         this.collector = collector;
@@ -33,6 +33,11 @@ final class IxCollect<T, C> extends IxSource<T, C> {
     @Override
     public Iterator<C> iterator() {
         return new CollectorIterator<T, C>(source.iterator(), collector, initialFactory.get());
+    }
+
+    @Override
+    public IxEnumerator<C> enumerator() {
+        return new CollectorEnumerator<T, C>(source.enumerator(), collector, initialFactory.get());
     }
 
     static final class CollectorIterator<T, C> extends IxSourceIterator<T, C> {
@@ -60,6 +65,53 @@ final class IxCollect<T, C> extends IxSource<T, C> {
             hasValue = true;
             done = true;
             return true;
+        }
+    }
+    
+    static final class CollectorEnumerator<T, C> implements IxEnumerator<C> {
+        
+        final IxEnumerator<T> source;
+        
+        final IxConsumer2<C, T> collector;
+        
+        C value;
+        
+        boolean once;
+        
+        CollectorEnumerator(IxEnumerator<T> source, IxConsumer2<C, T> collector, C value) {
+            this.source = source;
+            this.collector = collector;
+            this.value = value;
+        }
+        
+        @Override
+        public boolean moveNext() {
+            if (!once) {
+                once = true;
+                
+                C c = value;
+                
+                IxEnumerator<T> src = source;
+                IxConsumer2<C, T> coll = collector;
+                
+                while (src.moveNext()) {
+                    coll.accept(c, src.current());
+                }
+                
+                return true;
+            }
+            value = null;
+            return false;
+        }
+        
+        @Override
+        public C current() {
+            return value;
+        }
+        
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 }

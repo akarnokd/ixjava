@@ -24,7 +24,7 @@ final class IxReduce<T, C> extends IxSource<T, C> {
 
     final IxFunction2<C, T, C> reducer;
 
-    IxReduce(Iterable<T> source, IxSupplier<C> initialFactory, IxFunction2<C, T, C> reducer) {
+    IxReduce(Ix<T> source, IxSupplier<C> initialFactory, IxFunction2<C, T, C> reducer) {
         super(source);
         this.initialFactory = initialFactory;
         this.reducer = reducer;

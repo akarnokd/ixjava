@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 final class IxHasElements<T> extends IxSource<T, Boolean> {
 
-    IxHasElements(Iterable<T> source) {
+    IxHasElements(Ix<T> source) {
         super(source);
     }
 
