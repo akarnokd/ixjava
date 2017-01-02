@@ -18,7 +18,7 @@ package ix;
 
 import java.util.Iterator;
 
-final class IxRepeat<T> extends Ix<T> {
+final class IxRepeat<T> extends Ix<T> implements Iterator<T> {
 
     final T value;
 
@@ -28,30 +28,21 @@ final class IxRepeat<T> extends Ix<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new RepeatIterator<T>(value);
+        return this;
     }
 
-    static final class RepeatIterator<T> implements Iterator<T> {
+    @Override
+    public boolean hasNext() {
+        return true;
+    }
 
-        final T value;
+    @Override
+    public T next() {
+        return value;
+    }
 
-        RepeatIterator(T value) {
-            this.value = value;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return true;
-        }
-
-        @Override
-        public T next() {
-            return value;
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
     }
 }

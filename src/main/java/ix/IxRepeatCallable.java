@@ -16,34 +16,39 @@
 
 package ix;
 
+import java.util.Iterator;
+import java.util.concurrent.Callable;
+
 /**
- * An Iterable plus a key representing a group for the
- * operator {@code groupBy()}.
+ * Repeatedly call a Callable indefinitely.
  *
- * @param <K> the key type
- * @param <V> the value type
+ * @param <T> the value type
  */
-public abstract class GroupedIx<K, V> extends Ix<V> {
+final class IxRepeatCallable<T> extends Ix<T> implements Iterator<T> {
 
-    /**
-     * The group key.
-     */
-    protected final K key;
+    final Callable<T> callable;
 
-    /**
-     * Constructs a GroupedIx with the given group key.
-     * @param key the group key
-     */
-    public GroupedIx(K key) {
-        this.key = key;
+    IxRepeatCallable(Callable<T> callable) {
+        this.callable = callable;
     }
 
-    /**
-     * Returns this group's key.
-     * @return the key
-     */
-    public final K key() {
-        return key;
+    @Override
+    public Iterator<T> iterator() {
+        return this;
     }
 
+    @Override
+    public boolean hasNext() {
+        return true;
+    }
+
+    @Override
+    public T next() {
+        return checkedCall(callable);
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
 }

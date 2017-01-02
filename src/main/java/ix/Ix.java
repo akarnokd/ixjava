@@ -399,6 +399,58 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     /**
+     * Merges self-comparable items from an Iterable sequence of Iterable sequences, picking
+     * the smallest item from all those inner Iterables until all sources complete.
+     * @param <T> the value type
+     * @param sources the Iterable sequence of Iterables of self-comparable items
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T extends Comparable<? super T>> Ix<T> orderedMerge(Iterable<? extends Iterable<? extends T>> sources) {
+        return orderedMerge(sources, SelfComparator.INSTANCE);
+    }
+
+    /**
+     * Merges items from an Iterable sequence of Iterable sequences, picking
+     * the smallest item (according to a custom comparator) from all those inner
+     * Iterables until all sources complete.
+     * @param <T> the value type
+     * @param sources the Iterable sequence of Iterables
+     * @param comparator the comparator to compare items and pick the one that returns negative will be picked
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T> Ix<T> orderedMerge(Iterable<? extends Iterable<? extends T>> sources, Comparator<? super T> comparator) {
+        return new IxOrderedMergeIterable<T>(nullCheck(sources, "sources is null"), nullCheck(comparator, "comparator is null"));
+    }
+
+    /**
+     * Merges self-comparable items from an Iterable sequence of Iterable sequences, picking
+     * the smallest item from all those inner Iterables until all sources complete.
+     * @param <T> the value type
+     * @param sources the Iterable sequence of Iterables of self-comparable items
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T extends Comparable<? super T>> Ix<T> orderedMergeArray(Iterable<? extends T>... sources) {
+        return orderedMergeArray(SelfComparator.INSTANCE, sources);
+    }
+
+    /**
+     * Merges items from an array of Iterable sequences, picking
+     * the smallest item (according to a custom comparator) from all those inner
+     * Iterables until all sources complete.
+     * @param <T> the value type
+     * @param sources the Iterable sequence of Iterables
+     * @param comparator the comparator to compare items and pick the one that returns negative will be picked
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T> Ix<T> orderedMergeArray(Comparator<? super T> comparator, Iterable<? extends T>... sources) {
+        return new IxOrderedMergeArray<T>(nullCheck(sources, "sources is null"), nullCheck(comparator, "comparator is null"));
+    }
+
+    /**
      * Emits a range of incrementing integer values, starting from {@code start} and
      * up to {@code count} times.
      * @param start the starting value
@@ -418,6 +470,43 @@ public abstract class Ix<T> implements Iterable<T> {
             throw new IllegalArgumentException("count >= 0 required but it was " + count);
         }
         return new IxRange(start, count);
+    }
+
+    /**
+     * Prevents the downstream from calling remove() and throws
+     * an UnsupportedOperationException instead.
+     * @return the new Ix instance
+     * @see #readOnly(boolean)
+     * @since 1.0
+     */
+    public final Ix<T> readOnly() {
+        return new IxReadOnly<T>(this, false);
+    }
+
+    /**
+     * Prevents the downstream from calling remove() by optionally
+     * ignoring it or throwing an UnsupportedOperationException.
+     * @param silent if true, remove() calls are ignored; if false,
+     * remove() calls throw an UnsupportedOperationException
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Ix<T> readOnly(boolean silent) {
+        return new IxReadOnly<T>(this, silent);
+    }
+
+    /**
+     * Repeatedly calls the given callable indefinitely and
+     * emits the returned value.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @param <T> the value type
+     * @param callable the callable to call
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public static <T> Ix<T> repeatCallable(Callable<T> callable) {
+        return new IxRepeatCallable<T>(nullCheck(callable, "callable is null"));
     }
 
     /**
@@ -736,6 +825,52 @@ public abstract class Ix<T> implements Iterable<T> {
             return new IxBufferSkip<T>(this, positive(size, "size"), positive(skip, "skip"));
         }
         return new IxBufferOverlap<T>(this, positive(size, "size"), positive(skip, "skip"));
+    }
+
+    /**
+     * Buffer until an item is encountered for which the predicate returns true,
+     * triggering a new buffer.
+     * <p>Neither the previous nor the next buffer will contain the item that caused the
+     * split
+     * @param predicate the predicate called with each item and should return false
+     * to trigger a new buffer
+     * @return the new Ix instance
+     * @see #bufferUntil(IxPredicate)
+     * @see #bufferWhile(IxPredicate)
+     * @since 1.0
+     */
+    public final Ix<List<T>> bufferSplit(IxPredicate<? super T> predicate) {
+        return new IxBufferSplit<T>(this, nullCheck(predicate, "predicate is null"));
+    }
+
+    /**
+     * Buffer until an item is encountered after which the predicate returns true
+     * to start a new buffer.
+     * <p>The item will be part of the previous buffer.
+     * @param predicate the predicate called with each item after the item
+     * has been added to the current buffer and should return true to start a new buffer
+     * @return the new Ix instance
+     * @see #bufferSplit(IxPredicate)
+     * @see #bufferWhile(IxPredicate)
+     * @since 1.0
+     */
+    public final Ix<List<T>> bufferUntil(IxPredicate<? super T> predicate) {
+        return new IxBufferUntil<T>(this, nullCheck(predicate, "predicate is null"));
+    }
+
+    /**
+     * Buffer while an item is encountered before which the predicate returns false
+     * to start a new buffer.
+     * <p>The item will be part of the next buffer
+     * @param predicate the predicate called with each item after the item
+     * has been added to the current buffer and should return true to start a new buffer
+     * @return the new Ix instance
+     * @see #bufferSplit(IxPredicate)
+     * @see #bufferUntil(IxPredicate)
+     * @since 1.0
+     */
+    public final Ix<List<T>> bufferWhile(IxPredicate<? super T> predicate) {
+        return new IxBufferWhile<T>(this, nullCheck(predicate, "predicate is null"));
     }
 
     /**
@@ -1093,6 +1228,17 @@ public abstract class Ix<T> implements Iterable<T> {
      */
     public final Ix<T> endWith(T... values) {
         return concat(this, fromArray(values));
+    }
+
+    /**
+     * Emit every Nth item only from upstream.
+     * <p>Example: Ix.range(1, 5).every(2) will yield {2, 4}.
+     * @param nth how many items to skip + 1
+     * @return the new Ix instance
+     * @since 1.0
+     */
+    public final Ix<T> every(int nth) {
+        return new IxEvery<T>(this, positive(nth, "nth"));
     }
 
     /**

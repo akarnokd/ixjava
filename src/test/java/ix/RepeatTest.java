@@ -16,6 +16,8 @@
 
 package ix;
 
+import java.util.concurrent.Callable;
+
 import org.junit.Test;
 
 public class RepeatTest {
@@ -234,6 +236,21 @@ public class RepeatTest {
         });
 
         IxTestHelper.assertValues(source, 1, 1, 1);
+
+        IxTestHelper.assertNoRemove(source);
+    }
+
+    @Test
+    public void repeatCallable() {
+        Ix<Integer> source = Ix.repeatCallable(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                return 1;
+            }
+        })
+        .take(5);
+
+        IxTestHelper.assertValues(source, 1, 1, 1, 1, 1);
 
         IxTestHelper.assertNoRemove(source);
     }
