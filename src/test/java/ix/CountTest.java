@@ -74,4 +74,30 @@ public class CountTest {
         IxTestHelper.assertNoRemove(source);
     }
 
+    @Test
+    public void normalDouble() {
+        Ix<Double> source = Ix.range(1, 5).countDouble();
+
+        IxTestHelper.assertValues(source, 5.0);
+
+        IxTestHelper.assertNoRemove(source);
+    }
+
+    @Test
+    public void justDouble() {
+        Ix<Double> source = Ix.just(4.56).countDouble();
+
+        IxTestHelper.assertValues(source, 4.56);
+
+        IxTestHelper.assertNoRemove(source);
+    }
+
+    @Test
+    public void emptyDouble() {
+        Ix<Double> source = Ix.empty().countDouble();
+
+        IxTestHelper.assertValues(source, 0.0);
+
+        IxTestHelper.assertNoRemove(source);
+    }
 }
