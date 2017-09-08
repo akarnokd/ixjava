@@ -55,7 +55,7 @@ final class IxToMap<T, K, V> extends IxSource<T, Map<K, V>> {
 
             IxFunction<? super T, ? extends V> valueSelector = this.valueSelector;
 
-            Map<K, V> result = new HashMap<K, V>();
+            Map<K, V> result = new LinkedHashMap<K, V>();
 
             while (it.hasNext()) {
                 T t = it.next();
