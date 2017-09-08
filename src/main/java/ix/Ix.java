@@ -1101,6 +1101,17 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     /**
+     * Emits the number of elements, as a double, in this sequence.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * @return the number of elements in this sequence
+     * @since 1.0
+     */
+    public final Ix<Double> countDouble() {
+        return new IxCountDouble<T>(this);
+    }
+
+    /**
      * Emits the given value if this sequence is empty, streams this sequence otherwise.
      * <p>
      * The result's iterator() doesn't support remove().
