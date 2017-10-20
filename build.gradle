@@ -121,7 +121,7 @@ license {
 }
 
 jacoco {
-    toolVersion = '0.7.7.201606060606' // See http://www.eclemma.org/jacoco/.
+    toolVersion = '0.7.9' // See http://www.eclemma.org/jacoco/.
 }
 
 jacocoTestReport {
@@ -171,5 +171,5 @@ build.dependsOn pmdPrint
 check.dependsOn pmdPrint
 
 animalsniffer {
-    annotation = 'rx.internal.util.SuppressAnimalSniffer'
+    annotation = 'ix.SuppressAnimalSniffer'
 }
