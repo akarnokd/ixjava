@@ -258,6 +258,26 @@ public abstract class Ix<T> implements Iterable<T> {
     }
 
     /**
+     * Emits all the elements of the given suppliers array.
+     * <p>
+     * The result's iterator() doesn't support remove().
+     * <p>
+     * 
+     * @param <T> the value type
+     * @param values the array of suppliers of values, not null
+     * @return the new Ix instance
+     * @throws NullPointerException if values is null
+     * @since 1.x
+     */
+    public static <T> Ix<T> fromSuppliers(IxSupplier<T>... values) {
+        int n = values.length;
+        if (n == 0) {
+            return empty();
+        }
+        return new IxFromSuppliers<T>(0,values.length,values);
+    }
+
+    /**
      * Generates a sequence of values via a generic indexed for-loop style construct;
      * the index starts with the given seed, checked via a condition (to terminate),
      * generated from the index via the selector and then a new index is generated via next.
