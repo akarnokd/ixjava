@@ -15,20 +15,14 @@ and interactive dataflows.**
 
 # Releases
 
+Javadoc: https://akarnokd.github.com/ixjava/javadoc/index.html
+
 **gradle**
 
 ```groovy
 dependencies {
-    compile 'com.github.akarnokd:ixjava:1.0.0'
+    implementation 'com.github.akarnokd:ixjava:1.0.0'
 }
-```
-
-**ivy**
-
-```xml
-<dependencies>
-    <dependency org="com.github.akarnokd" name="ixjava" rev="1.0.0" />
-</dependencies>
 ```
 
 Maven search:
