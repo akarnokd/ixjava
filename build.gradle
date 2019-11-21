@@ -102,6 +102,10 @@ plugins.withType(EclipsePlugin) {
 
 javadoc {
     failOnError = false
+     options.links(
+        "https://docs.oracle.com/javase/7/docs/api/"
+    )
+    
 }
 
 test {
