@@ -43,10 +43,10 @@ rm -rf javadoc
 yes | cp -rfv ./build/docs/javadoc/ javadoc/
 
 # stage all changed and new files
-git add *.html
-git add *.css
-git add *.js
-git add javadoc/package-list
+git add *.html --verbose
+git add *.css --verbose
+git add *.js --verbose
+git add javadoc/package-list --verbose
 
 # commit all
 git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
