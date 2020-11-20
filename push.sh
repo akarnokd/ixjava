@@ -9,24 +9,23 @@ targetRepo=github.com/akarnokd/ixjava.git
 # =======================================================================
 
 # only for main pushes, for now
-# if [ "$TRAVIS_PULL_REQUEST" == "true" ] || [ "$TRAVIS_TAG" == "" ]; then
-if [ "$TRAVIS_PULL_REQUEST" == "true" ]; then
+if [ "$CI_PULL_REQUEST" == "true" ]; then
 	echo -e "Pull request detected, skipping JavaDocs pushback."
 	exit 0
 fi
 
 # check if the token is actually there
-if [ "$GITHUB_TOKEN" == "" ]; then
+if [ "$JAVADOCS_TOKEN" == "" ]; then
 	echo -e "No access to GitHub, skipping JavaDocs pushback."
 	exit 0
 fi
 
 # prepare the git information
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
+git config --global user.email "akarnokd@gmail.com"
+git config --global user.name "akarnokd"
 
 # setup the remote
-git remote add origin-pages https://${GITHUB_TOKEN}@${targetRepo} > /dev/null 2>&1
+git remote add origin-pages https://${JAVADOCS_TOKEN}@${targetRepo} > /dev/null 2>&1
 
 # stash changes due to chmod
 git stash
@@ -50,7 +49,7 @@ git add --all --verbose
 #git add javadoc/package-list --verbose
 
 # commit all
-git commit --message "Travis build: $TRAVIS_BUILD_NUMBER"
+git commit --message "CI build: $CI_BUILD_NUMBER"
 
 
 # push it
