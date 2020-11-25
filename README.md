@@ -1,7 +1,7 @@
 ixjava
 =================
 
-<a href='https://travis-ci.com/akarnokd/ixjava/builds'><img src='https://travis-ci.com/akarnokd/ixjava.svg?branch=1.x'></a>
+<a href='https://github.com/akarnokd/ixjava/actions?query=workflow%3A%22Java+CI+with+Gradle%22'><img src='https://github.com/akarnokd/ixjava/workflows/Java%20CI%20with%20Gradle/badge.svg'></a>
 [![codecov.io](http://codecov.io/github/akarnokd/ixjava/coverage.svg?branch=1.x)](http://codecov.io/github/akarnokd/ixjava?branch=1.x)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.akarnokd/ixjava/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.akarnokd/ixjava)
 
