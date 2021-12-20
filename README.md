@@ -15,7 +15,7 @@ and interactive dataflows.**
 
 # Releases
 
-Javadoc: https://akarnokd.github.com/ixjava/javadoc/index.html
+Javadoc: https://akarnokd.github.io/ixjava/javadoc/index.html
 
 **gradle**
 
